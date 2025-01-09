@@ -1,0 +1,1 @@
+{"version":3,"file":"28407.js","mappings":"wFAAAA,MAAMC,UAAUC,MAAQ,CACvB,QAAW,kBACX,OAAU,CACTC,QAAS,iBACTC,QAAQ,GAET,QAAW,wBACX,SAAY,UACZ,SAAY,CACXD,QAAS,UACTE,YAAY,EACZC,MAAO,UAGR,YAAe","sources":["webpack://marktext/./node_modules/prismjs/components/prism-gcode.js"],"names":["Prism","languages","gcode","pattern","greedy","lookbehind","alias"],"sourceRoot":""}

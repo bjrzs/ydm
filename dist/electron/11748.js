@@ -1,0 +1,2 @@
+(global.webpackChunkmarktext=global.webpackChunkmarktext||[]).push([[11748],{11748:(e,r,n)=>{var o={"./locale":89234,"./locale.js":89234};function t(e){var r=a(e);return n(r)}function a(e){if(!n.o(o,e)){var r=new Error("Cannot find module '"+e+"'");throw r.code="MODULE_NOT_FOUND",r}return o[e]}t.keys=function(){return Object.keys(o)},t.resolve=a,e.exports=t,t.id=11748}}]);
+//# sourceMappingURL=11748.js.map

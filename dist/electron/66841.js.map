@@ -1,0 +1,1 @@
+{"version":3,"file":"66841.js","mappings":"wFAAAA,MAAMC,UAAUC,IAAM,CACrB,QAAW,yCAEX,OAAU,CACTC,QAAS,qFACTC,QAAQ,GAET,OAAU,gHACV,QAAW,0HACX,SAAY,2BACZ,SAAY,CACX,wCACA,CAECD,QAAS,qBACTE,YAAY,IAGd,YAAe","sources":["webpack://marktext/./node_modules/prismjs/components/prism-lua.js"],"names":["Prism","languages","lua","pattern","greedy","lookbehind"],"sourceRoot":""}

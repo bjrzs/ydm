@@ -1,0 +1,59 @@
+{
+  "rules": {
+    "description": "English_UpperCamelCase",
+    "naming": {
+      "description": "English_UpperCamelCase",
+      "style": "English_UpperCamelCase",
+      "separator": "_",
+      "language": "English",
+      "conventions": {
+        "description": "各类型命名规范",
+        "functions": "English_UpperCamelCase",
+        "variables": "English_UpperCamelCase",
+        "constants": "English_UpperCamelCase",
+        "classes": "English_UpperCamelCase",
+        "files": "English_Abbreviation"
+      }
+    },
+    "comments": {
+      "description": "English_UpperCamelCase",
+      "style": "English",
+      "language": "English",
+      "required": true
+    },
+    "documentation": {
+      "description": "English_UpperCamelCase",
+      "readme": {
+        "description": "README文件要求",
+        "required": true,
+        "language": "english",
+        "sections": [
+          "purpose",
+          "files",
+          "dates"
+        ]
+      }
+    },
+    "code": {
+      "description": "English_UpperCamelCase",
+      "preferredLanguages": [
+        "C",
+        "C#",
+        "Pascal",
+        "MaxScript",
+        "AutoLisp",
+        "G-code",
+        "Batch",
+        "Lua",
+        "c++",
+        "Python",
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "CSS",
+        "SQL",
+        "Markdown"
+      ]
+    }
+  }
+} 

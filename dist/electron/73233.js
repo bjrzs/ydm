@@ -1,0 +1,2 @@
+(global.webpackChunkmarktext=global.webpackChunkmarktext||[]).push([[73233],{73233:()=>{Prism.languages.t4=Prism.languages["t4-cs"]=Prism.languages["t4-templating"].createT4("csharp")}}]);
+//# sourceMappingURL=73233.js.map

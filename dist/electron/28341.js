@@ -1,0 +1,2 @@
+(global.webpackChunkmarktext=global.webpackChunkmarktext||[]).push([[28341],{28341:()=>{Prism.languages.csv={value:/[^\r\n,"]+|"(?:[^"]|"")*"(?!")/,punctuation:/,/}}}]);
+//# sourceMappingURL=28341.js.map

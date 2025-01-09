@@ -1,0 +1,1 @@
+{"version":3,"file":"77460.js","mappings":"wFAEAA,MAAMC,UAAUC,UAAY,CAC3B,QAAW,2BACX,OAAU,CACTC,QAAS,yCACTC,QAAQ,GAET,OAAU,mEACV,QAAW,mSACX,SAAY,sIACZ,MAAS,aACT,SAAY,wDACZ,YAAe","sources":["webpack://marktext/./node_modules/prismjs/components/prism-ichigojam.js"],"names":["Prism","languages","ichigojam","pattern","greedy"],"sourceRoot":""}

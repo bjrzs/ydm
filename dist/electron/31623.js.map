@@ -1,0 +1,1 @@
+{"version":3,"file":"31623.js","mappings":"wFAAAA,MAAMC,UAAUC,WAAW,CAACC,QAAQ,kBAAkB,aAAa,CAACC,QAAQ,gGAAgGC,YAAW,GAAI,YAAY,uDAAuDC,YAAY","sources":["webpack://marktext/./node_modules/prismjs/components/prism-properties.min.js"],"names":["Prism","languages","properties","comment","pattern","lookbehind","punctuation"],"sourceRoot":""}
