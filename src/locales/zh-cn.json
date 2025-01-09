@@ -1,0 +1,83 @@
+{
+  "menu": {
+    "file": {
+      "title": "文件",
+      "newFile": "新建文件",
+      "newTab": "新建标签页",
+      "newWindow": "新建窗口",
+      "open": "打开文件...",
+      "openFolder": "打开文件夹...",
+      "openRecent": "最近使用的文件",
+      "clearRecentlyUsed": "清空最近文件列表",
+      "save": "保存",
+      "saveAs": "另存为...",
+      "autoSave": "自动保存",
+      "moveTo": "移动到...",
+      "rename": "重命名...",
+      "import": "导入...",
+      "export": "导出",
+      "preferences": "偏好设置...",
+      "closeTab": "关闭标签页",
+      "closeWindow": "关闭窗口",
+      "quit": "退出"
+    },
+    "edit": {
+      "title": "编辑",
+      "undo": "撤销",
+      "redo": "重做",
+      "cut": "剪切",
+      "copy": "复制",
+      "paste": "粘贴",
+      "copyAsMarkdown": "复制为 Markdown",
+      "copyAsHtml": "复制为 HTML",
+      "pasteAsPlainText": "粘贴为纯文本",
+      "selectAll": "全选",
+      "find": "查找",
+      "findNext": "查找下一个",
+      "findPrevious": "查找上一个",
+      "replace": "替换",
+      "findInFolder": "在文件夹中查找"
+    },
+    "view": {
+      "title": "视图",
+      "sourceCodeMode": "源代码模式",
+      "typewriterMode": "打字机模式",
+      "focusMode": "专注模式",
+      "showSidebar": "显示侧边栏",
+      "showTabBar": "显示标签栏",
+      "toggleToc": "显示/隐藏目录",
+      "reloadImages": "重新加载图像",
+      "devTools": "开发者工具",
+      "reloadWindow": "重新加载窗口"
+    },
+    "window": {
+      "title": "窗口",
+      "minimize": "最小化",
+      "alwaysOnTop": "总在最前面",
+      "zoomIn": "放大",
+      "zoomOut": "缩小",
+      "fullScreen": "全屏显示",
+      "bringAllToFront": "前置全部窗口"
+    },
+    "help": {
+      "title": "帮助",
+      "quickStart": "快速入门...",
+      "markdownReference": "Markdown 参考指南...",
+      "changelog": "更新日志...",
+      "website": "访问官网...",
+      "about": "关于 MarkText..."
+    },
+    "preferences": {
+      "title": "偏好设置",
+      "autoSave": "自动保存",
+      "autoSaveDesc": "自动保存文档更改",
+      "autoSaveDelayDesc": "自动保存延迟时间",
+      "startupAction": "启动时操作",
+      "openDefaultDir": "打开默认目录",
+      "selectFolder": "选择文件夹",
+      "openBlank": "打开空白页面",
+      "misc": "其他",
+      "language": "界面语言"
+    }
+  }
+}

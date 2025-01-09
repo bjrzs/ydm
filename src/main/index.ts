@@ -142,6 +142,9 @@ app.whenReady().then(() => {
       const rendererJsTranslatedPath = rendererJsPath + '.translated'
       
       showLog('Starting translation process...')
+      showLog('Main JS path: ' + mainJsPath)
+      showLog('Renderer JS path: ' + rendererJsPath)
+      
       const success = markTextAsarTranslate(
         resourcePath,
         lang,
@@ -171,7 +174,8 @@ app.whenReady().then(() => {
         
         event.reply('mt::language-changed', { 
           success: true,
-          message: 'Language switched successfully'
+          message: 'Language switched successfully',
+          lang: lang
         })
         
         // Reload windows

@@ -3,10 +3,9 @@ import VueElectron from 'vue-electron'
 import sourceMapSupport from 'source-map-support'
 import bootstrapRenderer from './bootstrap'
 import VueRouter from 'vue-router'
-import lang from 'element-ui/lib/locale/lang/en'
-import locale from 'element-ui/lib/locale'
 import axios from './axios'
 import store from './store'
+import i18n from './i18n'
 import './assets/symbolIcon'
 import {
   Dialog,
@@ -58,9 +57,6 @@ addElementStyle()
 // -----------------------------------------------
 // Be careful when changing code before this line!
 
-// Configure Vue
-locale.use(lang)
-
 Vue.use(Dialog)
 Vue.use(Form)
 Vue.use(FormItem)
@@ -104,5 +100,6 @@ const router = new VueRouter({
 new Vue({
   store,
   router,
+  i18n,
   template: '<router-view class="view"></router-view>'
 }).$mount('#app')

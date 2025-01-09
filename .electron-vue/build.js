@@ -61,6 +61,13 @@ async function build () {
   const to = path.resolve(__dirname, '../static/themes')
   await fs.copy(from, to)
 
+  // Copy translation resources to both dist and build directories
+  const translationFrom = path.resolve(__dirname, '../translate-resources')
+  const translationToDist = path.resolve(__dirname, '../dist/electron/translate-resources')
+  const translationToBuild = path.resolve(__dirname, '../build/win-unpacked/resources/app/translate-resources')
+  await fs.copy(translationFrom, translationToDist)
+  await fs.copy(translationFrom, translationToBuild)
+
   let results = ''
 
   const tasks = new Listr(
