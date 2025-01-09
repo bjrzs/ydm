@@ -178,15 +178,15 @@ export default {
     onSelectChange (type, value) {
       this.$store.dispatch('SET_SINGLE_PREFERENCE', { type, value })
       if (type === 'language') {
-        log.info('渲染进程: 正在切换语言到', value)
-        console.log('渲染进程: 正在切换语言到', value)
-        // 发送语言切换请求
+        log.info('[Renderer] Switching language to:', value)
+        console.log('[Renderer] Switching language to:', value)
+        // Send language change request
         ipcRenderer.send('mt::change-language', {
           lang: value,
           resourcePath: 'M:/cm/ydm/translate-resources'
         })
-        log.info('渲染进程: 已发送语言切换请求')
-        console.log('渲染进程: 已发送语言切换请求')
+        log.info('[Renderer] Language change request sent')
+        console.log('[Renderer] Language change request sent')
       }
     },
     selectDefaultDirectoryToOpen () {
@@ -194,21 +194,21 @@ export default {
     }
   },
   mounted () {
-    log.info('渲染进程: 组件已加载')
-    console.log('渲染进程: 组件已加载')
+    log.info('[Renderer] Component mounted')
+    console.log('[Renderer] Component mounted')
     ipcRenderer.on('mt::language-changed', (event, data) => {
-      log.info('渲染进程: 收到主进程响应', data)
-      console.log('渲染进程: 收到主进程响应', data)
+      log.info('[Renderer] Received response from main process:', data)
+      console.log('[Renderer] Received response from main process:', data)
       if (data.success) {
-        window.alert('语言切换成功！')
+        window.alert('Language switched successfully!')
       } else {
-        window.alert('语言切换失败：' + (data.error || '未知错误'))
+        window.alert('Failed to switch language: ' + (data.error || 'Unknown error'))
       }
     })
   },
   beforeDestroy () {
-    log.info('渲染进程: 组件即将销毁')
-    console.log('渲染进程: 组件即将销毁')
+    log.info('[Renderer] Component will be destroyed')
+    console.log('[Renderer] Component will be destroyed')
     ipcRenderer.removeAllListeners('mt::language-changed')
   }
 }

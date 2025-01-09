@@ -7,45 +7,45 @@ let exceptionLogger = s => console.error(s)
 
 function configureLogger () {
   try {
-    // 确保transports存在
+    // Ensure transports exist
     if (!log.transports) {
       log.transports = {}
     }
-    // 确保file transport存在
+    // Ensure file transport exists
     if (!log.transports.file) {
       log.transports.file = {}
     }
-    // 确保console transport存在
+    // Ensure console transport exists
     if (!log.transports.console) {
       log.transports.console = {}
     }
-    // 设置日志级别
+    // Set log levels
     log.transports.file.level = 'debug'
     log.transports.console.level = 'debug'
 
-    // 设置日志文件路径
+    // Set log file path
     const userDataPath = process.env.APPDATA || (process.platform === 'darwin' ? path.join(process.env.HOME, 'Library/Application Support') : path.join(process.env.HOME, '.config'))
     const logPath = path.join(userDataPath, 'MarkText', 'logs')
-    
-    // 确保日志目录存在
+
+    // Ensure log directory exists
     try {
       require('fs').mkdirSync(logPath, { recursive: true })
     } catch (err) {
-      console.error('创建日志目录失败:', err)
+      console.error('Failed to create log directory:', err)
     }
 
-    // 设置文件路径解析函数
+    // Set file path resolver
     log.transports.file.resolvePathFn = () => {
       const logFile = path.join(logPath, 'renderer.log')
-      console.log('日志文件路径:', logFile)
+      console.log('Log file path:', logFile)
       return logFile
     }
 
-    // 添加初始日志
-    log.info('日志系统初始化完成')
-    log.info('日志路径:', logPath)
+    // Add initial logs
+    log.info('Log system initialization completed')
+    log.info('Log path:', logPath)
   } catch (error) {
-    console.error('配置日志时出错:', error)
+    console.error('Error configuring logger:', error)
   }
 }
 
@@ -122,7 +122,7 @@ const bootstrapRenderer = () => {
     }
     global.marktext = marktext
   } catch (error) {
-    console.error('初始化渲染进程时出错:', error)
+    console.error('Initializing renderer process failed:', error)
   }
 }
 
