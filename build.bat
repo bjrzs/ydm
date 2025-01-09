@@ -5,6 +5,10 @@ echo Build start,kill MarkText and delete build...
 taskkill /F /IM MarkText.exe 2>nul
 rmdir /s /q build
 
+echo Clean cache...
+rmdir /s /q node_modules\.cache 2>nul
+rmdir /s /q .cache 2>nul
+
 echo Installing dependencies...
 call yarn install --ignore-scripts --ignore-engines --production=false
 if errorlevel 1 (

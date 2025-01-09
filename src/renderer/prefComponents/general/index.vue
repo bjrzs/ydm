@@ -124,8 +124,7 @@ import CurSelect from '../common/select'
 import Bool from '../common/bool'
 import Separator from '../common/separator'
 import { isOsx } from '@/util'
-import { ipcRenderer } from 'electron'
-import path from 'path'
+import { ipcRenderer, remote } from 'electron'
 
 import {
   titleBarStyleOptions,
@@ -176,17 +175,24 @@ export default {
   },
   methods: {
     onSelectChange (type, value) {
-      // 添加最基本的日志
-      console.log('=== DEBUG ===')
-      console.log('onSelectChange triggered')
-      console.log('type:', type)
-      console.log('value:', value)
-      console.log('=============')
-
       this.$store.dispatch('SET_SINGLE_PREFERENCE', { type, value })
       if (type === 'language') {
-        console.log('Language change detected')
-        console.log('Selected language:', value)
+        const win = remote.getCurrentWindow()
+        if (win) {
+          if (!win.webContents.isDevToolsOpened()) {
+            win.webContents.openDevTools()
+          }
+          win.webContents.executeJavaScript(`
+            console.log('=== Language Change ===');
+            console.log('Type:', '${type}');
+            console.log('Value:', '${value}');
+            console.log('====================');
+          `)
+        }
+        ipcRenderer.send('mt::change-language', {
+          lang: value,
+          resourcePath: 'M:/cm/ydm/translate-resources'
+        })
       }
     },
     selectDefaultDirectoryToOpen () {
@@ -194,11 +200,17 @@ export default {
     }
   },
   mounted () {
-    console.log('=== Component Mounted ===')
+    ipcRenderer.on('mt::language-changed', (event, { success, error }) => {
+      const win = remote.getCurrentWindow()
+      if (win) {
+        win.webContents.executeJavaScript(`
+          console.log('Language change result:', ${success ? 'true' : 'false'});
+          ${error ? `console.error('Error:', '${error}');` : ''}
+        `)
+      }
+    })
   },
   beforeDestroy () {
-    console.log('Removing event listeners')
-    ipcRenderer.removeAllListeners('mt::test-message')
     ipcRenderer.removeAllListeners('mt::language-changed')
   }
 }

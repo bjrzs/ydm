@@ -12,6 +12,7 @@ const SpritePlugin = require('svg-sprite-loader/plugin')
 const postcssPresetEnv = require('postcss-preset-env')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const ESLintPlugin = require('eslint-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 const { getRendererEnvironmentDefinitions } = require('./marktextEnvironment')
 const { dependencies } = require('../package.json')
@@ -193,7 +194,23 @@ const rendererConfig = {
       /.+[\/\\]node_modules[\/\\]axios[\/\\]lib[\/\\]adapters[\/\\]xhr\.js$/,
       'http.js'
     ),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"'
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
+    }),
+    new TerserPlugin({
+      parallel: true,
+      terserOptions: {
+        ecma: 6,
+        compress: {
+          drop_console: false,
+          drop_debugger: false
+        }
+      }
+    })
   ],
   cache: false,
   output: {
