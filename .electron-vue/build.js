@@ -23,12 +23,12 @@ function doTranslate() {
   require('ts-node/register')
   const { markTextAsarTranslate } = require('../marktext_asar_translate')
   console.log(process.env['lang'])
-  const longRootPath = './'
-  const jsRootPath = './dist/electron/'
-  const mainJsFileName = path.join(jsRootPath, './main.js')
-  const outMainJsFileName = path.join(jsRootPath, './main.js')
-  const rendererJsFileName = path.join(jsRootPath, './renderer.js')
-  const outRendererJsFileName = path.join(jsRootPath, './renderer.js')
+  const longRootPath = path.resolve(__dirname, '../dist/electron')
+  const jsRootPath = path.resolve(__dirname, '../dist/electron')
+  const mainJsFileName = path.join(jsRootPath, 'main.js')
+  const outMainJsFileName = path.join(jsRootPath, 'main.js')
+  const rendererJsFileName = path.join(jsRootPath, 'renderer.js')
+  const outRendererJsFileName = path.join(jsRootPath, 'renderer.js')
   return markTextAsarTranslate(longRootPath, toLang, mainJsFileName, outMainJsFileName, rendererJsFileName, outRendererJsFileName)
 }
 

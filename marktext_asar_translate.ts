@@ -23,9 +23,10 @@ function searchLabelsFromFile( fileName:string, exclude: void|string[]) : string
     let labels:string[] = []
     if (fs.existsSync(fileName)) {
         let buffer = fs.readFileSync(fileName, "utf-8")
-        let pat = /(label):"(.*?)"/gms
+        let pat = /(?:label:"(.*?)"|"([^"]*)")/gms
         if (Array.isArray(exclude) && exclude.length > 0) {
-            buffer.replace(pat, (match, key, value) => {
+            buffer.replace(pat, (match, labelValue, plainValue) => {
+                const value = labelValue || plainValue
                 if (exclude.indexOf(value) == -1) {
                     if (labels.indexOf(value) ==  -1){
                         labels.push(value)
@@ -34,7 +35,8 @@ function searchLabelsFromFile( fileName:string, exclude: void|string[]) : string
                 return match
             })
         } else {
-            buffer.replace(pat, (match, key, value) => {
+            buffer.replace(pat, (match, labelValue, plainValue) => {
+                const value = labelValue || plainValue
                 if (labels.indexOf(value) ==  -1){
                     labels.push(value)
                 }
@@ -60,11 +62,19 @@ function replaceLabelsFromFile( fileName:string, toDict: string[]) : string {
     }
     if (fs.existsSync(fileName)) {
         let buffer = fs.readFileSync(fileName, "utf-8")
-        let pat = /(label):"(.*?)"/gms
-        content = buffer.replace(pat, (match, key, value) => {
+        let labelPat = /(label):"(.*?)"/gms
+        content = buffer.replace(labelPat, (match, key, value) => {
             const idx = toKeys.indexOf(value)
             if (idx != -1) {
                 return key + ':"' + toVals[idx] + '"'
+            }
+            return match
+        })
+        let textPat = /"([^"]*)"/gms
+        content = content.replace(textPat, (match, value) => {
+            const idx = toKeys.indexOf(value)
+            if (idx != -1) {
+                return '"' + toVals[idx] + '"'
             }
             return match
         })
@@ -195,43 +205,30 @@ function initMainLabelDict(fileName:string, langRootPath:string, toLang:string) 
 }
 
 export function markTextAsarTranslate(langRootPath:string, toLang:string, mainJsFileName:string, outMainJsFileName:string, rendererJsFileName:string, outRendererJsFileName:string): boolean {
-  
-  // 添加日志输出,方便调试
-  console.log(`开始翻译处理:
-    语言根路径: ${langRootPath}
-    目标语言: ${toLang}
-    主进程文件: ${mainJsFileName}
-    渲染进程文件: ${rendererJsFileName}
-  `)
 
-  // 初始化翻译字典
   const toDict = initMainLabelDict(mainJsFileName, langRootPath, toLang)
-  if(toDict.length === 0) {
-    console.log("警告: 翻译字典为空")
+
+  if (toDict.length>0){
+    if (replaceMainLabelDict(mainJsFileName, langRootPath,  toDict, toLang, outMainJsFileName)){
+      console.log("replaceMainLabelDict success.")
+    }else{
+      console.log("replaceMainLabelDict failed.")
+      return false
+    }
+  }
+
+  if (replaceMain(mainJsFileName, langRootPath,  toLang, outMainJsFileName)){
+    console.log("replaceMain success.")
+  }else{
+    console.log("replaceMain failed.")
     return false
   }
 
-  // 替换主进程菜单标签
-  if (!replaceMainLabelDict(mainJsFileName, langRootPath, toDict, toLang, outMainJsFileName)) {
-    console.log("错误: 替换主进程菜单标签失败")
+  if (replaceRenderer(rendererJsFileName, langRootPath,  toLang, outRendererJsFileName)){
+    console.log("replaceRenderer success.")
+  }else{
+    console.log("replaceRenderer failed.")
     return false
   }
-  console.log("成功: 主进程菜单标签替换完成")
-
-  // 替换主进程其他文本
-  if (!replaceMain(mainJsFileName, langRootPath, toLang, outMainJsFileName)) {
-    console.log("错误: 替换主进程其他文本失败") 
-    return false
-  }
-  console.log("成功: 主进程其他文本替换完成")
-
-  // 替换渲染进程文本
-  if (!replaceRenderer(rendererJsFileName, langRootPath, toLang, outRendererJsFileName)) {
-    console.log("错误: 替换渲染进程文本失败")
-    return false
-  }
-  console.log("成功: 渲染进程文本替换完成")
-
-  console.log("翻译处理全部完成!")
   return true
 }
