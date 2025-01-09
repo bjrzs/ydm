@@ -5,14 +5,48 @@ import RendererPaths from './node/paths'
 
 let exceptionLogger = s => console.error(s)
 
-const configureLogger = () => {
-  const { debug, paths, windowId } = global.marktext.env
-  log.transports.console.level = process.env.NODE_ENV === 'development' ? 'info' : false // mirror to window console
-  log.transports.mainConsole = null
-  log.transports.file.resolvePath = () => path.join(paths.logPath, `editor-${windowId}.log`)
-  log.transports.file.level = debug ? 'debug' : 'info'
-  log.transports.file.sync = false
-  exceptionLogger = log.error
+function configureLogger () {
+  try {
+    // 确保transports存在
+    if (!log.transports) {
+      log.transports = {}
+    }
+    // 确保file transport存在
+    if (!log.transports.file) {
+      log.transports.file = {}
+    }
+    // 确保console transport存在
+    if (!log.transports.console) {
+      log.transports.console = {}
+    }
+    // 设置日志级别
+    log.transports.file.level = 'debug'
+    log.transports.console.level = 'debug'
+
+    // 设置日志文件路径
+    const userDataPath = process.env.APPDATA || (process.platform === 'darwin' ? path.join(process.env.HOME, 'Library/Application Support') : path.join(process.env.HOME, '.config'))
+    const logPath = path.join(userDataPath, 'MarkText', 'logs')
+    
+    // 确保日志目录存在
+    try {
+      require('fs').mkdirSync(logPath, { recursive: true })
+    } catch (err) {
+      console.error('创建日志目录失败:', err)
+    }
+
+    // 设置文件路径解析函数
+    log.transports.file.resolvePathFn = () => {
+      const logFile = path.join(logPath, 'renderer.log')
+      console.log('日志文件路径:', logFile)
+      return logFile
+    }
+
+    // 添加初始日志
+    log.info('日志系统初始化完成')
+    log.info('日志路径:', logPath)
+  } catch (error) {
+    console.error('配置日志时出错:', error)
+  }
 }
 
 const parseUrlArgs = () => {
@@ -47,46 +81,49 @@ const parseUrlArgs = () => {
 }
 
 const bootstrapRenderer = () => {
-  // Register renderer exception handler
-  window.addEventListener('error', event => {
-    if (event.error) {
-      const { message, name, stack } = event.error
-      const copy = {
-        message,
-        name,
-        stack
+  try {
+    configureLogger()
+    // Register renderer exception handler
+    window.addEventListener('error', event => {
+      if (event.error) {
+        const { message, name, stack } = event.error
+        const copy = {
+          message,
+          name,
+          stack
+        }
+
+        exceptionLogger(event.error)
+
+        // Pass exception to main process exception handler to show a error dialog.
+        ipcRenderer.send('mt::handle-renderer-error', copy)
+      } else {
+        console.error(event)
       }
+    })
 
-      exceptionLogger(event.error)
-
-      // Pass exception to main process exception handler to show a error dialog.
-      ipcRenderer.send('mt::handle-renderer-error', copy)
-    } else {
-      console.error(event)
-    }
-  })
-
-  const {
-    debug,
-    initialState,
-    userDataPath,
-    windowId,
-    type
-  } = parseUrlArgs()
-  const paths = new RendererPaths(userDataPath)
-  const marktext = {
-    initialState,
-    env: {
+    const {
       debug,
-      paths,
+      initialState,
+      userDataPath,
       windowId,
       type
-    },
-    paths
+    } = parseUrlArgs()
+    const paths = new RendererPaths(userDataPath)
+    const marktext = {
+      initialState,
+      env: {
+        debug,
+        paths,
+        windowId,
+        type
+      },
+      paths
+    }
+    global.marktext = marktext
+  } catch (error) {
+    console.error('初始化渲染进程时出错:', error)
   }
-  global.marktext = marktext
-
-  configureLogger()
 }
 
 export default bootstrapRenderer

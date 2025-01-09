@@ -124,7 +124,8 @@ import CurSelect from '../common/select'
 import Bool from '../common/bool'
 import Separator from '../common/separator'
 import { isOsx } from '@/util'
-import { ipcRenderer, remote } from 'electron'
+import { ipcRenderer } from 'electron'
+import log from 'electron-log'
 
 import {
   titleBarStyleOptions,
@@ -177,22 +178,15 @@ export default {
     onSelectChange (type, value) {
       this.$store.dispatch('SET_SINGLE_PREFERENCE', { type, value })
       if (type === 'language') {
-        const win = remote.getCurrentWindow()
-        if (win) {
-          if (!win.webContents.isDevToolsOpened()) {
-            win.webContents.openDevTools()
-          }
-          win.webContents.executeJavaScript(`
-            console.log('=== Language Change ===');
-            console.log('Type:', '${type}');
-            console.log('Value:', '${value}');
-            console.log('====================');
-          `)
-        }
+        log.info('渲染进程: 正在切换语言到', value)
+        console.log('渲染进程: 正在切换语言到', value)
+        // 发送语言切换请求
         ipcRenderer.send('mt::change-language', {
           lang: value,
           resourcePath: 'M:/cm/ydm/translate-resources'
         })
+        log.info('渲染进程: 已发送语言切换请求')
+        console.log('渲染进程: 已发送语言切换请求')
       }
     },
     selectDefaultDirectoryToOpen () {
@@ -200,17 +194,21 @@ export default {
     }
   },
   mounted () {
-    ipcRenderer.on('mt::language-changed', (event, { success, error }) => {
-      const win = remote.getCurrentWindow()
-      if (win) {
-        win.webContents.executeJavaScript(`
-          console.log('Language change result:', ${success ? 'true' : 'false'});
-          ${error ? `console.error('Error:', '${error}');` : ''}
-        `)
+    log.info('渲染进程: 组件已加载')
+    console.log('渲染进程: 组件已加载')
+    ipcRenderer.on('mt::language-changed', (event, data) => {
+      log.info('渲染进程: 收到主进程响应', data)
+      console.log('渲染进程: 收到主进程响应', data)
+      if (data.success) {
+        window.alert('语言切换成功！')
+      } else {
+        window.alert('语言切换失败：' + (data.error || '未知错误'))
       }
     })
   },
   beforeDestroy () {
+    log.info('渲染进程: 组件即将销毁')
+    console.log('渲染进程: 组件即将销毁')
     ipcRenderer.removeAllListeners('mt::language-changed')
   }
 }

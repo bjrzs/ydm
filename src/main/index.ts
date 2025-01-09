@@ -1,57 +1,47 @@
 import { ipcMain, app, BrowserWindow } from 'electron'
 import { markTextAsarTranslate } from '../../marktext_asar_translate'
 import path from 'path'
+import log from 'electron-log'
 
-// 创建窗口时打开开发者工具
-const openDevTools = (win) => {
-  if (!win.webContents.isDevToolsOpened()) {
-    win.webContents.openDevTools()
-    // 发送测试消息到渲染进程
-    setTimeout(() => {
-      console.log('Sending test message to renderer...')
-      win.webContents.send('mt::test-message', 'Hello from main process!')
-    }, 2000)
-  }
+// 配置日志
+const userDataPath = app.getPath('userData')
+const logPath = path.join(userDataPath, 'logs')
+
+log.transports.file.resolvePathFn = () => path.join(logPath, 'main.log')
+log.transports.file.level = 'debug'
+log.transports.console.level = 'debug'
+
+// 添加一个辅助函数来显示日志
+function showLog(message) {
+  log.info(message)
+  console.log(message)
 }
 
-// 监听新窗口创建
-app.on('browser-window-created', (event, win) => {
-  console.log('New window created')
-  openDevTools(win)
-})
-
-// 添加测试事件监听
-ipcMain.on('mt::test-response', (event, message) => {
-  console.log('Received test response from renderer:', message)
-})
-
-// 添加简单的测试消息监听
-ipcMain.on('mt::test-hello', (event, message) => {
-  console.log('Received test message:', message)
-  // 回复消息
-  event.reply('mt::test-hello-reply', 'Main process received: ' + message)
+// 在应用启动时添加日志
+app.on('ready', () => {
+  showLog('应用已启动')
+  showLog('日志路径: ' + logPath)
 })
 
 // Add language change handler
-console.log('Setting up language change handler in main process')
-ipcMain.on('mt::change-language', (event, { lang, resourcePath, dictFiles }) => {
-  console.log('Main process received language change request:', { lang, resourcePath, dictFiles })
+ipcMain.on('mt::change-language', (event, data) => {
+  showLog('===============================')
+  showLog('主进程: 收到语言切换请求')
+  showLog('数据: ' + JSON.stringify(data, null, 2))
+  showLog('===============================')
   
   try {
-    // 使用绝对路径
-    const appPath = 'M:/cm/ydm'
-    console.log('App path:', appPath)
+    const { lang, resourcePath } = data
     
-    // 检查文件是否存在
+    // 使用绝对路径
+    const appPath = app.getAppPath()
     const mainJsPath = path.join(appPath, 'dist/electron', 'main.js')
     const rendererJsPath = path.join(appPath, 'dist/electron', 'renderer.js')
-    console.log('Checking files:', {
-      mainJsPath,
-      rendererJsPath
-    })
     
-    // Use the translation files
-    console.log('Calling markTextAsarTranslate...')
+    showLog('主进程文件路径: ' + mainJsPath)
+    showLog('渲染进程文件路径: ' + rendererJsPath)
+    
+    // 调用翻译函数
     const success = markTextAsarTranslate(
       resourcePath,
       lang,
@@ -61,34 +51,26 @@ ipcMain.on('mt::change-language', (event, { lang, resourcePath, dictFiles }) => 
       rendererJsPath + '.translated'
     )
     
-    console.log('Translation result:', success)
+    showLog('翻译结果: ' + (success ? '成功' : '失败'))
     
+    // 发送结果回渲染进程
+    event.reply('mt::language-changed', { 
+      success: success,
+      message: success ? '语言切换成功' : '语言切换失败'
+    })
+    
+    // 如果成功，重新加载窗口
     if (success) {
-      console.log('Translation successful, notifying renderer process')
-      // Notify renderer process
-      event.reply('mt::language-changed', { success: true })
-      // 重新加载所有窗口
+      showLog('正在重新加载窗口...')
       BrowserWindow.getAllWindows().forEach(win => {
-        console.log('Reloading window...')
         win.reload()
-        // 重新打开开发者工具
-        setTimeout(() => {
-          console.log('Reopening DevTools...')
-          openDevTools(win)
-        }, 1000)
-      })
-    } else {
-      console.error('Translation failed')
-      event.reply('mt::language-changed', { 
-        success: false, 
-        error: 'Failed to translate files' 
       })
     }
   } catch (error) {
-    console.error('Error in language change handler:', error)
+    showLog('错误: ' + error.message)
     event.reply('mt::language-changed', { 
       success: false, 
-      error: error.message || 'Unknown error occurred' 
+      error: error.message || '未知错误' 
     })
   }
 }) 

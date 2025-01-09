@@ -18,10 +18,10 @@ if errorlevel 1 (
 rem add the 
 echo Copying translation resources...
 mkdir build\translate-resources 2>nul
-xcopy /E /I /Y "M:\cm\ydm\translate-resources" "build\translate-resources"
+xcopy /E /I /Y "M:\cm\ydm\translate-resources" "build\translate-resources"  2>nul
 
 echo new build need copy node_modules
-call xcopy_.bat
+call xcopy_.bat 2>nul
 
 echo Running pack...
 call yarn run pack

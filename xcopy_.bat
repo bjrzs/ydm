@@ -1,3 +1,5 @@
+@echo off
+
 xcopy /E /I /Y "M:\cm\exe\resources\app\node_modules\@hfelix" "node_modules\@hfelix"
 xcopy /E /I /Y "M:\cm\exe\resources\app\node_modules\keyboard-layout" "node_modules\keyboard-layout"
 xcopy /E /I /Y "M:\cm\exe\resources\app\node_modules\fontmanager-redux" "node_modules\fontmanager-redux"
