@@ -1,8 +1,8 @@
 @echo off
 cls
 
-echo Build start,kill MarkText and delete build...
-taskkill /F /IM MarkText.exe 2>nul
+echo Build start,kill MarkText and Delete build...
+call k.bat >nul
 rmdir /s /q build
 
 echo Clean cache...
@@ -15,25 +15,27 @@ if errorlevel 1 (
     echo Yarn install completed with warnings, continuing...
 )
 
-rem add the 
-echo Copying translation resources...
-mkdir build\translate-resources 2>nul
-xcopy /E /I /Y "M:\cm\ydm\translate-resources" "build\translate-resources"  2>nul
+echo Copy node_modules to app
+call xcopy_.bat >nul
+if errorlevel 1 (
+    echo Copy node_modules to app, continuing...
+)
 
-echo new build need copy node_modules
-call xcopy_.bat 2>nul
-
-echo Running pack...
+echo yarn run pack...
 call yarn run pack
 if errorlevel 1 (
     echo Pack completed with warnings, continuing...
 )
 
-echo Building with electron-builder...
+echo yarn electron-builder --dir...
 call yarn electron-builder --dir
 if errorlevel 1 (
     echo Electron-builder completed with warnings, continuing...
 )
+
+
+echo Copy translate-resources files
+xcopy /E /I /Y "M:\cm\ydm\translate-resources" "build\win-unpacked\translate-resources"
 
 echo Build process completed!
 pause
