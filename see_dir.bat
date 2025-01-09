@@ -20,6 +20,8 @@ echo static Directory: >> dir_all.txt
 dir /s/a "static" >> dir_all.txt
 echo ==================== >> dir_all.txt
 
+echo marktext-chinese-language-pack-main Directory: >> dir_all.txt
+dir /s/a "marktext-chinese-language-pack-main" >> dir_all.txt
 
 echo SRC Directory: >> dir_all.txt
 dir /s/a "src" >> dir_all.txt
