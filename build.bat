@@ -9,8 +9,8 @@ echo Clean cache...
 rmdir /s /q node_modules\.cache 2>nul
 rmdir /s /q .cache 2>nul
 
-echo Setting language to zh-cn...
-set lang=zh-cn
+rem echo Setting language to zh-cn...
+rem set lang=zh-cn
 
 echo Installing dependencies...
 call yarn install --ignore-scripts --ignore-engines --production=false
@@ -36,9 +36,6 @@ if errorlevel 1 (
     echo Electron-builder completed with warnings, continuing...
 )
 
-
-echo Copy translate-resources files
-xcopy /E /I /Y "M:\cm\ydm\translate-resources" "build\win-unpacked\translate-resources"
 
 echo Build process completed!
 pause

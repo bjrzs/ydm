@@ -334,25 +334,23 @@ yarn global add node-gyp@8.4.0
 
 
 electron-builder.yml 中 设置为 npmRebuild: false
-因为 原生模块 编译不成功，
+因为 原生模块 编译不成功.
 
 于是我手动来编译：我发现
 我输入 cd node_modules/ced
 执行 node-gyp rebuild，返回是gyp info ok
 
-我能不能在 build.bat 中，由于 npmRebuild: false 跳过的这些 原生模块 ，一个一个来编译，然后 把编译好的 像xcopy_bat 一样copy 到 将要编译的 node_modules 目录中
+在 build.bat 中，由于 npmRebuild: false 跳过的这些 原生模块 ，所以把编译好的mode 用xcopy_bat copy 到 将要编译的 node_modules 目录中.
 
 
 src/renderer/prefComponents/general/index.vue
-disable="true"   // 这里设置为 true 表示禁用了选择
+disable="true"   // 这里设置为 true 表示禁用了选择语言
 
 
-构建 项目是使用 build.bat
+# 构建 项目是使用 build.bat
 
 
-注意：经常 有一些行尾空格导致的ESLint错误
 
-你改的这些vue ,js 文件，要再检查一下，是否有一些行尾空格导致的ESLint错误
 
 
 	"titleBarStyle": "native", 这样就会显示菜单
@@ -368,3 +366,36 @@ disable="true"   // 这里设置为 true 表示禁用了选择
 我们需要在渲染进程的入口文件中集成 i18n
 
 应该跳出这个思维，自己创建一个 中文的json，并让它 生效
+
+
+# 使用 i18n 实现了 程序运行时 切换至 中文界面，修改了src/renderer/prefComponents/general/index.vue;
+
+
+注意：经常 有一些行尾空格导致的ESLint错误,你改的这些vue ,js 文件，要再检查一下，是否有一些行尾空格导致的ESLint错误
+使用 powershell修复 未尾空格 问题 
+powershell -Command "(Get-Content 'config.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'config.js' -NoNewline"
+
+
+
+很多错误，所以我不得不用 git 回滚代码回到这里。
+
+build.bat 运行后，执行marktext 终于在切换 简体中文 时，界面 语言选择模块 （只这一个面板）变成了中文 ，但其它比如侧边栏、菜单等还是英文 ;
+
+1、应该把所有的中文 都放在 zh-cn.json 一个文件中，包括  侧边栏，菜单 ，其它面板  都放在这个文件。 英文都放成en.json  一个文件中 方便管理;
+
+2. 你应该只使用一个i18n.js，修改它，所有的 中英文切换 都用这一个 i18n.js 文件来控制实现 ，不分开再建新的i18n.js;
+
+4.需要在菜单，侧边栏等其它面板 中 引入  i18n,这些组件也能正确使用 $t 函数进行翻译,参考src/renderer/prefComponents/general/index.vue;
+
+5. 菜单栏不显示的问题（通过 titleBarStyle: "native" 设置）
+原来的src/renderer/prefComponents/general/index.vue 中，有下面这条 titleBarStyle ，被你删除了，造成 没有这个选项了
+<cur-select
+          v-if="!isOsx"
+          description="Title bar style"
+          notes="Requires restart."
+          :value="titleBarStyle"
+          :options="titleBarStyleOptions"
+          :onChange="value => onSelectChange('titleBarStyle', value)"
+        ></cur-select>
+
+6. 特别注意：我们只是要切换语言，不修改其它不相关的代码 防止出错
