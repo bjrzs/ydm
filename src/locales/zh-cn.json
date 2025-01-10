@@ -105,5 +105,104 @@
     "sourceCodeModeEnabled": "启用源代码模式",
     "typewriterModeEnabled": "启用打字机模式",
     "focusModeEnabled": "启用专注模式"
+  },
+  "editor": {
+    "title": "编辑器",
+    "textEditorSettings": "文本编辑器设置：",
+    "fontSize": "字体大小",
+    "lineHeight": "行高",
+    "fontFamily": "字体",
+    "maxWidth": "编辑器最大宽度",
+    "maxWidthNote": "留空使用主题默认值，否则使用带单位的数字，单位可以是'ch'（字符）、'px'（像素）或'%'（百分比）。",
+    "codeBlockSettings": "代码块设置：",
+    "codeFontSize": "代码字体大小",
+    "codeFontFamily": "代码字体",
+    "showLineNumbers": "显示行号",
+    "trimEmptyLines": "删除首尾空行",
+    "writingBehavior": "书写行为：",
+    "autoPairBracket": "自动配对括号",
+    "autoPairMarkdown": "自动完成Markdown语法",
+    "autoPairQuote": "自动配对引号",
+    "fileRepresentation": "文件表示：",
+    "tabWidth": "制表符宽度",
+    "lineSeparator": "换行符类型",
+    "defaultEncoding": "默认编码",
+    "autoDetectEncoding": "自动检测文件编码",
+    "newlineHandling": "处理尾部换行符",
+    "misc": "其他：",
+    "textDirection": "文本方向",
+    "hideQuickInsert": "隐藏新段落类型选择提示",
+    "hideLinkPopup": "隐藏链接悬停弹窗",
+    "autoCheckTasks": "自动检查相关任务"
+  },
+  "theme": {
+    "title": "主题",
+    "autoSwitch": "根据系统设置自动调整应用主题",
+    "openThemeFolder": "打开主题文件夹",
+    "importTheme": "导入自定义主题",
+    "themes": {
+      "dark": "深色",
+      "light": "浅色",
+      "graphite": "石墨",
+      "materialDark": "Material深色",
+      "oneDark": "One Dark",
+      "ulysses": "尤利西斯"
+    }
+  },
+  "image": {
+    "title": "图片",
+    "insertAction": "从本地文件夹或剪贴板插入图片后的默认操作",
+    "clipboardNote": "剪贴板处理仅在macOS和Windows上完全支持",
+    "actions": {
+      "folder": "复制到指定文件夹",
+      "path": "使用相对路径",
+      "upload": "上传到图床"
+    },
+    "folderSetting": {
+      "title": "文件夹设置",
+      "location": "图片保存位置",
+      "browse": "浏览",
+      "relative": "使用相对路径",
+      "format": "图片文件名格式",
+      "formatNote": "可以使用以下变量：{filename}原始文件名，{date}当前日期，{time}当前时间"
+    },
+    "uploader": {
+      "title": "上传设置",
+      "currentService": "当前图片上传服务为 {service}",
+      "noService": "当前未选择上传服务。请选择并配置一个上传服务。",
+      "services": {
+        "picgo": "PicGo",
+        "github": "GitHub",
+        "cliScript": "命令行脚本"
+      },
+      "picgo": {
+        "notInstalled": "您的系统未安装",
+        "installFirst": "，请先安装后再使用。"
+      },
+      "github": {
+        "deprecated": "GitHub上传将在未来版本中移除，请使用PicGo",
+        "token": "GitHub令牌",
+        "tokenNote": "令牌在macOS上通过Keychain保存，在Linux上通过Secret Service API/libsecret保存，在Windows上通过Credential Vault保存",
+        "tokenPlaceholder": "输入令牌",
+        "owner": "所有者名称",
+        "ownerPlaceholder": "所有者",
+        "repo": "仓库名称",
+        "repoPlaceholder": "仓库",
+        "branch": "分支名称（可选）",
+        "branchPlaceholder": "分支",
+        "saveSuccess": "GitHub配置已保存"
+      },
+      "script": {
+        "description": "脚本将以图片文件路径作为唯一参数执行，并应输出HTMLImageElement的src属性的有效值。",
+        "location": "Shell脚本位置",
+        "locationPlaceholder": "脚本绝对路径",
+        "saveSuccess": "命令行脚本配置已保存"
+      }
+    }
+  },
+  "common": {
+    "save": "保存",
+    "saveConfig": "保存配置",
+    "showInFolder": "在文件夹中显示"
   }
 }

@@ -154,7 +154,7 @@ class Preference extends EventEmitter {
     })
   }
 
-  // 增加一个方法处理打开文件夹
+  // 增加一个方法处理打开文件�?
   watchedFolderChange (folder) {
     const defaultname = 'marktext'
     const settingspath = path.join(`${folder}`, `${defaultname}.json`)

@@ -1,6 +1,6 @@
 <template>
   <div class="pref-theme">
-    <h4>Theme</h4>
+    <h4>{{ $t('theme.title') }}</h4>
     <section class="offcial-themes">
       <div v-for="t of themes" :key="t.name" class="theme"
         :class="[t.name, { 'active': t.name === theme }]"
@@ -11,7 +11,7 @@
     </section>
     <separator></separator>
     <cur-select
-      description="Automatically adjust application theme according to system settings"
+      :description="$t('theme.autoSwitch')"
       :value="autoSwitchTheme"
       :options="autoSwitchThemeOptions"
       :onChange="value => onSelectChange('autoSwitchTheme', value)"
@@ -19,13 +19,13 @@
     <separator v-show="false"></separator>
     <section v-show="false" class="import-themes ag-underdevelop">
       <div>
-        <span>Open the themes folder</span>
-        <el-button size="small">Open Folder</el-button>
+        <span>{{ $t('theme.openThemeFolder') }}</span>
+        <el-button size="small">{{ $t('theme.openThemeFolder') }}</el-button>
       </div>
 
       <div>
-        <span>Import custom themes</span>
-        <el-button size="small">Import Theme</el-button>
+        <span>{{ $t('theme.importTheme') }}</span>
+        <el-button size="small">{{ $t('theme.importTheme') }}</el-button>
       </div>
     </section>
   </div>
@@ -33,6 +33,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import i18n from '@/i18n'
 import themeMd from './theme.md'
 import { autoSwitchThemeOptions, themes } from './config'
 import markdownToHtml from '@/util/markdownToHtml'
@@ -40,6 +41,8 @@ import CurSelect from '../common/select'
 import Separator from '../common/separator'
 
 export default {
+  name: 'ThemePreferences',
+  i18n,
   components: {
     CurSelect,
     Separator

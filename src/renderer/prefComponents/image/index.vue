@@ -1,10 +1,10 @@
 <template>
   <div class="pref-image">
-    <h4>Image</h4>
+    <h4>{{ $t('image.title') }}</h4>
     <section class="image-ctrl">
-      <div>Default action after an image is inserted from local folder or clipboard
+      <div>{{ $t('image.insertAction') }}
         <el-tooltip class='item' effect='dark'
-          content='Clipboard handling is only fully supported on macOS and Windows.'
+          :content="$t('image.clipboardNote')"
           placement='top-start'>
           <i class="el-icon-info"></i>
         </el-tooltip>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import i18n from '@/i18n'
 import Separator from '../common/separator'
 import Uploader from './components/uploader'
 import CurSelect from '@/prefComponents/common/select'
@@ -26,6 +27,8 @@ import FolderSetting from './components/folderSetting'
 import { imageActions } from './config'
 
 export default {
+  name: 'ImagePreferences',
+  i18n,
   components: {
     Separator,
     CurSelect,
@@ -33,7 +36,10 @@ export default {
     Uploader
   },
   data () {
-    this.imageActions = imageActions
+    this.imageActions = imageActions.map(action => ({
+      ...action,
+      label: this.$t(`image.actions.${action.value}`)
+    }))
 
     return {}
   },
