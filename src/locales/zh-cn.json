@@ -79,5 +79,31 @@
       "misc": "其他",
       "language": "界面语言"
     }
+  },
+  "preferences": {
+    "title": "偏好设置",
+    "searchPlaceholder": "搜索设置",
+    "general": "常规",
+    "editor": "编辑器",
+    "markdown": "Markdown",
+    "theme": "主题",
+    "keyboard": "快捷键",
+    "image": "图片",
+    "language": "语言",
+    "system": "系统",
+    "about": "关于",
+    "autoSave": "自动保存",
+    "autoSaveDesc": "自动保存文档更改",
+    "titleBarStyle": "标题栏样式",
+    "titleBarStyleDesc": "更改窗口标题栏样式",
+    "native": "系统原生",
+    "custom": "自定义",
+    "hiddenInMacOS": "在macOS中隐藏",
+    "showMenuBar": "显示菜单栏",
+    "sideBarVisible": "显示侧边栏",
+    "tabBarVisible": "显示标签栏",
+    "sourceCodeModeEnabled": "启用源代码模式",
+    "typewriterModeEnabled": "启用打字机模式",
+    "focusModeEnabled": "启用专注模式"
   }
 }

@@ -379,15 +379,16 @@ powershell -Command "(Get-Content 'config.js' -Raw).TrimEnd() + [Environment]::N
 
 很多错误，所以我不得不用 git 回滚代码回到这里。
 
-build.bat 运行后，执行marktext 终于在切换 简体中文 时，界面 语言选择模块 （只这一个面板）变成了中文 ，但其它比如侧边栏、菜单等还是英文 ;
+build.bat 运行后，运行marktext, 在 gerener面板的语言栏 选择简体中文时，只有 gerener 这一个面板变成了中文 ，其它仍然为中文。
+实现 在gerener面板的语言栏 选择简体中文时 gerener面板变成了中文的方法是 修改了这个 src/renderer/prefComponents/general/index.vue，使用 i18n，使用 $t 函数进行翻译；
 
+现在的问题： 当 语言栏 选择简体中文后 其它比如侧边栏、菜单等仍英文。
+
+解决下面的问题：
 1、应该把所有的中文 都放在 zh-cn.json 一个文件中，包括  侧边栏，菜单 ，其它面板  都放在这个文件。 英文都放成en.json  一个文件中 方便管理;
-
-2. 你应该只使用一个i18n.js，修改它，所有的 中英文切换 都用这一个 i18n.js 文件来控制实现 ，不分开再建新的i18n.js;
-
-4.需要在菜单，侧边栏等其它面板 中 引入  i18n,这些组件也能正确使用 $t 函数进行翻译,参考src/renderer/prefComponents/general/index.vue;
-
-5. 菜单栏不显示的问题（通过 titleBarStyle: "native" 设置）
+2. i18n模块统一指向src/renderer/i18n，所有的 中英文切换 都用一个 i18n.js 文件来控制实现 ，不分开再建新的i18n.js;
+3.需要在菜单，侧边栏等其它面板 中 引入  i18n,让这些组件也能正确使用 $t 函数进行翻译,参考src/renderer/prefComponents/general/index.vue;
+4. 菜单栏不显示的问题（通过 titleBarStyle: "native" 设置）
 原来的src/renderer/prefComponents/general/index.vue 中，有下面这条 titleBarStyle ，被你删除了，造成 没有这个选项了
 <cur-select
           v-if="!isOsx"
@@ -398,4 +399,4 @@ build.bat 运行后，执行marktext 终于在切换 简体中文 时，界面 �
           :onChange="value => onSelectChange('titleBarStyle', value)"
         ></cur-select>
 
-6. 特别注意：我们只是要切换语言，不修改其它不相关的代码 防止出错
+特别注意：我们只是要切换语言，不修改其它 不相关的代码 防止出错，另外 你经常 有一些行尾空格导致的ESLint错误,你改完这些vue ,js 文件后，要再检查一下，是否有一些行尾空格导致的ESLint错误。

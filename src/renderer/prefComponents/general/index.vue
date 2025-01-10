@@ -49,6 +49,14 @@
           :options="languageOptions"
           :onChange="value => onSelectChange('language', value)"
         ></cur-select>
+        <cur-select
+          v-if="!isOsx"
+          :description="$t('preferences.titleBarStyle')"
+          :notes="$t('preferences.titleBarStyleDesc')"
+          :value="titleBarStyle"
+          :options="titleBarStyleOptions"
+          :onChange="value => onSelectChange('titleBarStyle', value)"
+        ></cur-select>
       </template>
     </compound>
   </div>
