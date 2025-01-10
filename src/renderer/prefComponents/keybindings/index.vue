@@ -1,28 +1,28 @@
 <template>
   <div class="pref-keybindings">
-    <h4>Key Bindings</h4>
+    <h4>{{ $t('keybindings.title') }}</h4>
     <section class="keybindings">
       <div class="text">
-        Customize MarkText shortcuts and click on the save button below to apply all changes (requires a restart).
-        All available and default key binding can be found <a class="link" @click="openKeybindingWiki">online</a>.
+        {{ $t('keybindings.description') }}
+        <a class="link" @click="openKeybindingWiki">{{ $t('keybindings.online') }}</a>.
       </div>
       <el-table
         :data="keybindingList"
         style="width: 100%"
       >
-        <el-table-column prop="description" label="Description">
+        <el-table-column prop="description" :label="$t('keybindings.table.description')">
         </el-table-column>
-        <el-table-column prop="accelerator" label="Key Combination" width="220">
+        <el-table-column prop="accelerator" :label="$t('keybindings.table.keyCombination')" width="220">
         </el-table-column>
-        <el-table-column fixed="right" label="Options" width="90">
+        <el-table-column fixed="right" :label="$t('keybindings.table.options')" width="90">
           <template slot-scope="scope">
-            <el-button @click="handleEditClick(scope.$index, scope.row)" type="text" size="small" title="Edit">
+            <el-button @click="handleEditClick(scope.$index, scope.row)" type="text" size="small" :title="$t('keybindings.actions.edit')">
               <i class="el-icon-edit"></i>
             </el-button>
-            <el-button @click="handleResetClick(scope.$index, scope.row)" type="text" size="small" title="Reset">
+            <el-button @click="handleResetClick(scope.$index, scope.row)" type="text" size="small" :title="$t('keybindings.actions.reset')">
               <i class="el-icon-refresh-right"></i>
             </el-button>
-            <el-button @click="handleUnbindClick(scope.$index, scope.row)" type="text" size="small" title="Unbind">
+            <el-button @click="handleUnbindClick(scope.$index, scope.row)" type="text" size="small" :title="$t('keybindings.actions.unbind')">
               <i class="el-icon-delete"></i>
             </el-button>
           </template>
@@ -31,13 +31,13 @@
     </section>
     <section class="footer">
       <separator></separator>
-      <el-button size="medium" @click="saveKeybindings">Save</el-button>
-      <el-button size="medium" @click="restoreDefaults">Restore default key bindings</el-button>
+      <el-button size="medium" @click="saveKeybindings">{{ $t('keybindings.buttons.save') }}</el-button>
+      <el-button size="medium" @click="restoreDefaults">{{ $t('keybindings.buttons.restoreDefaults') }}</el-button>
     </section>
     <section v-if="showDebugTools" class="keyboard-debug">
       <separator></separator>
-      <div><strong>Debug options:</strong></div>
-      <el-button size="medium" @click="dumpKeyboardInformation">Dump keyboard information</el-button>
+      <div><strong>{{ $t('keybindings.debug.title') }}</strong></div>
+      <el-button size="medium" @click="dumpKeyboardInformation">{{ $t('keybindings.debug.dumpInfo') }}</el-button>
     </section>
     <key-input-dialog
       :showWithId="selectedShortcutId"
@@ -50,6 +50,7 @@
 import { ipcRenderer, shell } from 'electron'
 import log from 'electron-log'
 import { setKeyboardLayout } from '@hfelix/electron-localshortcut'
+import i18n from '@/i18n'
 import Compound from '../common/compound'
 import Separator from '../common/separator'
 import KeyInputDialog from './key-input-dialog.vue'
@@ -57,6 +58,8 @@ import KeybindingConfigurator from './KeybindingConfigurator'
 import notice from '@/services/notification'
 
 export default {
+  name: 'KeybindingPreferences',
+  i18n,
   components: {
     Compound,
     Separator,
@@ -106,9 +109,9 @@ export default {
           .then(success => {
             if (!success) {
               notice.notify({
-                title: 'Failed to save',
+                title: this.$t('keybindings.messages.saveError.title'),
                 type: 'error',
-                message: 'An unexpected error occurred while saving.'
+                message: this.$t('keybindings.messages.saveError.message')
               })
             }
           })
@@ -156,9 +159,9 @@ export default {
     },
     handleDuplicateShortcut (id, accelerator) {
       notice.notify({
-        title: 'Shortcut already in use',
+        title: this.$t('keybindings.messages.duplicateShortcut.title'),
         type: 'warning',
-        message: `The shortcut "${accelerator}" is already in use. Please unset the shortcut and try again.`
+        message: this.$t('keybindings.messages.duplicateShortcut.message', { accelerator })
       })
     },
     dumpKeyboardInformation () {

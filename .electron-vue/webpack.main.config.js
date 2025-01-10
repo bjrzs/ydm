@@ -73,7 +73,8 @@ const mainConfig = {
   ],
   resolve: {
     alias: {
-      'common': path.join(__dirname, '../src/common')
+      'common': path.join(__dirname, '../src/common'),
+      '@': path.join(__dirname, '../src/renderer')
     },
     extensions: ['.js', '.json', '.node']
   },

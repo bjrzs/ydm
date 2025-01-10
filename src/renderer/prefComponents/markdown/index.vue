@@ -1,33 +1,33 @@
 <template>
   <div class="pref-markdown">
-    <h4>Markdown</h4>
+    <h4>{{ $t('markdown.title') }}</h4>
     <compound>
       <template #head>
-        <h6 class="title">Lists:</h6>
+        <h6 class="title">{{ $t('markdown.lists.title') }}</h6>
       </template>
       <template #children>
         <bool
-          description="Prefer loose list items"
+          :description="$t('markdown.lists.preferLoose')"
           :bool="preferLooseListItem"
           :onChange="value => onSelectChange('preferLooseListItem', value)"
           more="https://spec.commonmark.org/0.29/#loose"
         ></bool>
         <cur-select
-          description="Preferred marker for bullet lists"
+          :description="$t('markdown.lists.bulletMarker')"
           :value="bulletListMarker"
           :options="bulletListMarkerOptions"
           :onChange="value => onSelectChange('bulletListMarker', value)"
           more="https://spec.commonmark.org/0.29/#bullet-list-marker"
         ></cur-select>
         <cur-select
-          description="Preferred marker for ordered lists"
+          :description="$t('markdown.lists.orderMarker')"
           :value="orderListDelimiter"
           :options="orderListDelimiterOptions"
           :onChange="value => onSelectChange('orderListDelimiter', value)"
           more="https://spec.commonmark.org/0.29/#ordered-list"
         ></cur-select>
         <cur-select
-          description="Preferred list indentation"
+          :description="$t('markdown.lists.indentation')"
           :value="listIndentation"
           :options="listIndentationOptions"
           :onChange="value => onSelectChange('listIndentation', value)"
@@ -37,24 +37,24 @@
 
     <compound>
       <template #head>
-        <h6 class="title">Markdown extensions:</h6>
+        <h6 class="title">{{ $t('markdown.extensions.title') }}</h6>
       </template>
       <template #children>
         <cur-select
-          description="Front matter format"
+          :description="$t('markdown.extensions.frontMatter')"
           :value="frontmatterType"
           :options="frontmatterTypeOptions"
           :onChange="value => onSelectChange('frontmatterType', value)"
         ></cur-select>
         <bool
-          description="Enable Pandoc-style superscript and subscript"
+          :description="$t('markdown.extensions.superSubScript')"
           :bool="superSubScript"
           :onChange="value => onSelectChange('superSubScript', value)"
           more="https://pandoc.org/MANUAL.html#superscripts-and-subscripts"
         ></bool>
         <bool
-          description="Enable Pandoc-style footnotes"
-          notes="Requires restart."
+          :description="$t('markdown.extensions.footnote')"
+          :notes="$t('markdown.extensions.footnoteNote')"
           :bool="footnote"
           :onChange="value => onSelectChange('footnote', value)"
           more="https://pandoc.org/MANUAL.html#footnotes"
@@ -64,16 +64,16 @@
 
     <compound>
       <template #head>
-        <h6 class="title">Compatibility:</h6>
+        <h6 class="title">{{ $t('markdown.compatibility.title') }}</h6>
       </template>
       <template #children>
         <bool
-          description="Enable HTML rendering"
+          :description="$t('markdown.compatibility.htmlRendering')"
           :bool="isHtmlEnabled"
           :onChange="value => onSelectChange('isHtmlEnabled', value)"
         ></bool>
         <bool
-          description="Enable GitLab compatibility mode"
+          :description="$t('markdown.compatibility.gitlab')"
           :bool="isGitlabCompatibilityEnabled"
           :onChange="value => onSelectChange('isGitlabCompatibilityEnabled', value)"
         ></bool>
@@ -82,11 +82,11 @@
 
     <compound>
       <template #head>
-        <h6 class="title">Diagrams:</h6>
+        <h6 class="title">{{ $t('markdown.diagrams.title') }}</h6>
       </template>
       <template #children>
         <cur-select
-          description="Sequence diagram theme"
+          :description="$t('markdown.diagrams.sequenceTheme')"
           :value="sequenceTheme"
           :options="sequenceThemeOptions"
           :onChange="value => onSelectChange('sequenceTheme', value)"
@@ -97,11 +97,11 @@
 
     <compound>
       <template #head>
-        <h6 class="title">Misc:</h6>
+        <h6 class="title">{{ $t('markdown.misc.title') }}</h6>
       </template>
       <template #children>
         <cur-select
-          description="Preferred heading style"
+          :description="$t('markdown.misc.headingStyle')"
           :value="preferHeadingStyle"
           :options="preferHeadingStyleOptions"
           :onChange="value => onSelectChange('preferHeadingStyle', value)"
@@ -113,9 +113,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import i18n from '@/i18n'
 import Compound from '../common/compound'
 import Separator from '../common/separator'
-import { mapState } from 'vuex'
 import Bool from '../common/bool'
 import CurSelect from '../common/select'
 import {
@@ -128,6 +129,8 @@ import {
 } from './config'
 
 export default {
+  name: 'MarkdownPreferences',
+  i18n,
   components: {
     Compound,
     Separator,

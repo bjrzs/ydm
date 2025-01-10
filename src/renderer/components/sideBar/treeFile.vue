@@ -18,6 +18,7 @@
       v-model="newName"
       ref="renameInput"
       @keydown.enter="rename"
+      :placeholder="$t('sideBar.tree.rename')"
     >
     <span v-else>{{ file.name }}</span>
   </div>

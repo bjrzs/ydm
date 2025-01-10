@@ -20,6 +20,7 @@
         v-model="newName"
         ref="renameInput"
         @keydown.enter="rename"
+        :placeholder="$t('sideBar.tree.rename')"
       >
       <span v-else class="text-overflow">{{folder.name}}</span>
     </div>
@@ -39,6 +40,7 @@
         ref="input"
         @keydown.enter="handleInputEnter"
         v-model="createName"
+        :placeholder="$t('sideBar.tree.newFile')"
       >
       <file
         v-for="(file, index) of folder.files" :key="index + 'file'"

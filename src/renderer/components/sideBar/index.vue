@@ -12,6 +12,7 @@
           :key="index"
           @click="handleLeftIconClick(c.name)"
           :class="{ 'active': c.name === rightColumn }"
+          :title="$t(`sideBar.${c.name}`)"
         >
           <svg :viewBox="c.icon.viewBox">
             <use :xlink:href="c.icon.url"></use>
@@ -23,6 +24,7 @@
           v-for="(c, index) of sideBarBottomIcons"
           :key="index"
           @click="handleLeftBottomClick(c.name)"
+          :title="$t(`sideBar.${c.name}`)"
         >
           <svg :viewBox="c.icon.viewBox">
             <use :xlink:href="c.icon.url"></use>
@@ -50,12 +52,15 @@
 
 <script>
 import { sideBarIcons, sideBarBottomIcons } from './help'
+import i18n from '@/i18n'
 import Tree from './tree.vue'
 import SideBarSearch from './search.vue'
 import Toc from './toc.vue'
 import { mapState } from 'vuex'
 
 export default {
+  name: 'SideBar',
+  i18n,
   data () {
     this.sideBarIcons = sideBarIcons
     this.sideBarBottomIcons = sideBarBottomIcons

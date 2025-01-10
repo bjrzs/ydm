@@ -22,21 +22,28 @@
       "quit": "退出"
     },
     "edit": {
-      "title": "编辑",
+      "title": "编辑(&E)",
       "undo": "撤销",
       "redo": "重做",
       "cut": "剪切",
       "copy": "复制",
       "paste": "粘贴",
-      "copyAsMarkdown": "复制为 Markdown",
-      "copyAsHtml": "复制为 HTML",
+      "copyAsMarkdown": "复制为Markdown",
+      "copyAsHtml": "复制为HTML",
       "pasteAsPlainText": "粘贴为纯文本",
       "selectAll": "全选",
+      "duplicate": "复制",
+      "createParagraph": "创建段落",
+      "deleteParagraph": "删除段落",
       "find": "查找",
       "findNext": "查找下一个",
       "findPrevious": "查找上一个",
       "replace": "替换",
-      "findInFolder": "在文件夹中查找"
+      "findInFolder": "在文件夹中查找",
+      "screenshot": "截图",
+      "lineEnding": "换行符",
+      "lineEndingCRLF": "回车换行 (CRLF)",
+      "lineEndingLF": "换行 (LF)"
     },
     "view": {
       "title": "视图",
@@ -180,9 +187,9 @@
         "installFirst": "，请先安装后再使用。"
       },
       "github": {
-        "deprecated": "GitHub上传将在未来版本中移除，请使用PicGo",
+        "deprecated": "GitHub上传将在未来版本中移除,请使用PicGo",
         "token": "GitHub令牌",
-        "tokenNote": "令牌在macOS上通过Keychain保存，在Linux上通过Secret Service API/libsecret保存，在Windows上通过Credential Vault保存",
+        "tokenNote": "令牌在macOS上通过Keychain保存,在Linux上通过Secret Service API/libsecret保存,在Windows上通过Credential Vault保存",
         "tokenPlaceholder": "输入令牌",
         "owner": "所有者名称",
         "ownerPlaceholder": "所有者",
@@ -193,7 +200,7 @@
         "saveSuccess": "GitHub配置已保存"
       },
       "script": {
-        "description": "脚本将以图片文件路径作为唯一参数执行，并应输出HTMLImageElement的src属性的有效值。",
+        "description": "脚本将以图片文件路径作为唯一参数执行,并应输出HTMLImageElement的src属性的有效值。",
         "location": "Shell脚本位置",
         "locationPlaceholder": "脚本绝对路径",
         "saveSuccess": "命令行脚本配置已保存"
@@ -204,5 +211,133 @@
     "save": "保存",
     "saveConfig": "保存配置",
     "showInFolder": "在文件夹中显示"
+  },
+  "keybindings": {
+    "title": "快捷键",
+    "description": "自定义MarkText快捷键并点击下方保存按钮应用所有更改(需要重启） 所有可用的默认快捷键可以在",
+    "online": "在线查看",
+    "table": {
+      "description": "描述",
+      "keyCombination": "按键组合",
+      "options": "选项"
+    },
+    "actions": {
+      "edit": "编辑",
+      "reset": "重置",
+      "unbind": "解绑"
+    },
+    "buttons": {
+      "save": "保存",
+      "restoreDefaults": "恢复默认快捷键"
+    },
+    "debug": {
+      "title": "调试选项：",
+      "dumpInfo": "导出键盘信息"
+    },
+    "messages": {
+      "saveError": {
+        "title": "保存失败",
+        "message": "保存时发生意外错误。"
+      },
+      "duplicateShortcut": {
+        "title": "快捷键已被使用",
+        "message": "快捷键'{accelerator}'已被使用。请先解除该快捷键，然后重试。"
+      }
+    }
+  },
+  "markdown": {
+    "title": "Markdown",
+    "lists": {
+      "title": "列表：",
+      "preferLoose": "偏好松散列表项",
+      "bulletMarker": "无序列表标记",
+      "orderMarker": "有序列表标记",
+      "indentation": "列表缩进"
+    },
+    "extensions": {
+      "title": "Markdown扩展:",
+      "frontMatter": "Front matter格式",
+      "superSubScript": "启用Pandoc风格的上标和下标",
+      "footnote": "启用Pandoc风格的脚注",
+      "footnoteNote": "需要重启。"
+    },
+    "compatibility": {
+      "title": "兼容性：",
+      "htmlRendering": "启用HTML渲染",
+      "gitlab": "启用GitLab兼容模式"
+    },
+    "diagrams": {
+      "title": "图表：",
+      "sequenceTheme": "序列图主题"
+    },
+    "misc": {
+      "title": "其他：",
+      "headingStyle": "首选标题样式"
+    }
+  },
+  "sideBar": {
+    "files": "文件",
+    "settings": "设置",
+    "tree": {
+      "openedFiles": "已打开的文件",
+      "saveAll": "全部保存",
+      "closeAll": "全部关闭",
+      "closeTab": "关闭标签页",
+      "newFile": "新建文件",
+      "newDirectory": "新建目录",
+      "rename": "重命名",
+      "delete": "删除",
+      "moveToTrash": "移到回收站",
+      "import": "导入...",
+      "openInFinder": "在访达中打开",
+      "openInExplorer": "在资源管理器中打开",
+      "copyPath": "复制路径",
+      "emptyProject": "空项目",
+      "createFile": "创建文件",
+      "openFolder": "打开文件夹",
+      "contextMenu": {
+        "cut": "剪切",
+        "copy": "复制",
+        "paste": "粘贴",
+        "duplicate": "复制",
+        "newFile": "新建文件",
+        "newFolder": "新建文件夹",
+        "reveal": "在文件管理器中显示"
+      }
+    },
+    "search": {
+      "placeholder": "在文件夹中搜索...",
+      "caseSensitive": "区分大小写",
+      "wholeWord": "全字匹配",
+      "useRegexp": "使用正则表达式",
+      "noFolderOpened": "未打开文件夹",
+      "noResults": "未找到结果",
+      "cancel": "取消",
+      "openFolder": "打开文件夹",
+      "showMoreMatches": "显示更多结果",
+      "searchInFiles": "在文件中搜索",
+      "includeSubfolders": "包含子文件夹",
+      "searchResults": {
+        "matches": "个匹配项",
+        "files": "个文件",
+        "match": "个匹配项",
+        "file": "个文件",
+        "in": "在"
+      }
+    },
+    "toc": {
+      "title": "目录",
+      "expandAll": "展开全部",
+      "collapseAll": "折叠全部",
+      "noContent": "无内容",
+      "headings": {
+        "h1": "一级标题",
+        "h2": "二级标题", 
+        "h3": "三级标题",
+        "h4": "四级标题",
+        "h5": "五级标题",
+        "h6": "六级标题"
+      }
+    }
   }
 }

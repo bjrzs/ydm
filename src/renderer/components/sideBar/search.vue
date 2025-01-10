@@ -5,12 +5,12 @@
       <div class="search-wrapper">
         <input
           type="text" v-model="keyword"
-          placeholder="Search in folder..."
+          :placeholder="$t('sideBar.search.placeholder')"
           @keyup="search"
         >
         <div class="controls">
           <span
-            title="Case Sensitive"
+            :title="$t('sideBar.search.caseSensitive')"
             class="is-case-sensitive"
             :class="{'active': isCaseSensitive}"
             @click.stop="caseSensitiveClicked()"
@@ -20,7 +20,7 @@
             </svg>
           </span>
           <span
-            title="Select whole word"
+            :title="$t('sideBar.search.wholeWord')"
             class="is-whole-word"
             :class="{'active': isWholeWord}"
             @click.stop="wholeWordClicked()"
@@ -30,7 +30,7 @@
             </svg>
           </span>
           <span
-            title="Use query as RegEx"
+            :title="$t('sideBar.search.useRegexp')"
             class="is-regex"
             :class="{'active': isRegexp}"
             @click.stop="regexpClicked()"
@@ -43,9 +43,9 @@
       </div>
 
       <div class="search-message-section" v-if="showNoFolderOpenedMessage">
-        <span>No folder open</span>
+        <span>{{ $t('sideBar.search.noFolderOpened') }}</span>
       </div>
-      <div class="search-message-section" v-if="showNoResultFoundMessage">No results found.</div>
+      <div class="search-message-section" v-if="showNoResultFoundMessage">{{ $t('sideBar.search.noResults') }}</div>
       <div class="search-message-section" v-if="searchErrorString">{{ searchErrorString }}</div>
 
       <div
@@ -57,7 +57,7 @@
           size="mini"
           @click="cancelSearcher"
         >
-          Cancel <i class="el-icon-video-pause"></i>
+          {{ $t('sideBar.search.cancel') }} <i class="el-icon-video-pause"></i>
         </el-button>
       </div>
       <div v-if="searchResult.length" class="search-result-info">{{searchResultInfo}}</div>
@@ -78,7 +78,7 @@
             v-if="showNoFolderOpenedMessage"
             @click="openFolder"
           >
-            Open Folder
+            {{ $t('sideBar.search.openFolder') }}
           </button>
         </div>
       </div>
@@ -158,7 +158,7 @@ export default {
         return acc + item.matches.length
       }, 0)
 
-      return `${matchCount} ${matchCount > 1 ? 'matches' : 'match'} in ${fileCount} ${fileCount > 1 ? 'files' : 'file'}`
+      return `${matchCount} ${this.$t(matchCount > 1 ? 'sideBar.search.searchResults.matches' : 'sideBar.search.searchResults.match')} ${this.$t('sideBar.search.searchResults.in')} ${fileCount} ${this.$t(fileCount > 1 ? 'sideBar.search.searchResults.files' : 'sideBar.search.searchResults.file')}`
     },
     showNoFolderOpenedMessage () {
       return !this.projectTree || !this.projectTree.pathname

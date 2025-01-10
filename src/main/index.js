@@ -9,6 +9,11 @@ import App from './app'
 import Accessor from './app/accessor'
 import setupEnvironment from './app/env'
 import { getLogLevel } from './utils'
+import i18n from './i18n'
+
+// Initialize i18n with system locale
+const locale = app.getLocale().toLowerCase()
+i18n.setLocale(locale.startsWith('zh') ? 'zh-cn' : 'en')
 
 const initializeLogger = appEnvironment => {
   log.transports.console.level = process.env.NODE_ENV === 'development' ? 'info' : 'error'

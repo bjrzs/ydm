@@ -7,6 +7,7 @@
     >
       <svg class="icon" aria-hidden="true"
         @click.stop="removeFileInTab(file)"
+        :title="$t('sideBar.tree.closeTab')"
       >
         <use xlink:href="#icon-close-small"></use>
       </svg>

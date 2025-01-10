@@ -3,6 +3,8 @@ cls
 
 echo Build start,kill MarkText and Delete build...
 call k.bat >nul
+
+echo format vue and js...
 call f.bat >nul
 rmdir /s /q build
 
