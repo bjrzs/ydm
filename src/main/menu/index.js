@@ -9,6 +9,7 @@ import { updateFormatMenu } from '../menu/actions/format'
 import { updateSelectionMenus } from '../menu/actions/paragraph'
 import { viewLayoutChanged } from '../menu/actions/view'
 import configureMenu, { configSettingMenu } from '../menu/templates'
+import { createDynamicMenu, handleMenuClick } from './dynamicMenu'
 
 const RECENTLY_USED_DOCUMENTS_FILE_NAME = 'recently-used-documents.json'
 const MAX_RECENTLY_USED_DOCUMENTS = 12
@@ -408,14 +409,85 @@ class AppMenu {
       this.clearRecentlyUsedDocuments()
     })
 
-    ipcMain.on('broadcast-preferences-changed', prefs => {
-      if (prefs.theme !== undefined) {
-        this.updateThemeMenu(prefs.theme)
-      }
-      if (prefs.autoSave !== undefined) {
-        this.updateAutoSaveMenu(prefs.autoSave)
+    ipcMain.on('broadcast-preferences-changed', (e, prefs) => {
+      try {
+        if (prefs && typeof prefs === 'object') {
+          if ('theme' in prefs) {
+            this.updateThemeMenu(prefs.theme)
+          }
+          if ('autoSave' in prefs) {
+            this.updateAutoSaveMenu(prefs.autoSave)
+          }
+          if ('language' in prefs) {
+            this.updateLanguageMenu(prefs.language)
+          }
+        }
+      } catch (error) {
+        log.error('Error handling preferences change:', error)
       }
     })
+
+    ipcMain.on('menu-command', (event, command) => {
+      switch (command) {
+        case 'file.new':
+          // 处理新建文件
+          break
+        case 'file.open':
+          // 处理打开文件
+          break
+        // ... 其他命令处理
+      }
+    })
+
+    ipcMain.on('mt::change-language', (event, language) => {
+      // 重建所有窗口的菜单
+      this.windowMenus.forEach((value, key) => {
+        const { type } = value
+        if (type === MenuType.EDITOR) {
+          // 重新构建菜单
+          const { menu: newMenu } = this._buildEditorMenu()
+          value.menu = newMenu
+
+          // 如果是当前活动窗口，更新应用菜单
+          if (this.activeWindowId === key) {
+            this._setApplicationMenu(newMenu)
+          }
+        }
+      })
+    })
+
+    // Listen for menu template updates from renderer
+    ipcMain.on('update-menu', (event, menuTemplate) => {
+      createDynamicMenu(menuTemplate)
+    })
+
+    // Listen for menu item clicks
+    ipcMain.on('menu-click', (event, actionId) => {
+      const window = this.windowMenus.get(event.sender.id)
+      if (window) {
+        handleMenuClick(window, actionId)
+      }
+    })
+  }
+
+  updateLanguageMenu (language) {
+    try {
+      if (!language) return // 如果语言未定义，直接返回
+
+      this.windowMenus.forEach((value, key) => {
+        const { type } = value
+        if (type === MenuType.EDITOR) {
+          const { menu: newMenu } = this._buildEditorMenu()
+          value.menu = newMenu
+
+          if (this.activeWindowId === key) {
+            this._setApplicationMenu(newMenu)
+          }
+        }
+      })
+    } catch (error) {
+      log.error('Error updating language menu:', error)
+    }
   }
 }
 
@@ -440,5 +512,7 @@ export const getMenuItemById = menuId => {
   const menus = Menu.getApplicationMenu()
   return menus.getMenuItemById(menuId)
 }
+
+export { initializeMainMenu } from './dynamicMenu'
 
 export default AppMenu

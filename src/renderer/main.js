@@ -36,6 +36,7 @@ import {
 import services from './services'
 import routes from './router'
 import { addElementStyle } from '@/util/theme'
+import { initMenu } from './menu'
 
 import './assets/styles/index.css'
 import './assets/styles/printService.css'
@@ -101,5 +102,8 @@ new Vue({
   store,
   router,
   i18n,
+  created () {
+    initMenu() // Initialize dynamic menu
+  },
   template: '<router-view class="view"></router-view>'
 }).$mount('#app')

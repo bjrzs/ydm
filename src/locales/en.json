@@ -2,24 +2,20 @@
   "menu": {
     "file": {
       "title": "File",
-      "newFile": "New File",
+      "new": "New",
       "newTab": "New Tab",
-      "newWindow": "New Window",
-      "open": "Open File...",
-      "openFolder": "Open Folder...",
+      "open": "Open",
+      "openFolder": "Open Folder",
       "openRecent": "Open Recent",
-      "clearRecentlyUsed": "Clear Recently Used",
       "save": "Save",
-      "saveAs": "Save As...",
+      "saveAs": "Save As",
       "autoSave": "Auto Save",
-      "moveTo": "Move To...",
-      "rename": "Rename...",
-      "import": "Import...",
       "export": "Export",
-      "preferences": "Preferences...",
+      "exportHTML": "Export HTML",
+      "exportPDF": "Export PDF",
+      "exportImage": "Export Image",
       "closeTab": "Close Tab",
-      "closeWindow": "Close Window",
-      "quit": "Quit"
+      "closeWindow": "Close Window"
     },
     "edit": {
       "title": "Edit",
