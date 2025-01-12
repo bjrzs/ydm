@@ -1,5 +1,23 @@
 @echo off
-echo Format vue and js...
+chcp 65001
+
+echo Format vue and js ,check Files...
+
+yarn eslint --fix ^
+  src\main\index.js ^
+  src\main\menu\dynamicMenu.js ^
+  src\renderer\main.js ^
+  src\renderer\store\preferences.js ^
+  src\renderer\i18n\index.js ^
+  src\renderer\menu\config.js
+
+prettier --write "src/main/index.js"
+prettier --write "src/main/menu/dynamicMenu.js"
+prettier --write "src/renderer/main.js"
+prettier --write "src/renderer/store/preferences.js"
+prettier --write "src/renderer/i18n/index.js"
+prettier --write "src/renderer/menu/config.js"
+prettier --write "src/locales/zh-cn.json"
 
 :: Format existing files
 powershell -NoProfile -Command "(Get-Content -Path 'src\renderer\i18n\index.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\renderer\i18n\index.js' -NoNewline"
@@ -16,6 +34,8 @@ powershell -NoProfile -Command "(Get-Content -Path 'src\main\menu\templates\dock
 powershell -NoProfile -Command "(Get-Content -Path 'src\main\keyboard\shortcutHandler.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\main\keyboard\shortcutHandler.js' -NoNewline"
 powershell -NoProfile -Command "(Get-Content -Path 'src\main\preferences\index.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\main\preferences\index.js' -NoNewline"
 powershell -NoProfile -Command "(Get-Content -Path 'src\renderer\main.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\renderer\main.js' -NoNewline"
+powershell -NoProfile -Command "(Get-Content -Path 'src\renderer\store\preferences.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\renderer\store\preferences.js' -NoNewline"
+powershell -NoProfile -Command "(Get-Content -Path 'src\locales\zh-cn.json' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\locales\zh-cn.json' -NoNewline"
 
 :: Format new menu files
 powershell -NoProfile -Command "(Get-Content -Path 'src\renderer\menu\config.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\renderer\menu\config.js' -NoNewline"
@@ -27,7 +47,16 @@ powershell -NoProfile -Command "(Get-Content -Path 'src\main\menu\dynamicMenu.js
 powershell -NoProfile -Command "(Get-Content -Path 'src\main\index.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\main\index.js' -NoNewline"
 
 :: Run ESLint
-yarn eslint --fix src\main\menu\templates\*.js src\main\keyboard\*.js src\main\preferences\*.js src\renderer\i18n\*.js src\renderer\menu\*.js src\main\menu\dynamicMenu.js src\main\index.js src\renderer\main.js
+yarn eslint --fix ^
+  src\main\menu\templates\file.js ^
+  src\main\menu\templates\edit.js ^
+  src\main\menu\templates\view.js ^
+  src\main\menu\templates\window.js ^
+  src\main\menu\templates\help.js ^
+  src\main\menu\templates\format.js ^
+  src\main\menu\templates\theme.js ^
+  src\main\menu\templates\paragraph.js ^
+  src\main\menu\templates\marktext.js
 
 :: Format with Prettier
 prettier --write "src/renderer/menu/config.js"
@@ -37,6 +66,8 @@ prettier --write "src/renderer/i18n/index.js"
 prettier --write "src/main/menu/dynamicMenu.js"
 prettier --write "src/main/index.js"
 prettier --write "src/renderer/main.js"
+prettier --write "src/renderer/store/preferences.js"
+prettier --write "src/locales/zh-cn.json"
 
 :: Remove trailing spaces and ensure LF line endings
 sed -i 's/\s\+$//' "src/renderer/menu/config.js"
@@ -46,6 +77,8 @@ sed -i 's/\s\+$//' "src/renderer/i18n/index.js"
 sed -i 's/\s\+$//' "src/main/menu/dynamicMenu.js"
 sed -i 's/\s\+$//' "src/main/index.js"
 sed -i 's/\s\+$//' "src/renderer/main.js"
+sed -i 's/\s\+$//' "src/renderer/store/preferences.js"
+sed -i 's/\s\+$//' "src/locales/zh-cn.json"
 
 :: Convert CRLF to LF
 dos2unix "src/renderer/menu/config.js"
@@ -55,6 +88,12 @@ dos2unix "src/renderer/i18n/index.js"
 dos2unix "src/main/menu/dynamicMenu.js"
 dos2unix "src/main/index.js"
 dos2unix "src/renderer/main.js"
+dos2unix "src/renderer/store/preferences.js"
+dos2unix "src/locales/zh-cn.json"
+
+echo prettier --write "src/locales/zh-cn.json" >> f.bat
+
+echo Is OK,Let's continue...
 
 pause
  

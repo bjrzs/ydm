@@ -6,11 +6,36 @@ import store from '../store'
 export function initMenu () {
   menuBuilder.buildMenu()
 
+  // Initialize language from preferences and update menu
+  const initializeLanguage = () => {
+    const currentLanguage = store.state.preferences.language
+    if (currentLanguage) {
+      // Simulate a language switch event
+      store.dispatch('preferences/setLanguage', currentLanguage)
+      menuBuilder.updateMenuTranslations()
+      ipcRenderer.send('mt::update-menu-item', { id: 'en', checked: currentLanguage === 'en' })
+      ipcRenderer.send('mt::update-menu-item', { id: 'zh-cn', checked: currentLanguage === 'zh-cn' })
+    }
+  }
+
+  // Initial language setup
+  initializeLanguage()
+
+  // Listen for preferences loaded event
+  ipcRenderer.on('mt::preferences-loaded', () => {
+    initializeLanguage()
+  })
+
   // Listen for language changes
   store.watch(
     state => state.preferences.language,
-    () => {
+    (newLanguage) => {
       menuBuilder.updateMenuTranslations()
+      // Save language preference
+      store.dispatch('preferences/savePreferences')
+      // Update menu item checked state
+      ipcRenderer.send('mt::update-menu-item', { id: 'en', checked: newLanguage === 'en' })
+      ipcRenderer.send('mt::update-menu-item', { id: 'zh-cn', checked: newLanguage === 'zh-cn' })
     }
   )
 

@@ -47,17 +47,17 @@ export const menuConfig = {
     submenu: [
       {
         id: 'newFile',
-        label: 'menu.file.new',
+        label: 'menu.file.newFile',
         accelerator: 'CmdOrCtrl+N'
       },
       {
-        id: 'newTab',
-        label: 'menu.file.newTab',
-        accelerator: 'CmdOrCtrl+T'
+        id: 'newWindow',
+        label: 'menu.file.newWindow',
+        accelerator: 'CmdOrCtrl+Shift+N'
       },
       { type: 'separator' },
       {
-        id: 'openFile',
+        id: 'open',
         label: 'menu.file.open',
         accelerator: 'CmdOrCtrl+O'
       },
@@ -108,6 +108,29 @@ export const menuConfig = {
       },
       { type: 'separator' },
       {
+        id: 'preferences',
+        label: 'menu.file.preferences',
+        accelerator: 'CmdOrCtrl+,'
+      },
+      { type: 'separator' },
+      {
+        id: 'language',
+        label: 'menu.file.language',
+        submenu: [
+          {
+            id: 'en',
+            label: 'menu.file.language.en',
+            type: 'radio'
+          },
+          {
+            id: 'zh-cn',
+            label: 'menu.file.language.zh-cn',
+            type: 'radio'
+          }
+        ]
+      },
+      { type: 'separator' },
+      {
         id: 'closeTab',
         label: 'menu.file.closeTab',
         accelerator: 'CmdOrCtrl+W'
@@ -116,6 +139,12 @@ export const menuConfig = {
         id: 'closeWindow',
         label: 'menu.file.closeWindow',
         accelerator: 'CmdOrCtrl+Shift+W'
+      },
+      { type: 'separator' },
+      {
+        id: 'quit',
+        label: 'menu.file.quit',
+        accelerator: 'CmdOrCtrl+Q'
       }
     ]
   },

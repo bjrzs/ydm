@@ -97,7 +97,17 @@ class MenuBuilder {
       changelog: () => ipcRenderer.send('mt::open-url', 'changelog'),
       feedback: () => ipcRenderer.send('mt::open-url', 'feedback'),
       twitter: () => ipcRenderer.send('mt::open-url', 'twitter'),
-      devTools: () => ipcRenderer.send('mt::toggle-dev-tools')
+      devTools: () => ipcRenderer.send('mt::toggle-dev-tools'),
+
+      // Language menu
+      en: () => {
+        store.dispatch('preferences/setLanguage', 'en')
+        this.updateMenuTranslations()
+      },
+      'zh-cn': () => {
+        store.dispatch('preferences/setLanguage', 'zh-cn')
+        this.updateMenuTranslations()
+      }
     }
 
     const action = actions[menuId]
@@ -125,13 +135,14 @@ class MenuBuilder {
 
     if (menuItem.type === 'checkbox') {
       translatedItem.checked = store.state.preferences[menuItem.id] || false
-      translatedItem.click = (menuItem) => {
-        this.handleMenuClick(menuItem.id, menuItem.checked)
-      }
     }
 
     if (menuItem.type === 'radio') {
-      translatedItem.checked = store.state.preferences.theme === menuItem.id
+      if (menuItem.id === 'en' || menuItem.id === 'zh-cn') {
+        translatedItem.checked = store.state.preferences.language === menuItem.id
+      } else if (menuItem.id === 'light' || menuItem.id === 'dark' || menuItem.id === 'graphite' || menuItem.id === 'material' || menuItem.id === 'ulysses') {
+        translatedItem.checked = store.state.preferences.theme === menuItem.id
+      }
     }
 
     return translatedItem

@@ -15,7 +15,17 @@
       "exportPDF": "导出 PDF",
       "exportImage": "导出图片",
       "closeTab": "关闭标签页",
-      "closeWindow": "关闭窗口"
+      "closeWindow": "关闭窗口",
+      "language": "语言",
+      "language.en": "English",
+      "language.zh-cn": "简体中文",
+      "newFile": "新建文件",
+      "newWindow": "新建窗口",
+      "moveTo": "移动到",
+      "rename": "重命名",
+      "import": "导入",
+      "preferences": "偏好设置",
+      "quit": "退出"
     },
     "edit": {
       "title": "编辑(&E)",
@@ -43,7 +53,10 @@
     },
     "view": {
       "title": "视图",
-      "sourceCodeMode": "源代码模式",
+      "sourceCode": "源代码模式",
+      "toggleSidebar": "切换侧边栏",
+      "toggleTabBar": "切换标签栏",
+      "toggleFullScreen": "切换全屏",
       "typewriterMode": "打字机模式",
       "focusMode": "专注模式",
       "showSidebar": "显示侧边栏",
@@ -51,7 +64,15 @@
       "toggleToc": "显示/隐藏目录",
       "reloadImages": "重新加载图像",
       "devTools": "开发者工具",
-      "reloadWindow": "重新加载窗口"
+      "reloadWindow": "重新加载窗口",
+      "commandPalette": "命令面板",
+      "sourceCodeMode": "源代码模式",
+      "showCommandPalette": "显示命令面板",
+      "mobileMode": "打开移动模式",
+      "showToc": "显示目录",
+      "hideToc": "隐藏目录",
+      "showMenuBar": "显示菜单栏",
+      "hideMenuBar": "隐藏菜单栏"
     },
     "window": {
       "title": "窗口",
@@ -81,6 +102,72 @@
       "openBlank": "打开空白页面",
       "misc": "其他",
       "language": "界面语言"
+    },
+    "marktext": {
+      "title": "MarkText",
+      "about": "关于 MarkText",
+      "preferences": "偏好设置",
+      "services": "服务",
+      "hide": "隐藏 MarkText",
+      "hideOthers": "隐藏其他",
+      "unhide": "显示全部",
+      "quit": "退出 MarkText"
+    },
+    "paragraph": {
+      "title": "段落",
+      "heading1": "一级标题",
+      "heading2": "二级标题",
+      "heading3": "三级标题",
+      "heading4": "四级标题",
+      "heading5": "五级标题",
+      "heading6": "六级标题",
+      "upgradeHeading": "提升标题级别",
+      "degradeHeading": "降低标题级别",
+      "table": "表格",
+      "codeFence": "代码块",
+      "quoteBlock": "引用块",
+      "mathBlock": "数学公式块",
+      "orderList": "有序列表",
+      "unorderList": "无序列表",
+      "taskList": "任务列表",
+      "text": "文本",
+      "bulletList": "无序列表",
+      "looseListItem": "松散列表项",
+      "horizontalLine": "水平线",
+      "frontMatter": "前置内容",
+      "htmlBlock": "HTML块"
+    },
+    "format": {
+      "title": "格式",
+      "strong": "粗体",
+      "emphasis": "斜体",
+      "underline": "下划线",
+      "strike": "删除线",
+      "inlineCode": "行内代码",
+      "inlineMath": "行内公式",
+      "link": "链接",
+      "image": "图片",
+      "superscript": "上标",
+      "subscript": "下标",
+      "highlight": "高亮",
+      "hyperlink": "超链接",
+      "clearFormat": "清除格式"
+    },
+    "theme": {
+      "title": "主题",
+      "light": "浅色",
+      "dark": "深色",
+      "graphite": "石墨",
+      "material": "Material",
+      "ulysses": "尤利西斯",
+      "themes": {
+        "light": "浅色",
+        "dark": "深色",
+        "graphite": "石墨",
+        "materialDark": "Material深色",
+        "oneDark": "One Dark",
+        "ulysses": "尤利西斯"
+      }
     }
   },
   "preferences": {
