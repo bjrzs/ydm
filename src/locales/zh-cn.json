@@ -93,9 +93,12 @@
     "general": "常规",
     "editor": "编辑器",
     "markdown": "Markdown",
+    "spelling": "拼写检查",
     "theme": "主题",
     "keyboard": "快捷键",
     "image": "图片",
+    "keybindings": "快捷键",
+    "key bindings": "快捷键",
     "language": "语言",
     "system": "系统",
     "about": "关于",
@@ -338,6 +341,22 @@
         "h5": "五级标题",
         "h6": "六级标题"
       }
+    }
+  },
+  "spellcheck": {
+    "title": "拼写检查",
+    "enable": "启用拼写检查",
+    "language": "拼写检查语言",
+    "autoDetect": "自动检测语言",
+    "noUnderline": "不显示拼写错误下划线",
+    "addToDictionary": "添加到字典",
+    "removeFromDictionary": "从字典中移除",
+    "customDictionary": "自定义字典",
+    "words": "单词列表",
+    "noWords": "暂无单词",
+    "actions": {
+      "add": "添加",
+      "remove": "移除"
     }
   }
 }

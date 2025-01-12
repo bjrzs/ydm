@@ -24,7 +24,7 @@ export const category = [{
   icon: MarkdownIcon,
   path: '/preference/markdown'
 }, {
-  name: 'Spelling',
+  name: 'spelling',
   label: 'spelling',
   icon: SpellIcon,
   path: '/preference/spelling'
@@ -39,7 +39,7 @@ export const category = [{
   icon: ImageIcon,
   path: '/preference/image'
 }, {
-  name: 'Key Bindings',
+  name: 'key bindings',
   label: 'keybindings',
   icon: KeyBindingIcon,
   path: '/preference/keybindings'
