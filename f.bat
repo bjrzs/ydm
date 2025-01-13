@@ -9,7 +9,9 @@ yarn eslint --fix ^
   src\renderer\main.js ^
   src\renderer\store\preferences.js ^
   src\renderer\i18n\index.js ^
-  src\renderer\menu\config.js
+  src\renderer\menu\config.js ^
+  src\main\menu\templates\file\index.js ^
+  src\renderer\app.vue
 
 prettier --write "src/main/index.js"
 prettier --write "src/main/menu/dynamicMenu.js"
@@ -18,6 +20,8 @@ prettier --write "src/renderer/store/preferences.js"
 prettier --write "src/renderer/i18n/index.js"
 prettier --write "src/renderer/menu/config.js"
 prettier --write "src/locales/zh-cn.json"
+prettier --write "src/main/menu/templates/file/index.js"
+prettier --write "src/renderer/app.vue"
 
 :: Format existing files
 powershell -NoProfile -Command "(Get-Content -Path 'src\renderer\i18n\index.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\renderer\i18n\index.js' -NoNewline"
@@ -41,6 +45,8 @@ powershell -NoProfile -Command "(Get-Content -Path 'src\locales\zh-cn.json' -Raw
 powershell -NoProfile -Command "(Get-Content -Path 'src\renderer\menu\config.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\renderer\menu\config.js' -NoNewline"
 powershell -NoProfile -Command "(Get-Content -Path 'src\renderer\menu\menuBuilder.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\renderer\menu\menuBuilder.js' -NoNewline"
 powershell -NoProfile -Command "(Get-Content -Path 'src\renderer\menu\index.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\renderer\menu\index.js' -NoNewline"
+powershell -NoProfile -Command "(Get-Content -Path 'src\main\menu\templates\file\index.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\main\menu\templates\file\index.js' -NoNewline"
+powershell -NoProfile -Command "(Get-Content -Path 'src\renderer\app.vue' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\renderer\app.vue' -NoNewline"
 
 :: Format new main process files
 powershell -NoProfile -Command "(Get-Content -Path 'src\main\menu\dynamicMenu.js' -Raw).TrimEnd() + [Environment]::NewLine | Set-Content 'src\main\menu\dynamicMenu.js' -NoNewline"
@@ -56,7 +62,9 @@ yarn eslint --fix ^
   src\main\menu\templates\format.js ^
   src\main\menu\templates\theme.js ^
   src\main\menu\templates\paragraph.js ^
-  src\main\menu\templates\marktext.js
+  src\main\menu\templates\marktext.js ^
+  src\main\menu\templates\file\index.js ^
+  src\renderer\app.vue
 
 :: Format with Prettier
 prettier --write "src/renderer/menu/config.js"
@@ -79,6 +87,8 @@ sed -i 's/\s\+$//' "src/main/index.js"
 sed -i 's/\s\+$//' "src/renderer/main.js"
 sed -i 's/\s\+$//' "src/renderer/store/preferences.js"
 sed -i 's/\s\+$//' "src/locales/zh-cn.json"
+sed -i 's/\s\+$//' "src/main/menu/templates/file/index.js"
+sed -i 's/\s\+$//' "src/renderer/app.vue"
 
 :: Convert CRLF to LF
 dos2unix "src/renderer/menu/config.js"
@@ -90,6 +100,8 @@ dos2unix "src/main/index.js"
 dos2unix "src/renderer/main.js"
 dos2unix "src/renderer/store/preferences.js"
 dos2unix "src/locales/zh-cn.json"
+dos2unix "src/main/menu/templates/file/index.js"
+dos2unix "src/renderer/app.vue"
 
 echo prettier --write "src/locales/zh-cn.json" >> f.bat
 

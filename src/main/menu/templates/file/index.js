@@ -1,6 +1,6 @@
 import i18n from '../../../i18n'
 import { getFileMenuConfig } from './config'
-import { actions } from '../../../actions'
+import { openFileOrFolder, clearRecentlyUsed } from '../../actions/file'
 
 export default function createFileMenu (keybindings, userPreference, recentlyUsedFiles) {
   const config = getFileMenuConfig(keybindings)
@@ -26,12 +26,12 @@ export default function createFileMenu (keybindings, userPreference, recentlyUse
       submenu: [
         ...recentlyUsedFiles.map(file => ({
           label: file,
-          click: (menuItem, browserWindow) => actions.openFileOrFolder(browserWindow, file)
+          click: (menuItem, browserWindow) => openFileOrFolder(browserWindow, file)
         })),
         { type: 'separator' },
         {
           label: i18n.t('menu.file.clearRecentlyUsed'),
-          click: (menuItem, browserWindow) => actions.clearRecentlyUsed()
+          click: (menuItem, browserWindow) => clearRecentlyUsed()
         }
       ]
     })

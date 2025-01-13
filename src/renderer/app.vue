@@ -8,9 +8,8 @@
 <script>
 import TopMenu from './components/TopMenu'
 import { mapState } from 'vuex'
-import { ipcRenderer } from 'electron'
-import { DEFAULT_STYLE } from '../config'
-import { addThemeStyle } from './utils/theme'
+import { DEFAULT_STYLE } from './config'
+import { addThemeStyle } from './util/theme'
 
 export default {
   name: 'MarkText',
