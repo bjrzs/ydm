@@ -44,7 +44,7 @@ echo Is OK,Let's continue...
 echo.
 
 echo ---Delete build
-
+rmdir /s /q dist\electron
 rmdir /s /q build
 
 
@@ -58,17 +58,18 @@ rem set lang=zh-cn
 
 echo.
 echo ---Installing dependencies
-call yarn install --ignore-scripts --ignore-engines --production=false
+rem --ignore-scripts --ignore-engines --production=false
+call yarn install
 if errorlevel 1 (
     echo Yarn install completed with warnings, continuing...
 )
 
-echo.
-echo ---Copy node_modules to app
-call xcopy_.bat >nul
-if errorlevel 1 (
-    echo Copy node_modules to app, continuing...
-)
+rem echo.
+rem echo ---Copy node_modules to app
+rem call xcopy_.bat >nul
+rem if errorlevel 1 (
+rem     echo Copy node_modules to app, continuing...
+rem )
 
 echo.
 echo ---yarn run pack

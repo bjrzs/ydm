@@ -19,7 +19,7 @@ function doTranslate() {
   }
   if (toLang == '') return true
   */
-  const toLang='zh-cn'//强制使用中文
+  const toLang='en'
   require('ts-node/register')
   const { markTextAsarTranslate } = require('../marktext_asar_translate')
   console.log(process.env['lang'])
