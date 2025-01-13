@@ -1,7 +1,8 @@
 import i18n from '../../../i18n'
 import { getFileMenuConfig } from './config'
+import { actions } from '../../../actions'
 
-export default function createFileMenu(keybindings, userPreference, recentlyUsedFiles) {
+export default function createFileMenu (keybindings, userPreference, recentlyUsedFiles) {
   const config = getFileMenuConfig(keybindings)
   const { autoSave } = userPreference.getAll()
 
@@ -46,4 +47,4 @@ export default function createFileMenu(keybindings, userPreference, recentlyUsed
     label: i18n.t('menu.file.title'),
     submenu: menuItems
   }
-} 
+}

@@ -13,7 +13,7 @@
           {{ $t('menu.file.save') }}
         </el-menu-item>
       </el-submenu>
-      
+
       <el-submenu index="edit">
         <template slot="title">{{ $t('menu.edit.title') }}</template>
         <el-menu-item index="edit.undo" @click="handleCommand('edit.undo')">
@@ -51,7 +51,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'TopMenu',
-  data() {
+  data () {
     return {
       activeIndex: 'file'
     }
@@ -65,7 +65,7 @@ export default {
   watch: {
     currentLanguage: {
       immediate: true,
-      handler(newLang) {
+      handler (newLang) {
         this.$i18n.locale = newLang
         this.$nextTick(() => {
           this.$forceUpdate()
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     ...mapActions('preferences', ['SET_SINGLE_PREFERENCE']),
-    handleCommand(command) {
+    handleCommand (command) {
       this.$electron.ipcRenderer.send('menu-command', command)
     }
   }
@@ -109,4 +109,4 @@ export default {
   color: var(--highlight-color);
   background-color: var(--item-hover-bg-color);
 }
-</style> 
+</style>

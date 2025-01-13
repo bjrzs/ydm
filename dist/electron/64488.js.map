@@ -1,1 +1,0 @@
-{"version":3,"file":"64488.js","mappings":"wFAAAA,MAAMC,UAAUC,MAAQF,MAAMC,UAAUE,OAAO,OAAQ,CACtD,YAAe,iBAGhBH,MAAMC,UAAUG,aAAa,QAAS,cAAe,CACpD,SAAY","sources":["webpack://marktext/./node_modules/prismjs/components/prism-jsonp.js"],"names":["Prism","languages","jsonp","extend","insertBefore"],"sourceRoot":""}

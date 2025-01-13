@@ -1,1 +1,0 @@
-{"version":3,"file":"73253.js","mappings":"wFAAAA,MAAMC,UAAUC,KAAO,CACtB,QAAW,MACX,OAAU,CACTC,QAAS,mCACTC,QAAQ,GAET,QAAW,sCACX,OAAU,oBACV,YAAe","sources":["webpack://marktext/./node_modules/prismjs/components/prism-arff.js"],"names":["Prism","languages","arff","pattern","greedy"],"sourceRoot":""}

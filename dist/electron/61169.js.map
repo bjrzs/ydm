@@ -1,1 +1,0 @@
-{"version":3,"file":"61169.js","mappings":"wFAAAA,MAAMC,UAAUC,OAAS,CACxB,QAAW,CACV,iBACA,OAED,OAAU,CACTC,QAAS,uBACTC,QAAQ,GAGT,OAAU,iEACV,QAAW,8HACX,SAAY,uBACZ,SAAY,0CACZ,YAAe","sources":["webpack://marktext/./node_modules/prismjs/components/prism-matlab.js"],"names":["Prism","languages","matlab","pattern","greedy"],"sourceRoot":""}

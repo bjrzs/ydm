@@ -1,0 +1,67 @@
+{
+  "menu": {
+    "file": {
+      "title": "File",
+      "new": "New",
+      "newTab": "New Tab",
+      "open": "Open",
+      "openFolder": "Open Folder",
+      "openRecent": "Open Recent",
+      "save": "Save",
+      "saveAs": "Save As",
+      "autoSave": "Auto Save",
+      "export": "Export",
+      "exportHTML": "Export HTML",
+      "exportPDF": "Export PDF",
+      "exportImage": "Export Image",
+      "closeTab": "Close Tab",
+      "closeWindow": "Close Window"
+    },
+    "edit": {
+      "title": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "copyAsMarkdown": "Copy as Markdown",
+      "copyAsHtml": "Copy as HTML",
+      "pasteAsPlainText": "Paste as Plain Text",
+      "selectAll": "Select All",
+      "find": "Find",
+      "findNext": "Find Next",
+      "findPrevious": "Find Previous",
+      "replace": "Replace",
+      "findInFolder": "Find in Folder"
+    },
+    "view": {
+      "title": "View",
+      "sourceCodeMode": "Source Code Mode",
+      "typewriterMode": "Typewriter Mode",
+      "focusMode": "Focus Mode",
+      "showSidebar": "Show Sidebar",
+      "showTabBar": "Show Tab Bar",
+      "toggleToc": "Toggle Table of Contents",
+      "reloadImages": "Reload Images",
+      "devTools": "Developer Tools",
+      "reloadWindow": "Reload Window"
+    },
+    "window": {
+      "title": "Window",
+      "minimize": "Minimize",
+      "alwaysOnTop": "Always on Top",
+      "zoomIn": "Zoom In",
+      "zoomOut": "Zoom Out",
+      "fullScreen": "Full Screen",
+      "bringAllToFront": "Bring All to Front"
+    },
+    "help": {
+      "title": "Help",
+      "quickStart": "Quick Start...",
+      "markdownReference": "Markdown Reference...",
+      "changelog": "Changelog...",
+      "website": "Website...",
+      "about": "About MarkText..."
+    }
+  }
+}

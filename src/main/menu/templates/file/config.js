@@ -104,4 +104,4 @@ export const getFileMenuConfig = (keybindings) => {
       click: () => app.quit()
     }]
   }
-} 
+}

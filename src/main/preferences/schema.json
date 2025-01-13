@@ -16,7 +16,7 @@
       "custom",
       "native"
     ],
-    "default": "custom"
+    "default": "native"
   },
   "openFilesInNewWindow": {
     "description": "General--Open files in a new window.",
@@ -70,7 +70,7 @@
   "language": {
     "description": "General--The language MarkText use.",
     "type": "string",
-    "default": "en"
+    "default": "zh-cn"
   },
   "editorFontFamily": {
     "description": "Editor--editor font family",

@@ -5,7 +5,7 @@ import bus from '../bus'
 const state = {
   autoSave: false,
   autoSaveDelay: 5000,
-  titleBarStyle: 'custom',
+  titleBarStyle: 'native',
   openFilesInNewWindow: false,
   openFolderInNewWindow: false,
   zoom: 1.0,
@@ -14,7 +14,7 @@ const state = {
   fileSortBy: 'created',
   startUpAction: 'lastState',
   defaultDirectoryToOpen: '',
-  language: 'en',
+  language: 'zh-cn',
 
   editorFontFamily: 'Open Sans',
   fontSize: 16,

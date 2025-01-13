@@ -1,2 +1,0 @@
-"use strict";(global.webpackChunkmarktext=global.webpackChunkmarktext||[]).push([[42548],{42548:(a,t,e)=>{e.r(t),e.d(t,{default:()=>n});const d="mindmap",n={id:d,detector:a=>null!==a.match(/^\s*mindmap/),loader:async()=>{const{diagram:a}=await Promise.all([e.e(60671),e.e(52810)]).then(e.bind(e,52810));return{id:d,diagram:a}}}}}]);
-//# sourceMappingURL=42548.js.map

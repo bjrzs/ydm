@@ -10,13 +10,13 @@ export default {
     SpellcheckPreferences
   },
 
-  data() {
+  data () {
     return {
       activeTab: 'menu'
     }
   },
 
-  created() {
+  created () {
     // Load initial preferences
     const preferences = this.$store.state.preferences
     this.activeTab = preferences.lastPreferencesTab || 'menu'
@@ -25,16 +25,16 @@ export default {
     this.$root.$on('language-changed', this.handleLanguageChange)
   },
 
-  mounted() {
+  mounted () {
     // ... existing code ...
   },
 
-  beforeDestroy() {
+  beforeDestroy () {
     this.$root.$off('language-changed', this.handleLanguageChange)
   },
 
   methods: {
-    handleTabChange(tab) {
+    handleTabChange (tab) {
       this.activeTab = tab
       // Save last active tab
       this.$store.dispatch('preferences/setPreference', {
@@ -43,7 +43,7 @@ export default {
       })
     },
 
-    handleLanguageChange() {
+    handleLanguageChange () {
       // Force re-render of components
       this.$forceUpdate()
       this.$children.forEach(child => {
@@ -53,7 +53,7 @@ export default {
       })
     },
 
-    updatePreferences() {
+    updatePreferences () {
       // ... existing code ...
     }
   },
@@ -82,4 +82,4 @@ export default {
       </div>
     </div>
   `
-} 
+}

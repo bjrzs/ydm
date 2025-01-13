@@ -8,6 +8,9 @@
 <script>
 import TopMenu from './components/TopMenu'
 import { mapState } from 'vuex'
+import { ipcRenderer } from 'electron'
+import { DEFAULT_STYLE } from '../config'
+import { addThemeStyle } from './utils/theme'
 
 export default {
   name: 'MarkText',
@@ -16,10 +19,35 @@ export default {
   },
   computed: {
     ...mapState('preferences', ['language']),
-    showTopMenu() {
-      // 根据需要控制顶部菜单的显示
+    showTopMenu () {
       return true
     }
+  },
+  created () {
+    this.$nextTick(() => {
+      const state = global.marktext.initialState || DEFAULT_STYLE
+      addThemeStyle(state.theme)
+
+      this.$store.dispatch('ASK_FOR_USER_PREFERENCE')
+
+      this.$store.watch(
+        state => state.preferences,
+        (newPreferences) => {
+          const userLanguage = newPreferences.language
+
+          let menuLanguage = 'zh-cn'
+          if (userLanguage && userLanguage.toLowerCase().startsWith('en')) {
+            menuLanguage = 'en'
+          }
+
+          const { menu } = require('./menu')
+          menu.init(menuLanguage)
+
+          this.hideLoadingPage()
+        },
+        { immediate: false }
+      )
+    })
   }
 }
-</script> 
+</script>

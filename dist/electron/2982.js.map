@@ -1,1 +1,0 @@
-{"version":3,"file":"2982.js","mappings":"sFAAAA,MAAMC,UAAUC,KAAO,CAGtB,QAAW,0BACX,OAAU,CACTC,QAAS,4BACTC,QAAQ,GAET,QAAW,CACVD,QAAS,oCACTE,YAAY,GAEb,UAAa,CACZF,QAAS,0BACTE,YAAY,GAEb,QAAW,qBACX,SAAY,KACZ,YAAe","sources":["webpack://marktext/./node_modules/prismjs/components/prism-yang.js"],"names":["Prism","languages","yang","pattern","greedy","lookbehind"],"sourceRoot":""}

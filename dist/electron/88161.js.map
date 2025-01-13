@@ -1,1 +1,0 @@
-{"version":3,"file":"88161.js","mappings":"wFAAAA,MAAMC,UAAUC,KAAO,CACtB,QAAW,CACVC,QAAS,OACTC,QAAQ,GAET,OAAU,CACTD,QAAS,kBACTC,QAAQ,GAET,SAAY,qBACZ,aAAc,+BACd,SAAY,kDACZ,QAAW","sources":["webpack://marktext/./node_modules/prismjs/components/prism-hoon.js"],"names":["Prism","languages","hoon","pattern","greedy"],"sourceRoot":""}

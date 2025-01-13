@@ -1,1 +1,0 @@
-{"version":3,"file":"10008.js","mappings":"wFAAAA,MAAMC,UAAUC,WAAa,CAC5B,QAAW,8BACX,OAAU,CACTC,QAAS,yEACTC,QAAQ,GAET,SAAY,QACZ,MAAS,CACRD,QAAS,OACTE,MAAO,YAIR,QAAW,+JACX,OAAU,iFACV,QAAW,yBACX,YAAe,kBAGf,SAAY","sources":["webpack://marktext/./node_modules/prismjs/components/prism-warpscript.js"],"names":["Prism","languages","warpscript","pattern","greedy","alias"],"sourceRoot":""}

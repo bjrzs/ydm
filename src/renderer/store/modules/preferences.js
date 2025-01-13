@@ -3,7 +3,7 @@ import { ipcRenderer } from 'electron'
 const state = {
   language: 'en',
   theme: 'light',
-  autoSave: false,
+  autoSave: false
   // 添加其他必要的初始状态...
 }
 
@@ -37,4 +37,4 @@ export default {
   state,
   mutations,
   actions
-} 
+}

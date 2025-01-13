@@ -1,2 +1,0 @@
-(global.webpackChunkmarktext=global.webpackChunkmarktext||[]).push([[15827],{15827:()=>{Prism.languages.brainfuck={pointer:{pattern:/<|>/,alias:"keyword"},increment:{pattern:/\+/,alias:"inserted"},decrement:{pattern:/-/,alias:"deleted"},branching:{pattern:/\[|\]/,alias:"important"},operator:/[.,]/,comment:/\S+/}}}]);
-//# sourceMappingURL=15827.js.map

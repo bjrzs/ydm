@@ -7,7 +7,7 @@ npm-debug.log
 npm-debug.log.*
 yarn-error.log
 thumbs.db
-dist/electron/*
+dist/
 !.gitkeep
 .idea
 .env

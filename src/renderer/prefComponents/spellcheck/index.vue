@@ -22,9 +22,11 @@
 </template>
 
 <script>
+import { ipcRenderer } from 'electron'
+
 export default {
   name: 'SpellcheckPreferences',
-  
+
   data () {
     return {
       enableSpellcheck: false,

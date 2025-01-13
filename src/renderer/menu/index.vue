@@ -26,7 +26,7 @@ import { menuConfig } from './config'
 
 export default {
   name: 'AppMenu',
-  data() {
+  data () {
     return {
       menuConfig,
       activeIndex: ''
@@ -42,7 +42,7 @@ export default {
     })
   },
   methods: {
-    handleSelect(key) {
+    handleSelect (key) {
       switch (key) {
         // 文件菜单
         case 'newFile':
@@ -126,7 +126,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted () {
     // 监听主进程的菜单状态更新
     ipcRenderer.on('mt::update-menu', (e, { type, value }) => {
       switch (type) {
@@ -140,7 +140,7 @@ export default {
       }
     })
   },
-  beforeDestroy() {
+  beforeDestroy () {
     ipcRenderer.removeAllListeners('mt::update-menu')
   }
 }
@@ -195,4 +195,4 @@ export default {
   opacity: 0.5;
   cursor: not-allowed;
 }
-</style> 
+</style>

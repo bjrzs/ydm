@@ -1,1 +1,0 @@
-{"version":3,"file":"89425.js","mappings":"wFAAAA,MAAMC,UAAUC,aAAa,MAAO,WAAY,CAC/C,KAAQ,CACPC,QAAS,WACTC,MAAO,WAER,OAAU,uIACV,MAAS,CACRD,QAAS,cACTE,OAAQ,CACP,QAAW,6BACX,YAAe","sources":["webpack://marktext/./node_modules/prismjs/components/prism-php-extras.js"],"names":["Prism","languages","insertBefore","pattern","alias","inside"],"sourceRoot":""}

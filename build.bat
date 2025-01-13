@@ -44,8 +44,9 @@ echo Is OK,Let's continue...
 echo.
 
 echo ---Delete build
-call f.bat >nul
+
 rmdir /s /q build
+
 
 echo.
 echo ---Clean node_modules.\cache
@@ -82,6 +83,9 @@ call yarn electron-builder --dir
 if errorlevel 1 (
     echo Electron-builder completed with warnings, continuing...
 )
+
+echo ---Delete dist\electron 
+rmdir /s /q dist\electron
 
 echo.
 echo ---Build process completed!

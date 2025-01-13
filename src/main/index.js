@@ -10,8 +10,6 @@ import Accessor from './app/accessor'
 import setupEnvironment from './app/env'
 import { getLogLevel } from './utils'
 import i18n from './i18n'
-import { initializeMainMenu } from './menu'
-import windowManager from './app/windowManager'
 
 // Initialize i18n with system locale
 const locale = app.getLocale().toLowerCase()
@@ -91,6 +89,6 @@ const marktext = new App(accessor, args)
 marktext.init()
 
 app.on('ready', () => {
-  // Initialize the dynamic menu system
-  initializeMainMenu(windowManager.windows)
+
+  // createMenu()
 })
