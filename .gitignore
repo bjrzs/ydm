@@ -1,14 +1,14 @@
 .DS_Store
-build/
 coverage
 .vscode
+build/
 node_modules/
+dist/
+docs/
 npm-debug.log
 npm-debug.log.*
 yarn-error.log
 thumbs.db
-dist/
-docs/
 !.gitkeep
 .idea
 .env

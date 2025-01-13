@@ -1,7 +1,6 @@
 import { ipcRenderer } from 'electron'
 
 const state = {
-  language: 'en',
   theme: 'light',
   autoSave: false
   // 添加其他必要的初始状态...
@@ -22,13 +21,6 @@ const actions = {
       // 只发送已定义的状态变化
       ipcRenderer.send('broadcast-preferences-changed', { [key]: value })
     }
-  },
-
-  changeLanguage ({ dispatch }, language) {
-    return dispatch('SET_SINGLE_PREFERENCE', {
-      key: 'language',
-      value: language
-    })
   }
 }
 

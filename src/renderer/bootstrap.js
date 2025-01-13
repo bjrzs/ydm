@@ -1,9 +1,17 @@
 import path from 'path'
-import { ipcRenderer } from 'electron'
 import log from 'electron-log'
 import RendererPaths from './node/paths'
 
-let exceptionLogger = s => console.error(s)
+// Improve error logging with more details
+let exceptionLogger = error => {
+  console.error('Error Details:')
+  console.error('- Message:', error.message)
+  console.error('- Name:', error.name)
+  console.error('- Stack:', error.stack)
+  if (log && log.error) {
+    log.error(error)
+  }
+}
 
 function configureLogger () {
   try {
@@ -32,20 +40,24 @@ function configureLogger () {
       require('fs').mkdirSync(logPath, { recursive: true })
     } catch (err) {
       console.error('Failed to create log directory:', err)
+      // If we can't create log directory, disable file logging
+      log.transports.file = null
+      return false
     }
 
-    // Set file path resolver
+    // Use new resolvePathFn API instead of deprecated resolvePath
     log.transports.file.resolvePathFn = () => {
       const logFile = path.join(logPath, 'renderer.log')
-      console.log('Log file path:', logFile)
       return logFile
     }
 
     // Add initial logs
     log.info('Log system initialization completed')
     log.info('Log path:', logPath)
+    return true
   } catch (error) {
     console.error('Error configuring logger:', error)
+    return false
   }
 }
 
@@ -61,8 +73,15 @@ const parseUrlArgs = () => {
   const windowId = Number(params.get('wid'))
   const type = params.get('type')
 
+  // Check required parameters
+  if (!userDataPath) {
+    throw new Error('Error while parsing URL arguments: userDataPath is required!')
+  }
   if (Number.isNaN(windowId)) {
-    throw new Error('Error while parsing URL arguments: windowId!')
+    throw new Error('Error while parsing URL arguments: windowId is invalid!')
+  }
+  if (!type) {
+    throw new Error('Error while parsing URL arguments: type is required!')
   }
 
   return {
@@ -82,24 +101,23 @@ const parseUrlArgs = () => {
 
 const bootstrapRenderer = () => {
   try {
-    configureLogger()
+    const loggerInitialized = configureLogger()
+    if (!loggerInitialized) {
+      console.warn('Logger initialization failed, continuing with console logging only')
+    }
+
     // Register renderer exception handler
     window.addEventListener('error', event => {
       if (event.error) {
-        const { message, name, stack } = event.error
-        const copy = {
-          message,
-          name,
-          stack
-        }
-
         exceptionLogger(event.error)
-
-        // Pass exception to main process exception handler to show a error dialog.
-        ipcRenderer.send('mt::handle-renderer-error', copy)
       } else {
-        console.error(event)
+        console.error('Unhandled error event:', event)
       }
+    })
+
+    // Register unhandled rejection handler
+    window.addEventListener('unhandledrejection', event => {
+      exceptionLogger(event.reason)
     })
 
     const {
@@ -123,6 +141,7 @@ const bootstrapRenderer = () => {
     global.marktext = marktext
   } catch (error) {
     console.error('Initializing renderer process failed:', error)
+    exceptionLogger(error)
   }
 }
 

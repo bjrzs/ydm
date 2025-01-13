@@ -44,8 +44,8 @@ echo Is OK,Let's continue...
 echo.
 
 echo ---Delete build
-rmdir /s /q dist\electron
-rmdir /s /q build
+rmdir /s /q dist\electron 2>nul
+rmdir /s /q build 2>nul
 
 
 echo.

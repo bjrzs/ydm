@@ -129,6 +129,15 @@ const actions = {
     ipcRenderer.send('mt::set-user-preference', { [type]: value })
   },
 
+  setLanguage ({ commit, dispatch }, lang) {
+    dispatch('SET_SINGLE_PREFERENCE', {
+      type: 'language',
+      value: lang
+    })
+    // Reload window to apply new language
+    ipcRenderer.send('mt::reload-window')
+  },
+
   SET_USER_DATA ({ commit }, { type, value }) {
     ipcRenderer.send('mt::set-user-data', { [type]: value })
   },

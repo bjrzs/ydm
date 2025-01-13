@@ -16,9 +16,11 @@
       "exportImage": "导出图片",
       "closeTab": "关闭标签页",
       "closeWindow": "关闭窗口",
-      "language": "语言",
-      "language.en": "English",
-      "language.zh-cn": "简体中文",
+      "language": {
+        "title": "语言",
+        "en": "English",
+        "zh-cn": "简体中文"
+      },
       "newFile": "新建文件",
       "newWindow": "新建窗口",
       "moveTo": "移动到",
@@ -53,7 +55,7 @@
     },
     "view": {
       "title": "视图",
-      "sourceCode": "源代码模式",
+      "sourceCodeMode": "源代码模式",
       "toggleSidebar": "切换侧边栏",
       "toggleTabBar": "切换标签栏",
       "toggleFullScreen": "切换全屏",
@@ -66,7 +68,6 @@
       "devTools": "开发者工具",
       "reloadWindow": "重新加载窗口",
       "commandPalette": "命令面板",
-      "sourceCodeMode": "源代码模式",
       "showCommandPalette": "显示命令面板",
       "mobileMode": "打开移动模式",
       "showToc": "显示目录",
@@ -80,6 +81,7 @@
       "alwaysOnTop": "总在最前面",
       "zoomIn": "放大",
       "zoomOut": "缩小",
+      "zoom": "缩放",
       "fullScreen": "全屏显示",
       "bringAllToFront": "前置全部窗口"
     },
@@ -89,7 +91,12 @@
       "markdownReference": "Markdown 参考指南...",
       "changelog": "更新日志...",
       "website": "访问官网...",
-      "about": "关于 MarkText..."
+      "about": "关于 MarkText...",
+      "checkUpdates": "检查更新",
+      "documentation": "文档",
+      "feedback": "反馈",
+      "twitter": "Twitter",
+      "devTools": "开发者工具"
     },
     "preferences": {
       "title": "偏好设置",
@@ -128,10 +135,9 @@
       "quoteBlock": "引用块",
       "mathBlock": "数学公式块",
       "orderList": "有序列表",
-      "unorderList": "无序列表",
+      "bulletList": "无序列表",
       "taskList": "任务列表",
       "text": "文本",
-      "bulletList": "无序列表",
       "looseListItem": "松散列表项",
       "horizontalLine": "水平线",
       "frontMatter": "前置内容",
@@ -181,7 +187,6 @@
     "keyboard": "快捷键",
     "image": "图片",
     "keybindings": "快捷键",
-    "key bindings": "快捷键",
     "language": "语言",
     "system": "系统",
     "about": "关于",
@@ -363,11 +368,14 @@
   },
   "sideBar": {
     "files": "文件",
+    "search": "搜索",
+    "toc": "目录",
     "settings": "设置",
     "tree": {
-      "openedFiles": "已打开的文件",
+      "openedFiles": "已打开文件",
       "saveAll": "全部保存",
       "closeAll": "全部关闭",
+      "openFolder": "打开文件夹",
       "closeTab": "关闭标签页",
       "newFile": "新建文件",
       "newDirectory": "新建目录",
@@ -380,7 +388,6 @@
       "copyPath": "复制路径",
       "emptyProject": "空项目",
       "createFile": "创建文件",
-      "openFolder": "打开文件夹",
       "contextMenu": {
         "cut": "剪切",
         "copy": "复制",
@@ -418,7 +425,7 @@
       "noContent": "无内容",
       "headings": {
         "h1": "一级标题",
-        "h2": "二级标题", 
+        "h2": "二级标题",
         "h3": "三级标题",
         "h4": "四级标题",
         "h5": "五级标题",
