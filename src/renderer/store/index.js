@@ -1,3 +1,4 @@
+// store/index.js
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { ipcRenderer } from 'electron'
@@ -64,5 +65,10 @@ const store = new Vuex.Store({
     commandCenter
   }
 })
+
+// Initialize language from localStorage
+const savedLanguage = localStorage.getItem('preferred-language') || 'en'
+
+ipcRenderer.send('mt::change-language', String(savedLanguage))
 
 export default store

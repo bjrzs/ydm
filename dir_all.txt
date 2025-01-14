@@ -5,8 +5,8 @@ Root Directory:
 
  Directory of M:\cm\ydm
 
-2025/01/14  12:16    <DIR>          .
-2025/01/14  12:16    <DIR>          ..
+2025/01/14  21:36    <DIR>          .
+2025/01/14  21:36    <DIR>          ..
 2025/01/08  20:44             1,423 .cursorrules
 2025/01/09  14:52               234 .editorconfig
 2025/01/14  08:53    <DIR>          .electron-vue
@@ -14,14 +14,15 @@ Root Directory:
 2025/01/12  09:54             1,584 .eslintrc.js
 2025/01/09  13:19             1,286 .gitattributes
 2023/02/15  16:07    <DIR>          .github
-2025/01/14  08:53               164 .gitignore
+2025/01/14  15:09               176 .gitignore
 2023/02/15  16:07    <DIR>          .vscode
-2025/01/13  23:03    <DIR>          build
+2023/02/15  16:07             1,421 babel.config.js
+2025/01/14  21:36    <DIR>          build
 2025/01/14  08:53             2,479 build.bat
-2025/01/14  12:16                41 dir_all.txt
-2025/01/13  23:03    <DIR>          dist
+2025/01/14  21:39                41 dir_all.txt
+2025/01/14  21:36    <DIR>          dist
 2025/01/13  16:15             4,388 electron-builder.yml
-2025/01/14  08:19                 0 error.txt
+2025/01/14  21:32             3,160 error.txt
 2025/01/13  16:15             7,139 f.bat
 2025/01/09  17:15                91 k.bat
 2025/01/11  15:53    <DIR>          locales
@@ -30,11 +31,11 @@ Root Directory:
 2025/01/09  17:24             1,042 Marktext.lnk
 2025/01/14  08:53             7,296 marktext_asar_translate.ts
 2025/01/13  20:46             5,119 new.md
-2025/01/13  23:02    <DIR>          node_modules
+2025/01/14  21:36    <DIR>          node_modules
 2025/01/11  13:06             7,782 package.json
 2025/01/14  08:35        22,051,802 patch.diff
 2025/01/13  12:38    <DIR>          Picture
-2025/01/11  16:43            13,711 README.md
+2025/01/11  16:43            13,711 README1.md
 2023/02/15  16:07    <DIR>          resources
 2025/01/14  12:13               544 see_dir.bat
 2025/01/09  20:57    <DIR>          src
@@ -49,8 +50,9 @@ Root Directory:
 2025/01/11  13:06           616,051 yarn.lock
 2025/01/12  22:19             4,948 使用动态方法重做主菜单.md
 2025/01/04  17:02                57 删除编译好的.bat
-              28 File(s)     22,756,502 bytes
-              16 Dir(s)  111,955,525,632 bytes free
+2025/01/14  15:35             1,019 顶部菜单保存问题.md
+              30 File(s)     22,762,114 bytes
+              16 Dir(s)  111,948,881,920 bytes free
 ==================== 
 locales Directory: 
  Volume in drive M is 三星
@@ -64,7 +66,7 @@ locales Directory:
 
      Total Files Listed:
                0 File(s)              0 bytes
-               2 Dir(s)  111,955,525,632 bytes free
+               2 Dir(s)  111,948,881,920 bytes free
 ==================== 
 SRC Directory: 
  Volume in drive M is 三星
@@ -77,9 +79,9 @@ SRC Directory:
 2025/01/12  21:00    <DIR>          common
 2023/02/15  16:07             2,965 index.ejs
 2025/01/14  08:53    <DIR>          locales
-2025/01/14  08:53    <DIR>          main
+2025/01/14  14:48    <DIR>          main
 2025/01/10  12:49    <DIR>          muya
-2025/01/14  08:53    <DIR>          renderer
+2025/01/14  12:31    <DIR>          renderer
                1 File(s)          2,965 bytes
 
  Directory of M:\cm\ydm\src\common
@@ -135,8 +137,8 @@ SRC Directory:
 
  Directory of M:\cm\ydm\src\main
 
-2025/01/14  08:53    <DIR>          .
-2025/01/14  08:53    <DIR>          ..
+2025/01/14  14:48    <DIR>          .
+2025/01/14  14:48    <DIR>          ..
 2025/01/11  19:09    <DIR>          actions
 2025/01/11  13:06    <DIR>          app
 2025/01/10  12:49    <DIR>          cli
@@ -148,20 +150,19 @@ SRC Directory:
 2025/01/12  07:51             4,462 exceptionHandler.js
 2025/01/10  12:49    <DIR>          filesystem
 2025/01/12  07:51               208 globalSetting.js
-2025/01/14  08:53               862 i18n.js
 2025/01/12  07:51               675 index.dev.js
-2025/01/14  08:53             4,133 index.js
+2025/01/14  14:22             3,312 index.js
 2025/01/10  08:21             7,165 index.ts
 2023/02/15  16:07               188 jsconfig.json
-2025/01/14  08:19    <DIR>          keyboard
+2025/01/14  12:48    <DIR>          keyboard
 2025/01/13  12:55    <DIR>          menu
-2025/01/14  08:19               988 old_i18n.js
+2025/01/14  16:40               752 old_i18n.js
 2025/01/12  21:48    <DIR>          preferences
 2025/01/10  12:49    <DIR>          spellchecker
-2025/01/13  22:29    <DIR>          store
+2025/01/14  15:09    <DIR>          store
 2025/01/10  12:49    <DIR>          utils
 2025/01/10  21:04    <DIR>          windows
-               9 File(s)         20,697 bytes
+               8 File(s)         18,778 bytes
 
  Directory of M:\cm\ydm\src\main\actions
 
@@ -239,15 +240,15 @@ SRC Directory:
 
  Directory of M:\cm\ydm\src\main\keyboard
 
-2025/01/14  08:19    <DIR>          .
-2025/01/14  08:19    <DIR>          ..
+2025/01/14  12:48    <DIR>          .
+2025/01/14  12:48    <DIR>          ..
 2025/01/12  07:51             2,322 index.js
 2025/01/10  12:49             4,428 keybindingsDarwin.js
 2025/01/10  12:49             4,504 keybindingsLinux.js
 2025/01/10  12:49             4,341 keybindingsWindows.js
 2025/01/12  18:13             7,509 shortcutHandler.js
-2025/01/14  08:19               227 shortcuts.js
-               6 File(s)         23,331 bytes
+2025/01/14  12:48               234 shortcuts.js
+               6 File(s)         23,338 bytes
 
  Directory of M:\cm\ydm\src\main\menu
 
@@ -257,7 +258,7 @@ SRC Directory:
 2025/01/12  12:18    <DIR>          components
 2025/01/12  18:13               623 dynamicMenu.js
 2025/01/13  12:55            16,139 index.js
-2025/01/13  20:46    <DIR>          templates
+2025/01/14  12:44    <DIR>          templates
                2 File(s)         16,762 bytes
 
  Directory of M:\cm\ydm\src\main\menu\actions
@@ -280,43 +281,43 @@ SRC Directory:
 
 2025/01/12  12:18    <DIR>          .
 2025/01/12  12:18    <DIR>          ..
-2025/01/12  12:18    <DIR>          file
+2025/01/14  12:28    <DIR>          file
                0 File(s)              0 bytes
 
  Directory of M:\cm\ydm\src\main\menu\components\file
 
-2025/01/12  12:18    <DIR>          .
-2025/01/12  12:18    <DIR>          ..
+2025/01/14  12:28    <DIR>          .
+2025/01/14  12:28    <DIR>          ..
 2025/01/12  12:46             3,652 config.js
-2025/01/12  12:46             1,440 index.js
-               2 File(s)          5,092 bytes
+2025/01/14  12:28             1,447 index.js
+               2 File(s)          5,099 bytes
 
  Directory of M:\cm\ydm\src\main\menu\templates
 
-2025/01/13  20:46    <DIR>          .
-2025/01/13  20:46    <DIR>          ..
+2025/01/14  12:44    <DIR>          .
+2025/01/14  12:44    <DIR>          ..
 2025/01/12  18:13               425 dock.js
-2025/01/12  18:13             5,212 edit.js
-2025/01/14  08:53    <DIR>          file
-2025/01/12  18:13             4,696 file.js
-2025/01/12  18:13             3,582 format.js
-2025/01/13  20:46             1,741 help.js
+2025/01/14  12:43             5,219 edit.js
+2025/01/14  12:28    <DIR>          file
+2025/01/14  12:27             4,703 file.js
+2025/01/14  12:43             3,589 format.js
+2025/01/14  12:27             1,748 help.js
 2025/01/12  12:59             1,285 index.js
-2025/01/12  18:13             1,585 marktext.js
-2025/01/12  18:13             6,028 paragraph.js
+2025/01/14  12:44             1,592 marktext.js
+2025/01/14  12:28             6,035 paragraph.js
 2025/01/12  07:51               600 prefEdit.js
-2025/01/12  18:13             1,666 theme.js
-2025/01/12  18:13             3,092 view.js
-2025/01/12  18:13             1,844 window.js
-              12 File(s)         31,756 bytes
+2025/01/14  12:28             1,673 theme.js
+2025/01/14  12:28             3,099 view.js
+2025/01/14  12:28             1,851 window.js
+              12 File(s)         31,819 bytes
 
  Directory of M:\cm\ydm\src\main\menu\templates\file
 
-2025/01/14  08:53    <DIR>          .
-2025/01/14  08:53    <DIR>          ..
+2025/01/14  12:28    <DIR>          .
+2025/01/14  12:28    <DIR>          ..
 2025/01/13  11:12             3,600 config.js
-2025/01/14  08:53             1,569 index.js
-               2 File(s)          5,169 bytes
+2025/01/14  12:28             1,576 index.js
+               2 File(s)          5,176 bytes
 
  Directory of M:\cm\ydm\src\main\preferences
 
@@ -335,10 +336,9 @@ SRC Directory:
 
  Directory of M:\cm\ydm\src\main\store
 
-2025/01/13  22:29    <DIR>          .
-2025/01/13  22:29    <DIR>          ..
-2025/01/13  22:30               348 index.js
-               1 File(s)            348 bytes
+2025/01/14  15:09    <DIR>          .
+2025/01/14  15:09    <DIR>          ..
+               0 File(s)              0 bytes
 
  Directory of M:\cm\ydm\src\main\utils
 
@@ -1386,8 +1386,8 @@ SRC Directory:
 
  Directory of M:\cm\ydm\src\renderer
 
-2025/01/14  08:53    <DIR>          .
-2025/01/14  08:53    <DIR>          ..
+2025/01/14  12:31    <DIR>          .
+2025/01/14  12:31    <DIR>          ..
 2025/01/14  08:53             1,200 app.vue
 2025/01/10  12:49    <DIR>          assets
 2025/01/10  12:49    <DIR>          axios
@@ -1398,10 +1398,10 @@ SRC Directory:
 2025/01/13  11:06    <DIR>          components
 2025/01/10  12:49               743 config.js
 2023/02/15  16:07    <DIR>          contextMenu
-2025/01/14  08:53    <DIR>          i18n
+2025/01/14  15:10    <DIR>          i18n
 2023/02/15  16:07               241 jsconfig.json
-2025/01/14  08:53             2,169 main.js
-2025/01/14  08:53    <DIR>          menu
+2025/01/14  12:31             2,169 main.js
+2025/01/14  12:31    <DIR>          menu
 2025/01/10  12:49    <DIR>          mixins
 2025/01/10  12:49    <DIR>          node
 2025/01/10  12:49    <DIR>          pages
@@ -1409,7 +1409,7 @@ SRC Directory:
 2025/01/12  08:15    <DIR>          preferences
 2025/01/10  12:49    <DIR>          router
 2025/01/10  12:49    <DIR>          services
-2025/01/10  12:49    <DIR>          spellchecker
+2025/01/14  15:12    <DIR>          spellchecker
 2025/01/13  20:08    <DIR>          store
 2025/01/11  13:06    <DIR>          util
                5 File(s)          8,455 bytes
@@ -1717,22 +1717,21 @@ SRC Directory:
 
  Directory of M:\cm\ydm\src\renderer\i18n
 
-2025/01/14  08:53    <DIR>          .
-2025/01/14  08:53    <DIR>          ..
-2025/01/14  08:53             1,543 index.js
-2025/01/13  22:04             1,606 index_old.js
-               2 File(s)          3,149 bytes
+2025/01/14  15:10    <DIR>          .
+2025/01/14  15:10    <DIR>          ..
+2025/01/14  20:37             1,008 index.js
+               1 File(s)          1,008 bytes
 
  Directory of M:\cm\ydm\src\renderer\menu
 
-2025/01/14  08:53    <DIR>          .
-2025/01/14  08:53    <DIR>          ..
+2025/01/14  12:31    <DIR>          .
+2025/01/14  12:31    <DIR>          ..
 2025/01/12  21:48            10,625 config.js
-2025/01/13  20:46             1,664 index.js
+2025/01/14  21:11             2,974 index.js
 2025/01/13  11:12             4,868 index.vue
-2025/01/14  08:53             7,288 menuBuilder.js
+2025/01/14  12:31             7,287 menuBuilder.js
 2025/01/12  16:45               951 README.md
-               5 File(s)         25,396 bytes
+               5 File(s)         26,705 bytes
 
  Directory of M:\cm\ydm\src\renderer\mixins
 
@@ -1764,7 +1763,7 @@ SRC Directory:
 2025/01/12  08:12    <DIR>          ..
 2025/01/10  12:49    <DIR>          common
 2025/01/14  08:53    <DIR>          editor
-2025/01/14  08:53    <DIR>          general
+2025/01/14  12:30    <DIR>          general
 2025/01/14  08:53    <DIR>          image
 2025/01/14  08:53    <DIR>          keybindings
 2025/01/14  08:53    <DIR>          markdown
@@ -1848,11 +1847,11 @@ SRC Directory:
 
  Directory of M:\cm\ydm\src\renderer\prefComponents\general
 
-2025/01/14  08:53    <DIR>          .
-2025/01/14  08:53    <DIR>          ..
+2025/01/14  12:30    <DIR>          .
+2025/01/14  12:30    <DIR>          ..
 2025/01/11  16:38               594 config.js
-2025/01/14  08:53             5,240 index.vue
-               2 File(s)          5,834 bytes
+2025/01/14  12:30             5,236 index.vue
+               2 File(s)          5,830 bytes
 
  Directory of M:\cm\ydm\src\renderer\prefComponents\image
 
@@ -1946,9 +1945,9 @@ SRC Directory:
 
 2025/01/12  08:15    <DIR>          .
 2025/01/12  08:15    <DIR>          ..
-2025/01/13  11:12             1,979 index.js
+2025/01/14  21:18             2,003 index.js
 2025/01/12  08:15             1,045 style.css
-               2 File(s)          3,024 bytes
+               2 File(s)          3,048 bytes
 
  Directory of M:\cm\ydm\src\renderer\router
 
@@ -1977,11 +1976,11 @@ SRC Directory:
 
  Directory of M:\cm\ydm\src\renderer\spellchecker
 
-2025/01/10  12:49    <DIR>          .
-2025/01/10  12:49    <DIR>          ..
+2025/01/14  15:12    <DIR>          .
+2025/01/14  15:12    <DIR>          ..
 2025/01/10  12:49             2,955 index.js
-2025/01/10  12:49             3,890 languageMap.js
-               2 File(s)          6,845 bytes
+2025/01/14  15:44             3,953 languageMap.js
+               2 File(s)          6,908 bytes
 
  Directory of M:\cm\ydm\src\renderer\store
 
@@ -1991,7 +1990,7 @@ SRC Directory:
 2025/01/10  12:49             2,041 commandCenter.js
 2025/01/10  13:15            44,667 editor.js
 2025/01/10  12:49             4,115 help.js
-2025/01/10  12:49             1,533 index.js
+2025/01/14  21:35             1,736 index.js
 2025/01/10  12:49             2,258 layout.js
 2025/01/10  12:49             1,063 listenForMain.js
 2025/01/14  08:19    <DIR>          modules
@@ -2000,7 +1999,7 @@ SRC Directory:
 2025/01/10  12:49             6,793 project.js
 2025/01/10  12:49             4,860 treeCtrl.js
 2025/01/10  12:49               375 tweet.js
-              12 File(s)         74,731 bytes
+              12 File(s)         74,934 bytes
 
  Directory of M:\cm\ydm\src\renderer\store\modules
 
@@ -2026,8 +2025,8 @@ SRC Directory:
               10 File(s)         26,676 bytes
 
      Total Files Listed:
-             647 File(s)      4,009,624 bytes
-             560 Dir(s)  111,955,398,656 bytes free
+             644 File(s)      4,006,895 bytes
+             560 Dir(s)  111,948,754,944 bytes free
 ==================== 
 Electron-Vue Directory: 
  Volume in drive M is 三星
@@ -2058,5 +2057,5 @@ Electron-Vue Directory:
 
      Total Files Listed:
               10 File(s)         27,843 bytes
-               5 Dir(s)  111,955,447,808 bytes free
+               5 Dir(s)  111,948,804,096 bytes free
 ==================== 

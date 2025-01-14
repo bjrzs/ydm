@@ -7,7 +7,6 @@ import { ipcRenderer } from 'electron'
 
 Vue.use(VueI18n)
 
-// 调试用：打印翻译内容
 const messages = {
   en: {
     ...en
@@ -28,6 +27,11 @@ const i18n = new VueI18n({
 })
 
 locale.use(savedLanguage === 'zh-cn' ? zhCN : en)
+
+// 通知主进程语言变更
+if (savedLanguage) {
+  ipcRenderer.send('mt::change-language', savedLanguage)
+}
 
 // 处理语言切换
 export function changeLanguage (lang) {

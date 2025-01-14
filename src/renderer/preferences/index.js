@@ -1,3 +1,4 @@
+// preferences/index.js
 import MenuPreferences from '../prefComponents/menu'
 import SpellcheckPreferences from '../prefComponents/spellcheck'
 import './style.css'

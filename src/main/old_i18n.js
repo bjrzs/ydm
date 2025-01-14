@@ -1,4 +1,6 @@
-import { ipcMain } from 'electron'
+import { ipcMain, app } from 'electron'
+import path from 'path'
+import fs from 'fs'
 import zhCN from '../locales/zh-cn.json'
 import enUS from '../locales/en.json'
 
@@ -28,6 +30,25 @@ const i18n = {
     }
   }
 }
+
+// 添加新的 IPC 处理
+ipcMain.on('mt::request-language-setting', (event) => {
+  try {
+    const userDataPath = app.getPath('userData')
+    const preferencesPath = path.join(userDataPath, 'preferences.json')
+
+    if (fs.existsSync(preferencesPath)) {
+      const preferences = JSON.parse(fs.readFileSync(preferencesPath, 'utf8'))
+      const lang = preferences.language || 'zh-cn'
+      event.reply('mt::language-setting-reply', lang)
+      // 同时设置主进程的语言
+      i18n.setLocale(lang)
+    }
+  } catch (err) {
+    console.error('Failed to read preferences.json:', err)
+    event.reply('mt::language-setting-reply', 'zh-cn')
+  }
+})
 
 ipcMain.on('mt::change-language', (event, locale) => {
   i18n.setLocale(locale)

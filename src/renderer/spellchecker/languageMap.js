@@ -166,6 +166,9 @@ const HUNSPELL_DICTIONARY_LANGUAGE_MAP = Object.freeze([{
   label: 'українська', // Ukrainian
   value: 'uk-UA'
 }, {
+  label: '简体中文', // Ukrainian
+  value: 'zh-cn'
+}, {
   label: 'Tiếng Việt', // Vietnamese
   value: 'vi-VN'
 }])

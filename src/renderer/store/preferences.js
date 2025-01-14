@@ -130,12 +130,11 @@ const actions = {
   },
 
   setLanguage ({ commit, dispatch }, lang) {
-    dispatch('SET_SINGLE_PREFERENCE', {
-      type: 'language',
-      value: lang
-    })
-    // Reload window to apply new language
-    ipcRenderer.send('mt::reload-window')
+    // 1. 只发送语言变更消息
+    ipcRenderer.send('mt::change-language', String(lang))
+
+    // 2. 直接更新本地状态
+    commit('SET_USER_PREFERENCE', { language: String(lang) })
   },
 
   SET_USER_DATA ({ commit }, { type, value }) {
