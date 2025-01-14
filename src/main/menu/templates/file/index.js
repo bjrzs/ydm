@@ -1,4 +1,4 @@
-import i18n from '../../../i18n'
+import i18n from '../../../old_i18n.js'
 import { getFileMenuConfig } from './config'
 import { openFileOrFolder, clearRecentlyUsed } from '../../actions/file'
 

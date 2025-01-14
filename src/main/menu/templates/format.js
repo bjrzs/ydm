@@ -1,5 +1,5 @@
 import * as actions from '../actions/format'
-import i18n from '../../i18n'
+import i18n from '../../old_i18n.js'
 
 export default function (keybindings) {
   return {

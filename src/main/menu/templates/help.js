@@ -2,7 +2,7 @@ import { shell } from 'electron'
 import * as actions from '../actions/help'
 import { checkUpdates } from '../actions/marktext'
 import { isUpdatable } from '../../utils'
-import i18n from '../../i18n'
+import i18n from '../../old_i18n.js'
 
 export default function () {
   const helpMenu = {

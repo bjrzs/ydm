@@ -2,7 +2,7 @@ import { app } from 'electron'
 import * as actions from '../actions/file'
 import { userSetting } from '../actions/marktext'
 import { isOsx } from '../../config'
-import i18n from '../../i18n'
+import i18n from '../../old_i18n.js'
 
 export default function (keybindings, userPreference, recentlyUsedFiles) {
   const { autoSave } = userPreference.getAll()

@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
 import { menuConfig } from './config'
-import i18n from '../i18n'
+import i18n from '@/i18n'
 import store from '../store'
 
 class MenuBuilder {

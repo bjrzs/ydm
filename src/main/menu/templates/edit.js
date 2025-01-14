@@ -1,7 +1,7 @@
 import * as actions from '../actions/edit'
 import { isOsx } from '../../config'
 import { COMMANDS } from '../../commands'
-import i18n from '../../i18n'
+import i18n from '../../old_i18n.js'
 
 export default function (keybindings) {
   return {

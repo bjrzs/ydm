@@ -77,7 +77,7 @@ import {
   fileSortByOptions,
   languageOptions
 } from './config'
-import { changeLanguage } from '../../i18n'
+import { changeLanguage } from '@/i18n'
 
 export default {
   components: {

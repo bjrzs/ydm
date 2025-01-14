@@ -1,7 +1,6 @@
 import './globalSetting'
 import path from 'path'
-import fs from 'fs'
-import { app, dialog, BrowserWindow, ipcMain } from 'electron'
+import { app, dialog } from 'electron'
 import { initialize as remoteInitializeServer } from '@electron/remote/main'
 import cli from './cli'
 import setupExceptionHandler, { initExceptionLogger } from './exceptionHandler'
@@ -10,35 +9,10 @@ import App from './app'
 import Accessor from './app/accessor'
 import setupEnvironment from './app/env'
 import { getLogLevel } from './utils'
-import i18n from './i18n'
-// import configureMenu from './menu/templates'
-
-const getInitialLanguage = () => {
-  try {
-    const userDataPath = app.getPath('userData')
-    const preferencesPath = path.join(userDataPath, 'preferences.json')
-    const data = fs.readFileSync(preferencesPath, 'utf8')
-    const preferences = JSON.parse(data)
-    return preferences.language
-  } catch (err) {
-    const locale = app.getLocale().toLowerCase()
-    return locale.startsWith('zh') ? 'zh-cn' : 'en'
-  }
-}
-
-const initialLanguage = getInitialLanguage()
-i18n.setLocale(initialLanguage)
-
-ipcMain.on('mt::change-language', (event, language) => {
-  i18n.setLocale(language)
-
-  const windows = BrowserWindow.getAllWindows()
-  windows.forEach(window => {
-    // const menuTemplate = configureMenu()
-    // const menu = Menu.buildFromTemplate(menuTemplate)
-    // window.setMenu(menu)
-  })
-})
+import i18n from './old_i18n.js'
+// Initialize i18n with system locale
+const locale = app.getLocale().toLowerCase()
+i18n.setLocale(locale.startsWith('zh') ? 'zh-cn' : 'en')
 
 const initializeLogger = appEnvironment => {
   log.transports.console.level = process.env.NODE_ENV === 'development' ? 'info' : 'error'
@@ -112,7 +86,3 @@ remoteInitializeServer()
 
 const marktext = new App(accessor, args)
 marktext.init()
-
-app.on('ready', () => {
-  // createMenu()
-})

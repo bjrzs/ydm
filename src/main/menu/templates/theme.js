@@ -1,5 +1,5 @@
 import * as actions from '../actions/theme'
-import i18n from '../../i18n'
+import i18n from '../../old_i18n.js'
 
 export default function (userPreference) {
   const { theme } = userPreference.getAll()

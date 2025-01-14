@@ -1,7 +1,7 @@
 import { app } from 'electron'
 import { showAboutDialog } from '../actions/help'
 import * as actions from '../actions/marktext'
-import i18n from '../../i18n'
+import i18n from '../../old_i18n.js'
 
 // macOS only menu.
 
