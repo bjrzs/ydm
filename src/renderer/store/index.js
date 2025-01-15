@@ -18,7 +18,7 @@ Vue.use(Vuex)
 // global states
 const state = {
   platform: process.platform, // platform of system `darwin` | `win32` | `linux`
-  appVersion: process.versions.MARKTEXT_VERSION_STRING, // MarkText version string
+  // appVersion: process.versions.MARKTEXT_VERSION_STRING, // MarkText version string
   windowActive: true, // whether current window is active or focused
   init: false // whether MarkText is initialized
 }
@@ -35,7 +35,7 @@ const mutations = {
 }
 
 const actions = {
-  LINTEN_WIN_STATUS ({ commit, state }) {
+  LISTEN_WIN_STATUS ({ commit, state }) {
     ipcRenderer.on('mt::window-active-status', (e, { status }) => {
       commit('SET_WIN_STATUS', status)
     })
@@ -67,8 +67,8 @@ const store = new Vuex.Store({
 })
 
 // Initialize language from localStorage
-const savedLanguage = localStorage.getItem('preferred-language') || 'en'
+// const savedLanguage = localStorage.getItem('preferred-language') || 'en'
 
-ipcRenderer.send('mt::change-language', String(savedLanguage))
+// ipcRenderer.send('mt::change-language', String(savedLanguage))
 
 export default store
