@@ -39,7 +39,7 @@ export const category = [{
   icon: ImageIcon,
   path: '/preference/image'
 }, {
-  name: 'key bindings',
+  name: 'keybindings',
   label: 'keybindings',
   icon: KeyBindingIcon,
   path: '/preference/keybindings'

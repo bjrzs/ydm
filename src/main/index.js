@@ -17,7 +17,7 @@ i18n.setLocale(locale.startsWith('zh') ? 'zh-cn' : 'en')
 const initializeLogger = appEnvironment => {
   log.transports.console.level = process.env.NODE_ENV === 'development' ? 'info' : 'error'
   log.transports.rendererConsole = null
-  log.transports.file.resolvePath = () => path.join(appEnvironment.paths.logPath, 'main.log')
+  log.transports.file.resolvePathFn = () => path.join(appEnvironment.paths.logPath, 'main.log')
   log.transports.file.level = getLogLevel()
   log.transports.file.sync = true
   initExceptionLogger()

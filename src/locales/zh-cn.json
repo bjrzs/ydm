@@ -433,7 +433,7 @@
       }
     }
   },
-  "spellcheck": {
+  "spelling": {
     "title": "拼写检查",
     "enable": "启用拼写检查",
     "language": "拼写检查语言",

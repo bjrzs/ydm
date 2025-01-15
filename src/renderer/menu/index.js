@@ -22,7 +22,6 @@ export function initMenu () {
 
   // 监听偏好设置加载事件
   ipcRenderer.on('mt::preferences-loaded', () => {
-    console.log('[Renderer] Received mt::preferences-loaded event')
     initializeLanguage()
   })
 
@@ -32,11 +31,6 @@ export function initMenu () {
     (newLanguage) => {
       // 发送指令给主进程更新菜单翻译
       ipcRenderer.send('mt::update-menu-translations', newLanguage)
-      console.log('[Renderer] Sent update menu translations request')
-
-      // 保存语言偏好
-      store.dispatch('preferences/savePreferences')
-      console.log('[Renderer] Saved language preferences')
     }
   )
 }

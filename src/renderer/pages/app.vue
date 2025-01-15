@@ -118,7 +118,7 @@ export default {
     }
 
     // store/index.js
-    dispatch('LINTEN_WIN_STATUS')
+    dispatch('LISTEN_WIN_STATUS')
     // module: command center
     dispatch('LISTEN_COMMAND_CENTER_BUS')
     // module: tweet

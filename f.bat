@@ -65,6 +65,7 @@ yarn eslint --fix ^
   src\main\menu\templates\marktext.js ^
   src\main\menu\templates\file\index.js ^
   src\renderer\app.vue
+  src\renderer\components\sideBar\toc.vue
 
 :: Format with Prettier
 prettier --write "src/renderer/menu/config.js"
@@ -76,6 +77,7 @@ prettier --write "src/main/index.js"
 prettier --write "src/renderer/main.js"
 prettier --write "src/renderer/store/preferences.js"
 prettier --write "src/locales/zh-cn.json"
+prettier --write "src/renderer/components/sideBar/toc.vue"
 
 :: Remove trailing spaces and ensure LF line endings
 sed -i 's/\s\+$//' "src/renderer/menu/config.js"
@@ -89,6 +91,7 @@ sed -i 's/\s\+$//' "src/renderer/store/preferences.js"
 sed -i 's/\s\+$//' "src/locales/zh-cn.json"
 sed -i 's/\s\+$//' "src/main/menu/templates/file/index.js"
 sed -i 's/\s\+$//' "src/renderer/app.vue"
+sed -i 's/\s\+$//' "src/renderer/components/sideBar/toc.vue"
 
 :: Convert CRLF to LF
 dos2unix "src/renderer/menu/config.js"
@@ -102,8 +105,9 @@ dos2unix "src/renderer/store/preferences.js"
 dos2unix "src/locales/zh-cn.json"
 dos2unix "src/main/menu/templates/file/index.js"
 dos2unix "src/renderer/app.vue"
+dos2unix "src/renderer/components/sideBar/toc.vue"
 
-echo prettier --write "src/locales/zh-cn.json" >> f.bat
+prettier --write "src/locales/zh-cn.json" 
 
 echo Is OK,Let's continue...
 
