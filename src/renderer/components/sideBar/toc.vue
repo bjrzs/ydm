@@ -149,15 +149,42 @@ export default {
 
       if (!targetElement) return
 
-      let currentElement = targetElement
+      // 找到最近的标题元素
       let closestHeading = null
+      let currentElement = targetElement
 
+      // 向上查找最近的标题
       while (currentElement && currentElement !== this.editorElement) {
         if (currentElement.matches('h1, h2, h3, h4, h5, h6')) {
           closestHeading = currentElement
           break
         }
         currentElement = currentElement.parentElement
+      }
+
+      // 如果向上没找到，则查找当前位置之前最近的标题
+      if (!closestHeading) {
+        // 获取文档中的所有节点
+        const treeWalker = document.createTreeWalker(
+          this.editorElement,
+          NodeFilter.SHOW_ELEMENT,
+          null,
+          false
+        )
+
+        let currentNode = null
+        let previousHeading = null
+
+        // 遍历所有节点直到找到目标元素
+        while ((currentNode = treeWalker.nextNode())) {
+          if (currentNode.matches('h1, h2, h3, h4, h5, h6')) {
+            previousHeading = currentNode
+          }
+          if (currentNode === targetElement) {
+            closestHeading = previousHeading
+            break
+          }
+        }
       }
 
       if (!closestHeading) return
