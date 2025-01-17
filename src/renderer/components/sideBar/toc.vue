@@ -72,21 +72,17 @@ export default {
     setupEventListeners () {
       if (!this.editorElement) return
 
-      // 添加事件监听
-      this.editorElement.addEventListener('scroll', this.handleScroll)
+      console.log('Setting up scroll listener on:', this.editorElement) // DEBUG
+
+      // 同时监听文档和编辑器的滚动事件
+      this.editorElement.addEventListener('scroll', this.handleScroll, { passive: true })
+      document.addEventListener('scroll', this.handleScroll, { passive: true })
+      window.addEventListener('scroll', this.handleScroll, { passive: true })
+
+      // 监听鼠标滚轮事件
+      this.editorElement.addEventListener('wheel', this.handleScroll, { passive: true })
+
       this.editorElement.addEventListener('click', this.handleEditorClick)
-
-      // 监听内容变化
-      this.$watch('toc', () => {
-        console.log('TOC updated, updating cache') // DEBUG
-        this.updateHeadingsCache()
-      })
-
-      // 监听编辑器内容变化
-      this.editorElement.addEventListener('input', () => {
-        console.log('Content changed, updating cache') // DEBUG
-        this.updateHeadingsCache()
-      })
     },
 
     // 处理树节点点击
@@ -100,13 +96,48 @@ export default {
     },
 
     // 处理滚动事件
-    handleScroll: debounce(function () {
-      // 限制滚动处理频率
-      const now = Date.now()
-      if (now - this.lastScrollTime < 50) return // 50ms 内不重复处理
+    handleScroll: debounce(function (event) {
+      if (!this.editorElement) return
 
-      this.lastScrollTime = now
-      this.syncOutlinePosition()
+      const editorRect = this.editorElement.getBoundingClientRect()
+      const viewportTop = editorRect.top
+      const viewportHeight = editorRect.height
+      const targetY = viewportTop + (viewportHeight / 3)
+
+      // 找到该位置最近的标题
+      let targetElement = null
+      const elements = this.editorElement.querySelectorAll('h1, h2, h3, h4, h5, h6')
+
+      // 找最近的标题
+      let closestDistance = Infinity
+      elements.forEach(element => {
+        const rect = element.getBoundingClientRect()
+        const distance = Math.abs(rect.top + rect.height / 2 - targetY)
+        if (distance < closestDistance) {
+          closestDistance = distance
+          targetElement = element
+        }
+      })
+
+      if (!targetElement) return
+
+      const headingSlug = targetElement.id || targetElement.getAttribute('data-id')
+      if (!headingSlug) return
+
+      // 更新大纲高亮并滚动到对应位置
+      if (headingSlug !== this.activeHeadingId) {
+        this.activeHeadingId = headingSlug
+        this.$nextTick(() => {
+          const { tocTree } = this.$refs
+          if (tocTree) {
+            tocTree.setCurrentKey(headingSlug)
+            const nodeEl = tocTree.$el.querySelector(`[data-key="${headingSlug}"]`)
+            if (nodeEl) {
+              nodeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+            }
+          }
+        })
+      }
     }, 100),
 
     // 更新标题缓存
@@ -285,8 +316,11 @@ export default {
     // 清理事件监听
     if (this.editorElement) {
       this.editorElement.removeEventListener('scroll', this.handleScroll)
+      this.editorElement.removeEventListener('wheel', this.handleScroll)
       this.editorElement.removeEventListener('click', this.handleEditorClick)
     }
+    document.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 
