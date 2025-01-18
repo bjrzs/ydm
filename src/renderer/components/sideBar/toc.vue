@@ -16,7 +16,7 @@
       :indent="10"
       node-key="slug"
       :current-node-key="activeHeadingId"
-      highlight-current
+      class="custom-tree"
     ></el-tree>
     <div class="no-data" v-else>
       <svg aria-hidden="true" :viewBox="EmptyIcon.viewBox">
@@ -138,7 +138,7 @@ export default {
           }
         })
       }
-    }, 100),
+    }, 800),
 
     // 更新标题缓存
     updateHeadingsCache () {
@@ -338,13 +338,13 @@ function debounce (fn, delay) {
 
 <style>
 .side-bar-toc {
-  height: calc(100% - 35px);
+  height: var(--theme-color);
   margin: 0;
   padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
-  background-color: var(--sideBarBgColor, transparent);
+  background-color: var(--theme-color);
 }
 
 .side-bar-toc-overflow {
@@ -367,17 +367,36 @@ function debounce (fn, delay) {
 }
 
 .toc-item.active {
-  background-color: #424647;
-  border-right: 2px solid #f30707;
+  background-color: var(--theme-color);
+  border-right: var(--theme-color);
 }
 
 .el-tree {
-  background-color: transparent !important;
-  color: var(--sideBarTextColor, inherit);
+  background-color: var(--theme-color);
+  color: var(--theme-color);
 }
 
 .el-tree-node.is-current > .el-tree-node__content {
-  background-color: var(--sideBarItemHoverBgColor, rgba(0, 0, 0, 0.1)) !important;
-  border-right: 2px solid var(--themeColor, #409EFF);
+  background-color: #ebe708;/* 点击的时候的颜色 */
+  color: #0829e4;/* 点击文字颜色 */
+  font-size: 20px;
 }
+
+.el-tree-node.is-current > .el-tree-node__content:hover {
+  background-color: #ebe708;/* 点击的时候的颜色 */
+  color: #0829e4;/* 点击文字颜色 */
+  font-size: 20px;
+}
+
+.el-tree-node.is-current > .el-tree-node__label {
+  font-size: 20px;
+  color: #f4f800;
+  background-color: #ff0000;/* 点击的时候的颜色 */
+}
+.el-tree-node.is-current > .el-tree-node__label:hover {
+  font-size: 20px;
+  color: #ff0000;
+  background-color: #f4f800;/* 点击的时候的颜色 */
+}
+
 </style>
