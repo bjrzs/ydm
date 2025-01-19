@@ -1,16 +1,19 @@
 <template>
-  <div
-    class="side-bar-folder"
-  >
+  <div class="side-bar-folder">
     <div
-      class="folder-name" @click="folderNameClick"
-      :style="{'padding-left': `${(depth * 20) + 20}px`}"
-      :class="[{ 'active': folder.id === activeItem.id }]"
+      class="folder-name"
+      @click="folderNameClick"
+      :style="{ 'padding-left': `${depth * 20 + 20}px` }"
+      :class="[{ active: folder.id === activeItem.id }]"
       :title="folder.pathname"
       ref="folder"
     >
       <svg class="icon" aria-hidden="true">
-        <use :xlink:href="`#${folder.isCollapsed ? 'icon-folder-close' : 'icon-folder-open'}`"></use>
+        <use
+          :xlink:href="
+            `#${folder.isCollapsed ? 'icon-folder-close' : 'icon-folder-open'}`
+          "
+        ></use>
       </svg>
       <input
         type="text"
@@ -21,29 +24,29 @@
         ref="renameInput"
         @keydown.enter="rename"
         :placeholder="$t('sideBar.tree.rename')"
-      >
-      <span v-else class="text-overflow">{{folder.name}}</span>
+      />
+      <span v-else class="text-overflow">{{ folder.name }}</span>
     </div>
-    <div
-      class="folder-contents"
-      v-if="!folder.isCollapsed"
-    >
+    <div class="folder-contents" v-if="!folder.isCollapsed">
       <folder
-        v-for="(childFolder, index) of folder.folders" :key="index + 'folder'"
+        v-for="(childFolder, index) of folder.folders"
+        :key="index + 'folder'"
         :folder="childFolder"
         :depth="depth + 1"
       ></folder>
       <input
-        type="text" v-if="createCache.dirname === folder.pathname"
+        type="text"
+        v-if="createCache.dirname === folder.pathname"
         class="new-input"
-        :style="{'margin-left': `${depth * 5 + 15}px` }"
+        :style="{ 'margin-left': `${depth * 5 + 15}px` }"
         ref="input"
         @keydown.enter="handleInputEnter"
         v-model="createName"
         :placeholder="$t('sideBar.tree.newFile')"
-      >
+      />
       <file
-        v-for="(file, index) of folder.files" :key="index + 'file'"
+        v-for="(file, index) of folder.files"
+        :key="index + 'file'"
         :file="file"
         :depth="depth + 1"
       ></file>
@@ -122,33 +125,34 @@ export default {
 </script>
 
 <style scoped>
-  .side-bar-folder {
-    & > .folder-name {
-      cursor: default;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      height: 30px;
-      padding-right: 15px;
-      & > svg {
-        flex-shrink: 0;
-        color: var(--sideBarIconColor);
-        margin-right: 5px;
-      }
-      &:hover {
-        background: var(--sideBarItemHoverBgColor);
-      }
+.side-bar-folder {
+  & > .folder-name {
+    cursor: default;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    padding-right: 15px;
+    & > svg {
+      flex-shrink: 0;
+      color: var(--sideBarIconColor);
+      margin-right: 5px;
+    }
+    &:hover {
+      background: var(--sideBarItemHoverBgColor);
     }
   }
-  .new-input, input.rename {
-    outline: none;
-    height: 22px;
-    margin: 5px 0;
-    padding: 0 6px;
-    color: var(--sideBarColor);
-    border: 1px solid var(--floatBorderColor);
-    background: var(--floatBorderColor);
-    width: 70%;
-    border-radius: 3px;
-  }
+}
+.new-input,
+input.rename {
+  outline: none;
+  height: 22px;
+  margin: 5px 0;
+  padding: 0 6px;
+  color: var(--sideBarColor);
+  border: 1px solid var(--floatBorderColor);
+  background: var(--floatBorderColor);
+  width: 70%;
+  border-radius: 3px;
+}
 </style>

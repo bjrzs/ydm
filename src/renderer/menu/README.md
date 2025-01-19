@@ -28,4 +28,4 @@ This directory contains the implementation of MarkText's dynamic menu system.
 ## Usage
 
 The menu system is automatically initialized when the app starts.
-Language changes are handled through Vuex store watchers. 
+Language changes are handled through Vuex store watchers.

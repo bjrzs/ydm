@@ -2,7 +2,11 @@ import i18n from '../../../old_i18n.js'
 import { getFileMenuConfig } from './config'
 import { openFileOrFolder, clearRecentlyUsed } from '../../actions/file'
 
-export default function createFileMenu (keybindings, userPreference, recentlyUsedFiles) {
+export default function createFileMenu (
+  keybindings,
+  userPreference,
+  recentlyUsedFiles
+) {
   const config = getFileMenuConfig(keybindings)
   const { autoSave } = userPreference.getAll()
 
@@ -14,19 +18,24 @@ export default function createFileMenu (keybindings, userPreference, recentlyUse
     return {
       ...item,
       label: i18n.t(item.label),
-      accelerator: typeof item.accelerator === 'function' ? item.accelerator() : item.accelerator
+      accelerator:
+        typeof item.accelerator === 'function'
+          ? item.accelerator()
+          : item.accelerator
     }
   })
 
   // 处理最近使用的文件
-  const recentFilesIndex = menuItems.findIndex(item => item.id === 'openFolder') + 1
+  const recentFilesIndex =
+    menuItems.findIndex(item => item.id === 'openFolder') + 1
   if (recentlyUsedFiles && recentlyUsedFiles.length > 0) {
     menuItems.splice(recentFilesIndex, 0, {
       label: i18n.t('menu.file.openRecent'),
       submenu: [
         ...recentlyUsedFiles.map(file => ({
           label: file,
-          click: (menuItem, browserWindow) => openFileOrFolder(browserWindow, file)
+          click: (menuItem, browserWindow) =>
+            openFileOrFolder(browserWindow, file)
         })),
         { type: 'separator' },
         {

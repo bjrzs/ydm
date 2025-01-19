@@ -16,7 +16,7 @@ export dockMenu from './dock'
  *
  * @param {Keybindings} keybindings The keybindings instance
  */
-export const configSettingMenu = (keybindings) => {
+export const configSettingMenu = keybindings => {
   return [
     ...(process.platform === 'darwin' ? [marktext(keybindings)] : []),
     prefEdit(keybindings),

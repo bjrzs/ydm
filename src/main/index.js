@@ -15,9 +15,11 @@ const locale = app.getLocale().toLowerCase()
 i18n.setLocale(locale.startsWith('zh') ? 'zh-cn' : 'en')
 
 const initializeLogger = appEnvironment => {
-  log.transports.console.level = process.env.NODE_ENV === 'development' ? 'info' : 'error'
+  log.transports.console.level =
+    process.env.NODE_ENV === 'development' ? 'info' : 'error'
   log.transports.rendererConsole = null
-  log.transports.file.resolvePathFn = () => path.join(appEnvironment.paths.logPath, 'main.log')
+  log.transports.file.resolvePathFn = () =>
+    path.join(appEnvironment.paths.logPath, 'main.log')
   log.transports.file.level = getLogLevel()
   log.transports.file.sync = true
   initExceptionLogger()
@@ -27,7 +29,9 @@ const initializeLogger = appEnvironment => {
 
 // NOTE: We only support Linux, macOS and Windows but not BSD nor SunOS.
 if (!/^(darwin|win32|linux)$/i.test(process.platform)) {
-  process.stdout.write(`Operating system "${process.platform}" is not supported! Please open an issue at "https://github.com/marktext/marktext".\n`)
+  process.stdout.write(
+    `Operating system "${process.platform}" is not supported! Please open an issue at "https://github.com/marktext/marktext".\n`
+  )
   process.exit(1)
 }
 

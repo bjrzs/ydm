@@ -4,75 +4,86 @@ import i18n from '../../old_i18n.js'
 export default function (keybindings) {
   const viewMenu = {
     label: i18n.t('menu.view.title'),
-    submenu: [{
-      label: i18n.t('menu.view.commandPalette'),
-      accelerator: keybindings.getAccelerator('view.command-palette'),
-      click (menuItem, focusedWindow) {
-        actions.showCommandPalette(focusedWindow)
+    submenu: [
+      {
+        label: i18n.t('menu.view.commandPalette'),
+        accelerator: keybindings.getAccelerator('view.command-palette'),
+        click (menuItem, focusedWindow) {
+          actions.showCommandPalette(focusedWindow)
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        id: 'sourceCodeModeMenuItem',
+        label: i18n.t('menu.view.sourceCodeMode'),
+        accelerator: keybindings.getAccelerator('view.source-code-mode'),
+        type: 'checkbox',
+        checked: false,
+        click (item, focusedWindow) {
+          actions.toggleSourceCodeMode(focusedWindow)
+        }
+      },
+      {
+        id: 'typewriterModeMenuItem',
+        label: i18n.t('menu.view.typewriterMode'),
+        accelerator: keybindings.getAccelerator('view.typewriter-mode'),
+        type: 'checkbox',
+        checked: false,
+        click (item, focusedWindow) {
+          actions.toggleTypewriterMode(focusedWindow)
+        }
+      },
+      {
+        id: 'focusModeMenuItem',
+        label: i18n.t('menu.view.focusMode'),
+        accelerator: keybindings.getAccelerator('view.focus-mode'),
+        type: 'checkbox',
+        checked: false,
+        click (item, focusedWindow) {
+          actions.toggleFocusMode(focusedWindow)
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: i18n.t('menu.view.showSidebar'),
+        id: 'sideBarMenuItem',
+        accelerator: keybindings.getAccelerator('view.toggle-sidebar'),
+        type: 'checkbox',
+        checked: false,
+        click (item, focusedWindow) {
+          actions.toggleSidebar(focusedWindow)
+        }
+      },
+      {
+        label: i18n.t('menu.view.showTabBar'),
+        id: 'tabBarMenuItem',
+        accelerator: keybindings.getAccelerator('view.toggle-tabbar'),
+        type: 'checkbox',
+        checked: false,
+        click (item, focusedWindow) {
+          actions.toggleTabBar(focusedWindow)
+        }
+      },
+      {
+        label: i18n.t('menu.view.toggleToc'),
+        id: 'tocMenuItem',
+        accelerator: keybindings.getAccelerator('view.toggle-toc'),
+        click (_, focusedWindow) {
+          actions.showTableOfContents(focusedWindow)
+        }
+      },
+      {
+        label: i18n.t('menu.view.reloadImages'),
+        accelerator: keybindings.getAccelerator('view.reload-images'),
+        click (item, focusedWindow) {
+          actions.reloadImageCache(focusedWindow)
+        }
       }
-    }, {
-      type: 'separator'
-    }, {
-      id: 'sourceCodeModeMenuItem',
-      label: i18n.t('menu.view.sourceCodeMode'),
-      accelerator: keybindings.getAccelerator('view.source-code-mode'),
-      type: 'checkbox',
-      checked: false,
-      click (item, focusedWindow) {
-        actions.toggleSourceCodeMode(focusedWindow)
-      }
-    }, {
-      id: 'typewriterModeMenuItem',
-      label: i18n.t('menu.view.typewriterMode'),
-      accelerator: keybindings.getAccelerator('view.typewriter-mode'),
-      type: 'checkbox',
-      checked: false,
-      click (item, focusedWindow) {
-        actions.toggleTypewriterMode(focusedWindow)
-      }
-    }, {
-      id: 'focusModeMenuItem',
-      label: i18n.t('menu.view.focusMode'),
-      accelerator: keybindings.getAccelerator('view.focus-mode'),
-      type: 'checkbox',
-      checked: false,
-      click (item, focusedWindow) {
-        actions.toggleFocusMode(focusedWindow)
-      }
-    }, {
-      type: 'separator'
-    }, {
-      label: i18n.t('menu.view.showSidebar'),
-      id: 'sideBarMenuItem',
-      accelerator: keybindings.getAccelerator('view.toggle-sidebar'),
-      type: 'checkbox',
-      checked: false,
-      click (item, focusedWindow) {
-        actions.toggleSidebar(focusedWindow)
-      }
-    }, {
-      label: i18n.t('menu.view.showTabBar'),
-      id: 'tabBarMenuItem',
-      accelerator: keybindings.getAccelerator('view.toggle-tabbar'),
-      type: 'checkbox',
-      checked: false,
-      click (item, focusedWindow) {
-        actions.toggleTabBar(focusedWindow)
-      }
-    }, {
-      label: i18n.t('menu.view.toggleToc'),
-      id: 'tocMenuItem',
-      accelerator: keybindings.getAccelerator('view.toggle-toc'),
-      click (_, focusedWindow) {
-        actions.showTableOfContents(focusedWindow)
-      }
-    }, {
-      label: i18n.t('menu.view.reloadImages'),
-      accelerator: keybindings.getAccelerator('view.reload-images'),
-      click (item, focusedWindow) {
-        actions.reloadImageCache(focusedWindow)
-      }
-    }]
+    ]
   }
 
   if (global.MARKTEXT_DEBUG) {

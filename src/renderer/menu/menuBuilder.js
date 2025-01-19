@@ -27,7 +27,7 @@ class MenuBuilder {
       openFolder: () => store.dispatch('file/openFolder'),
       save: () => store.dispatch('file/save'),
       saveAs: () => store.dispatch('file/saveAs'),
-      autoSave: (checked) => store.dispatch('file/setAutoSave', checked),
+      autoSave: checked => store.dispatch('file/setAutoSave', checked),
       exportHTML: () => store.dispatch('file/exportFile', 'html'),
       exportPDF: () => store.dispatch('file/exportFile', 'pdf'),
       exportImage: () => store.dispatch('file/exportFile', 'image'),
@@ -124,7 +124,9 @@ class MenuBuilder {
     }
 
     if (menuItem.submenu) {
-      translatedItem.submenu = menuItem.submenu.map(item => this.buildMenuItem(item))
+      translatedItem.submenu = menuItem.submenu.map(item =>
+        this.buildMenuItem(item)
+      )
     }
 
     if (menuItem.id && !menuItem.submenu) {
@@ -139,8 +141,15 @@ class MenuBuilder {
 
     if (menuItem.type === 'radio') {
       if (menuItem.id === 'en' || menuItem.id === 'zh-cn') {
-        translatedItem.checked = store.state.preferences.language === menuItem.id
-      } else if (menuItem.id === 'light' || menuItem.id === 'dark' || menuItem.id === 'graphite' || menuItem.id === 'material' || menuItem.id === 'ulysses') {
+        translatedItem.checked =
+          store.state.preferences.language === menuItem.id
+      } else if (
+        menuItem.id === 'light' ||
+        menuItem.id === 'dark' ||
+        menuItem.id === 'graphite' ||
+        menuItem.id === 'material' ||
+        menuItem.id === 'ulysses'
+      ) {
         translatedItem.checked = store.state.preferences.theme === menuItem.id
       }
     }
@@ -150,7 +159,9 @@ class MenuBuilder {
 
   // Build complete menu
   buildMenu () {
-    this.menuTemplate = Object.values(menuConfig).map(menu => this.buildMenuItem(menu))
+    this.menuTemplate = Object.values(menuConfig).map(menu =>
+      this.buildMenuItem(menu)
+    )
     return this.menuTemplate
   }
 
@@ -162,7 +173,8 @@ class MenuBuilder {
 
   // Update recent files
   updateRecentFiles (recentFiles) {
-    const openRecentMenu = this.menuTemplate.find(menu => menu.id === 'fileMenu')
+    const openRecentMenu = this.menuTemplate
+      .find(menu => menu.id === 'fileMenu')
       ?.submenu.find(item => item.id === 'openRecent')
 
     if (openRecentMenu) {

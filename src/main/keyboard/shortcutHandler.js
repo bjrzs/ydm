@@ -3,7 +3,10 @@ import fs from 'fs'
 import fsPromises from 'fs/promises'
 import path from 'path'
 import log from 'electron-log'
-import { electronLocalshortcut, isValidElectronAccelerator } from '@hfelix/electron-localshortcut'
+import {
+  electronLocalshortcut,
+  isValidElectronAccelerator
+} from '@hfelix/electron-localshortcut'
 import { isFile2 } from 'common/filesystem'
 import { isEqualAccelerator } from 'common/keybinding'
 import { isLinux, isOsx } from '../config'
@@ -29,7 +32,9 @@ class Keybindings {
     if (appEnvironment.isDevMode) {
       for (const [id, accelerator] of this.keys) {
         if (!commandManager.has(id)) {
-          console.error(`[DEBUG] Command with id="${id}" isn't available for accelerator="${accelerator}".`)
+          console.error(
+            `[DEBUG] Command with id="${id}" isn't available for accelerator="${accelerator}".`
+          )
         }
       }
     }
@@ -48,7 +53,9 @@ class Keybindings {
 
   registerAccelerator (win, accelerator, callback) {
     if (!win || !accelerator || !callback) {
-      throw new Error(`addKeyHandler: invalid arguments (accelerator="${accelerator}").`)
+      throw new Error(
+        `addKeyHandler: invalid arguments (accelerator="${accelerator}").`
+      )
     }
 
     // Register shortcuts on the BrowserWindow instead of using Chromium's native menu.
@@ -80,8 +87,7 @@ class Keybindings {
     if (!isFile2(configPath)) {
       fs.writeFileSync(configPath, '{\n\n\n}\n', 'utf-8')
     }
-    shell.openPath(configPath)
-      .catch(err => console.error(err))
+    shell.openPath(configPath).catch(err => console.error(err))
   }
 
   getDefaultKeybindings () {
@@ -132,7 +138,11 @@ class Keybindings {
   async _saveUserKeybindings () {
     const { configPath, userKeybindings } = this
     try {
-      const userKeybindingJson = JSON.stringify(Object.fromEntries(userKeybindings), null, 2)
+      const userKeybindingJson = JSON.stringify(
+        Object.fromEntries(userKeybindings),
+        null,
+        2
+      )
       await fsPromises.writeFile(configPath, userKeybindingJson, 'utf8')
       return true
     } catch (_) {
@@ -147,7 +157,9 @@ class Keybindings {
 
     const rawUserKeybindings = this._loadUserKeybindingsFromDisk()
     if (!rawUserKeybindings) {
-      log.warn('Invalid keybinding configuration: failed to load or parse file.')
+      log.warn(
+        'Invalid keybinding configuration: failed to load or parse file.'
+      )
       return
     }
 
@@ -177,7 +189,11 @@ class Keybindings {
     // Check for duplicate user shortcuts
     for (const [keyA, valueA] of userAccelerators) {
       for (const [keyB, valueB] of userAccelerators) {
-        if (valueA !== '' && keyA !== keyB && isEqualAccelerator(valueA, valueB)) {
+        if (
+          valueA !== '' &&
+          keyA !== keyB &&
+          isEqualAccelerator(valueA, valueB)
+        ) {
           const err = `Invalid keybindings.json configuration: Duplicate value for "${keyA}" and "${keyB}"!`
           console.log(err)
           log.error(err)

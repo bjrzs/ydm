@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <TopMenu v-if="showTopMenu"/>
+    <TopMenu v-if="showTopMenu" />
     <!-- 其他组件 -->
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
 
       this.$store.watch(
         state => state.preferences,
-        (newPreferences) => {
+        newPreferences => {
           const userLanguage = newPreferences.language
 
           let menuLanguage = 'zh-cn'

@@ -1,5 +1,5 @@
 <template>
-    <span :class="className" class="file-icon"></span>
+  <span :class="className" class="file-icon"></span>
 </template>
 
 <script>
@@ -15,7 +15,9 @@ export default {
   },
   computed: {
     className () {
-      let classNames = fileIcons.getClassByName(this.name ? this.name : 'mock.md')
+      let classNames = fileIcons.getClassByName(
+        this.name ? this.name : 'mock.md'
+      )
 
       if (!classNames) {
         // Use fallback icon when the icon is unknown.
@@ -28,8 +30,8 @@ export default {
 </script>
 
 <style scoped>
-  .file-icon {
-    flex-shrink: 0;
-    margin-right: 5px;
-  }
+.file-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
 </style>

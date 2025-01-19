@@ -13,7 +13,9 @@ export function initMenu () {
       // 发送指令给主进程更新菜单翻译
       ipcRenderer.send('mt::update-menu-translations', currentLanguage)
     } else {
-      console.log('[Renderer] No language found in store, defaulting to English')
+      console.log(
+        '[Renderer] No language found in store, defaulting to English'
+      )
     }
   }
 
@@ -28,7 +30,7 @@ export function initMenu () {
   // 监听语言变化
   store.watch(
     state => state.preferences.language,
-    (newLanguage) => {
+    newLanguage => {
       // 发送指令给主进程更新菜单翻译
       ipcRenderer.send('mt::update-menu-translations', newLanguage)
     }

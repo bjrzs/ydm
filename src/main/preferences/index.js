@@ -23,7 +23,9 @@ class Preference extends EventEmitter {
 
     const { preferencesPath } = paths
     this.preferencesPath = preferencesPath
-    this.hasPreferencesFile = fs.existsSync(path.join(this.preferencesPath, `./${PREFERENCES_FILE_NAME}.json`))
+    this.hasPreferencesFile = fs.existsSync(
+      path.join(this.preferencesPath, `./${PREFERENCES_FILE_NAME}.json`)
+    )
     this.store = new Store({
       schema,
       name: PREFERENCES_FILE_NAME
@@ -36,7 +38,9 @@ class Preference extends EventEmitter {
   init = () => {
     let defaultSettings = null
     try {
-      defaultSettings = JSON.parse(fs.readFileSync(this.staticPath, { encoding: 'utf8' }) || '{}')
+      defaultSettings = JSON.parse(
+        fs.readFileSync(this.staticPath, { encoding: 'utf8' }) || '{}'
+      )
 
       // Set best theme on first application start.
       if (nativeTheme.shouldUseDarkColors) {
@@ -112,7 +116,9 @@ class Preference extends EventEmitter {
    */
   setItems (settings) {
     if (!settings) {
-      log.error('Cannot change settings without entires: object is undefined or null.')
+      log.error(
+        'Cannot change settings without entires: object is undefined or null.'
+      )
       return
     }
 
@@ -154,7 +160,7 @@ class Preference extends EventEmitter {
     })
   }
 
-  // 增加一个方法处理打开文件�?
+  // 增加一个方法处理打开文件�?
   watchedFolderChange (folder) {
     const defaultname = 'marktext'
     const settingspath = path.join(`${folder}`, `${defaultname}.json`)
@@ -167,7 +173,9 @@ class Preference extends EventEmitter {
       })
       const oldSettings = this.store.store
       this.store = newstore
-      const settings = JSON.parse(fs.readFileSync(settingspath, { encoding: 'utf8' }) || '{}')
+      const settings = JSON.parse(
+        fs.readFileSync(settingspath, { encoding: 'utf8' }) || '{}'
+      )
       for (const key of Object.keys(settings)) {
         oldSettings[key] = settings[key]
       }

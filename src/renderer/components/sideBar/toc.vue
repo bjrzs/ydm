@@ -1,10 +1,15 @@
 <template>
   <div
     class="side-bar-toc"
-    :class="[{ 'side-bar-toc-overflow': !wordWrapInToc, 'side-bar-toc-wordwrap': wordWrapInToc }]"
+    :class="[
+      {
+        'side-bar-toc-overflow': !wordWrapInToc,
+        'side-bar-toc-wordwrap': wordWrapInToc
+      }
+    ]"
     ref="tocContainer"
   >
-    <div class="title">{{ $t('sideBar.toc.title') }}</div>
+    <div class="title">{{ $t("sideBar.toc.title") }}</div>
     <el-tree
       v-if="toc.length"
       ref="tocTree"
@@ -56,8 +61,9 @@ export default {
   mounted () {
     this.$nextTick(() => {
       // 尝试获取 Muya 编辑器容器
-      this.editorElement = document.querySelector('.mu-container') ||
-                          document.querySelector('.editor-container')
+      this.editorElement =
+        document.querySelector('.mu-container') ||
+        document.querySelector('.editor-container')
       if (this.editorElement) {
         console.log('Editor element found:', this.editorElement) // DEBUG
         this.setupEventListeners()
@@ -75,12 +81,16 @@ export default {
       console.log('Setting up scroll listener on:', this.editorElement) // DEBUG
 
       // 同时监听文档和编辑器的滚动事件
-      this.editorElement.addEventListener('scroll', this.handleScroll, { passive: true })
+      this.editorElement.addEventListener('scroll', this.handleScroll, {
+        passive: true
+      })
       document.addEventListener('scroll', this.handleScroll, { passive: true })
       window.addEventListener('scroll', this.handleScroll, { passive: true })
 
       // 监听鼠标滚轮事件
-      this.editorElement.addEventListener('wheel', this.handleScroll, { passive: true })
+      this.editorElement.addEventListener('wheel', this.handleScroll, {
+        passive: true
+      })
 
       this.editorElement.addEventListener('click', this.handleEditorClick)
     },
@@ -102,11 +112,13 @@ export default {
       const editorRect = this.editorElement.getBoundingClientRect()
       const viewportTop = editorRect.top
       const viewportHeight = editorRect.height
-      const targetY = viewportTop + (viewportHeight / 3)
+      const targetY = viewportTop + viewportHeight / 3
 
       // 找到该位置最近的标题
       let targetElement = null
-      const elements = this.editorElement.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      const elements = this.editorElement.querySelectorAll(
+        'h1, h2, h3, h4, h5, h6'
+      )
 
       // 找最近的标题
       let closestDistance = Infinity
@@ -121,7 +133,8 @@ export default {
 
       if (!targetElement) return
 
-      const headingSlug = targetElement.id || targetElement.getAttribute('data-id')
+      const headingSlug =
+        targetElement.id || targetElement.getAttribute('data-id')
       if (!headingSlug) return
 
       // 更新大纲高亮并滚动到对应位置
@@ -131,7 +144,9 @@ export default {
           const { tocTree } = this.$refs
           if (tocTree) {
             tocTree.setCurrentKey(headingSlug)
-            const nodeEl = tocTree.$el.querySelector(`[data-key="${headingSlug}"]`)
+            const nodeEl = tocTree.$el.querySelector(
+              `[data-key="${headingSlug}"]`
+            )
             if (nodeEl) {
               nodeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
             }
@@ -144,7 +159,9 @@ export default {
     updateHeadingsCache () {
       if (!this.editorElement) return
 
-      const headings = Array.from(this.editorElement.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+      const headings = Array.from(
+        this.editorElement.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      )
       const oldLength = this.headingsCache?.length || 0
       this.headingsCache = headings
 
@@ -220,7 +237,8 @@ export default {
 
       if (!closestHeading) return
 
-      const headingSlug = closestHeading.id || closestHeading.getAttribute('data-id')
+      const headingSlug =
+        closestHeading.id || closestHeading.getAttribute('data-id')
       if (!headingSlug) return
 
       if (headingSlug !== this.activeHeadingId) {
@@ -229,7 +247,9 @@ export default {
           const { tocTree } = this.$refs
           if (tocTree) {
             tocTree.setCurrentKey(headingSlug)
-            const nodeEl = tocTree.$el.querySelector(`[data-key="${headingSlug}"]`)
+            const nodeEl = tocTree.$el.querySelector(
+              `[data-key="${headingSlug}"]`
+            )
             if (nodeEl) {
               nodeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
             }
@@ -247,7 +267,7 @@ export default {
 
       console.log('Attempting to scroll to:', headingId)
 
-      const findNodeInToc = (nodes) => {
+      const findNodeInToc = nodes => {
         for (const node of nodes) {
           if (node.slug === headingId) {
             return node
@@ -275,7 +295,9 @@ export default {
 
           tocTree.setCurrentKey(targetNode.slug)
 
-          const nodeEl = tocTree.$el.querySelector(`[data-key="${targetNode.slug}"]`)
+          const nodeEl = tocTree.$el.querySelector(
+            `[data-key="${targetNode.slug}"]`
+          )
           if (nodeEl) {
             // 确保父节点都是展开的
             let currentNode = targetNode
@@ -377,26 +399,25 @@ function debounce (fn, delay) {
 }
 
 .el-tree-node.is-current > .el-tree-node__content {
-  background-color: #ebe708;/* 点击的时候的颜色 */
-  color: #0829e4;/* 点击文字颜色 */
+  background-color: #ebe708; /* 点击的时候的颜色 */
+  color: #0829e4; /* 点击文字颜色 */
   font-size: 20px;
 }
 
 .el-tree-node.is-current > .el-tree-node__content:hover {
-  background-color: #ebe708;/* 点击的时候的颜色 */
-  color: #0829e4;/* 点击文字颜色 */
+  background-color: #ebe708; /* 点击的时候的颜色 */
+  color: #0829e4; /* 点击文字颜色 */
   font-size: 20px;
 }
 
 .el-tree-node.is-current > .el-tree-node__label {
   font-size: 20px;
   color: #f4f800;
-  background-color: #ff0000;/* 点击的时候的颜色 */
+  background-color: #ff0000; /* 点击的时候的颜色 */
 }
 .el-tree-node.is-current > .el-tree-node__label:hover {
   font-size: 20px;
   color: #ff0000;
-  background-color: #f4f800;/* 点击的时候的颜色 */
+  background-color: #f4f800; /* 点击的时候的颜色 */
 }
-
 </style>

@@ -1,88 +1,86 @@
 <template>
-    <div
-      class="side-bar-search"
-    >
-      <div class="search-wrapper">
-        <input
-          type="text" v-model="keyword"
-          :placeholder="$t('sideBar.search.placeholder')"
-          @keyup="search"
+  <div class="side-bar-search">
+    <div class="search-wrapper">
+      <input
+        type="text"
+        v-model="keyword"
+        :placeholder="$t('sideBar.search.placeholder')"
+        @keyup="search"
+      />
+      <div class="controls">
+        <span
+          :title="$t('sideBar.search.caseSensitive')"
+          class="is-case-sensitive"
+          :class="{ active: isCaseSensitive }"
+          @click.stop="caseSensitiveClicked()"
         >
-        <div class="controls">
-          <span
-            :title="$t('sideBar.search.caseSensitive')"
-            class="is-case-sensitive"
-            :class="{'active': isCaseSensitive}"
-            @click.stop="caseSensitiveClicked()"
-          >
-            <svg :viewBox="FindCaseIcon.viewBox" aria-hidden="true">
-              <use :xlink:href="FindCaseIcon.url" />
-            </svg>
-          </span>
-          <span
-            :title="$t('sideBar.search.wholeWord')"
-            class="is-whole-word"
-            :class="{'active': isWholeWord}"
-            @click.stop="wholeWordClicked()"
-          >
-            <svg :viewBox="FindWordIcon.viewBox" aria-hidden="true">
-              <use :xlink:href="FindWordIcon.url" />
-            </svg>
-          </span>
-          <span
-            :title="$t('sideBar.search.useRegexp')"
-            class="is-regex"
-            :class="{'active': isRegexp}"
-            @click.stop="regexpClicked()"
-          >
-            <svg :viewBox="FindRegexIcon.viewBox" aria-hidden="true">
-              <use :xlink:href="FindRegexIcon.url" />
-            </svg>
-          </span>
-        </div>
-      </div>
-
-      <div class="search-message-section" v-if="showNoFolderOpenedMessage">
-        <span>{{ $t('sideBar.search.noFolderOpened') }}</span>
-      </div>
-      <div class="search-message-section" v-if="showNoResultFoundMessage">{{ $t('sideBar.search.noResults') }}</div>
-      <div class="search-message-section" v-if="searchErrorString">{{ searchErrorString }}</div>
-
-      <div
-        class="cancel-area"
-        v-show="showSearchCancelArea"
-      >
-        <el-button
-          type="primary"
-          size="mini"
-          @click="cancelSearcher"
-        >
-          {{ $t('sideBar.search.cancel') }} <i class="el-icon-video-pause"></i>
-        </el-button>
-      </div>
-      <div v-if="searchResult.length" class="search-result-info">{{searchResultInfo}}</div>
-      <div class="search-result" v-if="searchResult.length">
-        <search-result-item
-          v-for="(item, index) of searchResult"
-          :key="index"
-          :searchResult="item"
-        ></search-result-item>
-      </div>
-      <div class="empty" v-else>
-        <div class="no-data">
-          <svg :viewBox="EmptyIcon.viewBox" aria-hidden="true">
-            <use :xlink:href="EmptyIcon.url" />
+          <svg :viewBox="FindCaseIcon.viewBox" aria-hidden="true">
+            <use :xlink:href="FindCaseIcon.url" />
           </svg>
-          <button
-            class="button-primary"
-            v-if="showNoFolderOpenedMessage"
-            @click="openFolder"
-          >
-            {{ $t('sideBar.search.openFolder') }}
-          </button>
-        </div>
+        </span>
+        <span
+          :title="$t('sideBar.search.wholeWord')"
+          class="is-whole-word"
+          :class="{ active: isWholeWord }"
+          @click.stop="wholeWordClicked()"
+        >
+          <svg :viewBox="FindWordIcon.viewBox" aria-hidden="true">
+            <use :xlink:href="FindWordIcon.url" />
+          </svg>
+        </span>
+        <span
+          :title="$t('sideBar.search.useRegexp')"
+          class="is-regex"
+          :class="{ active: isRegexp }"
+          @click.stop="regexpClicked()"
+        >
+          <svg :viewBox="FindRegexIcon.viewBox" aria-hidden="true">
+            <use :xlink:href="FindRegexIcon.url" />
+          </svg>
+        </span>
       </div>
     </div>
+
+    <div class="search-message-section" v-if="showNoFolderOpenedMessage">
+      <span>{{ $t("sideBar.search.noFolderOpened") }}</span>
+    </div>
+    <div class="search-message-section" v-if="showNoResultFoundMessage">
+      {{ $t("sideBar.search.noResults") }}
+    </div>
+    <div class="search-message-section" v-if="searchErrorString">
+      {{ searchErrorString }}
+    </div>
+
+    <div class="cancel-area" v-show="showSearchCancelArea">
+      <el-button type="primary" size="mini" @click="cancelSearcher">
+        {{ $t("sideBar.search.cancel") }} <i class="el-icon-video-pause"></i>
+      </el-button>
+    </div>
+    <div v-if="searchResult.length" class="search-result-info">
+      {{ searchResultInfo }}
+    </div>
+    <div class="search-result" v-if="searchResult.length">
+      <search-result-item
+        v-for="(item, index) of searchResult"
+        :key="index"
+        :searchResult="item"
+      ></search-result-item>
+    </div>
+    <div class="empty" v-else>
+      <div class="no-data">
+        <svg :viewBox="EmptyIcon.viewBox" aria-hidden="true">
+          <use :xlink:href="EmptyIcon.url" />
+        </svg>
+        <button
+          class="button-primary"
+          v-if="showNoFolderOpenedMessage"
+          @click="openFolder"
+        >
+          {{ $t("sideBar.search.openFolder") }}
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -158,13 +156,25 @@ export default {
         return acc + item.matches.length
       }, 0)
 
-      return `${matchCount} ${this.$t(matchCount > 1 ? 'sideBar.search.searchResults.matches' : 'sideBar.search.searchResults.match')} ${this.$t('sideBar.search.searchResults.in')} ${fileCount} ${this.$t(fileCount > 1 ? 'sideBar.search.searchResults.files' : 'sideBar.search.searchResults.file')}`
+      return `${matchCount} ${this.$t(
+        matchCount > 1
+          ? 'sideBar.search.searchResults.matches'
+          : 'sideBar.search.searchResults.match'
+      )} ${this.$t('sideBar.search.searchResults.in')} ${fileCount} ${this.$t(
+        fileCount > 1
+          ? 'sideBar.search.searchResults.files'
+          : 'sideBar.search.searchResults.file'
+      )}`
     },
     showNoFolderOpenedMessage () {
       return !this.projectTree || !this.projectTree.pathname
     },
     showNoResultFoundMessage () {
-      return this.searchResult.length === 0 && this.searcherRunning === false && this.keyword.length > 0
+      return (
+        this.searchResult.length === 0 &&
+        this.searcherRunning === false &&
+        this.keyword.length > 0
+      )
     }
   },
   methods: {
@@ -203,50 +213,51 @@ export default {
       this.startShowSearchCancelAreaTimer()
 
       const newSearchResult = []
-      const promises = ripgrepDirectorySearcher.search([rootDirectoryPath], keyword, {
-        didMatch: searchResult => {
-          if (canceled) return
+      const promises = ripgrepDirectorySearcher
+        .search([rootDirectoryPath], keyword, {
+          didMatch: searchResult => {
+            if (canceled) return
 
-          // filePath: "<file>"
-          // matches: Array(1)
-          // 0:
-          //   leadingContextLines: []
-          //   lineText: "foo-test"
-          //   matchText: "foo"
-          //   range: Array(2)
-          //     0: (2) [0, 0]
-          //     1: (2) [0, 3]
-          //   length: 2
-          //   trailingContextLines: []
+            // filePath: "<file>"
+            // matches: Array(1)
+            // 0:
+            //   leadingContextLines: []
+            //   lineText: "foo-test"
+            //   matchText: "foo"
+            //   range: Array(2)
+            //     0: (2) [0, 0]
+            //     1: (2) [0, 3]
+            //   length: 2
+            //   trailingContextLines: []
 
-          newSearchResult.push(searchResult)
-        },
-        didSearchPaths: numPathsFound => {
-          // More than 100 files with (multiple) matches were found.
-          if (!canceled && numPathsFound > 100) {
-            canceled = true
-            if (promises.cancel) {
-              promises.cancel()
+            newSearchResult.push(searchResult)
+          },
+          didSearchPaths: numPathsFound => {
+            // More than 100 files with (multiple) matches were found.
+            if (!canceled && numPathsFound > 100) {
+              canceled = true
+              if (promises.cancel) {
+                promises.cancel()
+              }
+              this.searchErrorString = 'Search was limited to 100 files.'
             }
-            this.searchErrorString = 'Search was limited to 100 files.'
-          }
-        },
+          },
 
-        // UI options
-        isCaseSensitive,
-        isWholeWord,
-        isRegexp,
+          // UI options
+          isCaseSensitive,
+          isWholeWord,
+          isRegexp,
 
-        // Options loaded from settings
-        exclusions: this.searchExclusions,
-        maxFileSize: this.searchMaxFileSize || null,
-        includeHidden: this.searchIncludeHidden,
-        noIgnore: this.searchNoIgnore,
-        followSymlinks: this.searchFollowSymlinks,
+          // Options loaded from settings
+          exclusions: this.searchExclusions,
+          maxFileSize: this.searchMaxFileSize || null,
+          includeHidden: this.searchIncludeHidden,
+          noIgnore: this.searchNoIgnore,
+          followSymlinks: this.searchFollowSymlinks,
 
-        // Only search markdown files
-        inclusions: MARKDOWN_INCLUSIONS
-      })
+          // Only search markdown files
+          inclusions: MARKDOWN_INCLUSIONS
+        })
         .then(() => {
           this.searchResult = newSearchResult
           this.searcherRunning = false
@@ -327,110 +338,110 @@ export default {
 </script>
 
 <style scoped>
-  .side-bar-search {
-    display: flex;
-    flex-direction: column;
+.side-bar-search {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.search-wrapper {
+  display: flex;
+  margin: 37px 15px 10px 15px;
+  padding: 0 6px;
+  border-radius: 14px;
+  height: 28px;
+  border: 1px solid var(--floatBorderColor);
+  background: var(--inputBgColor);
+  box-sizing: border-box;
+  align-items: center;
+  & > input {
+    color: var(--sideBarColor);
+    background: transparent;
     height: 100%;
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 8px;
+    font-size: 13px;
+    width: 50%;
   }
-  .search-wrapper {
+  & > .controls {
     display: flex;
-    margin: 37px 15px 10px 15px;
-    padding: 0 6px;
-    border-radius: 14px;
-    height: 28px;
-    border: 1px solid var(--floatBorderColor);
-    background: var(--inputBgColor);
-    box-sizing: border-box;
-    align-items: center;
-    & > input {
-      color: var(--sideBarColor);
-      background: transparent;
-      height: 100%;
-      flex: 1;
-      border: none;
-      outline: none;
-      padding: 0 8px;
-      font-size: 13px;
-      width: 50%;
-    }
-    & > .controls {
-      display: flex;
-      flex-shrink: 0;
-      margin-top: 3px;
-      & > span {
-        cursor: pointer;
-        width: 20px;
-        height: 20px;
-        margin-left: 2px;
-        margin-right: 2px;
-        &:hover {
-          color: var(--sideBarIconColor);
-        }
-        & > svg {
-          fill: var(--sideBarIconColor);
-          &:hover {
-            fill: var(--highlightThemeColor);
-          }
-        }
-        &.active svg {
-            fill: var(--highlightThemeColor);
-        }
-      }
-    }
-
-    & > svg {
+    flex-shrink: 0;
+    margin-top: 3px;
+    & > span {
       cursor: pointer;
-      flex-shrink: 0;
       width: 20px;
       height: 20px;
-      margin-right: 10px;
+      margin-left: 2px;
+      margin-right: 2px;
       &:hover {
         color: var(--sideBarIconColor);
       }
+      & > svg {
+        fill: var(--sideBarIconColor);
+        &:hover {
+          fill: var(--highlightThemeColor);
+        }
+      }
+      &.active svg {
+        fill: var(--highlightThemeColor);
+      }
     }
   }
-  .cancel-area {
-    text-align: center;
-    margin-bottom: 16px;
-  }
-  .search-message-section {
-    overflow-wrap: break-word;
-  }
-  .search-result-info,
-  .search-message-section {
-    padding-left: 15px;
-    margin-bottom: 5px;
-    font-size: 12px;
-    color: var(--sideBarColor);
-  }
-  .empty,
-  .search-result {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    &::-webkit-scrollbar:vertical {
-      width: 8px;
+
+  & > svg {
+    cursor: pointer;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    &:hover {
+      color: var(--sideBarIconColor);
     }
   }
-  .empty {
-    font-size: 14px;
-    text-align: center;
+}
+.cancel-area {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.search-message-section {
+  overflow-wrap: break-word;
+}
+.search-result-info,
+.search-message-section {
+  padding-left: 15px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: var(--sideBarColor);
+}
+.empty,
+.search-result {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar:vertical {
+    width: 8px;
+  }
+}
+.empty {
+  font-size: 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-bottom: 100px;
+  & .no-data {
     display: flex;
+    align-items: center;
     flex-direction: column;
-    justify-content: space-around;
-    padding-bottom: 100px;
-    & .no-data {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-    }
-    & .no-data svg {
-      fill: var(--themeColor);
-      width: 120px;
-    }
-    & .no-data .button-primary {
-      display: block;
-      margin-top: 20px;
-    }
   }
+  & .no-data svg {
+    fill: var(--themeColor);
+    width: 120px;
+  }
+  & .no-data .button-primary {
+    display: block;
+    margin-top: 20px;
+  }
+}
 </style>

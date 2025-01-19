@@ -101,7 +101,10 @@ const getters = {}
 const mutations = {
   SET_USER_PREFERENCE (state, preference) {
     Object.keys(preference).forEach(key => {
-      if (typeof preference[key] !== 'undefined' && typeof state[key] !== 'undefined') {
+      if (
+        typeof preference[key] !== 'undefined' &&
+        typeof state[key] !== 'undefined'
+      ) {
         state[key] = preference[key]
       }
     })

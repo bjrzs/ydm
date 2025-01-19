@@ -1,6 +1,11 @@
 <template>
   <div class="app-menu">
-    <el-menu mode="horizontal" :default-active="activeIndex" @select="handleSelect" class="main-menu">
+    <el-menu
+      mode="horizontal"
+      :default-active="activeIndex"
+      @select="handleSelect"
+      class="main-menu"
+    >
       <template v-for="(menu, key) in menuConfig">
         <el-submenu :key="key" :index="key">
           <template slot="title">{{ $t(menu.label) }}</template>
@@ -8,7 +13,9 @@
             <el-menu-item-group v-if="item.type !== 'separator'" :key="item.id">
               <el-menu-item :index="item.id">
                 <span>{{ $t(item.label) }}</span>
-                <span class="shortcut" v-if="item.shortcut">{{ item.shortcut }}</span>
+                <span class="shortcut" v-if="item.shortcut">{{
+                  item.shortcut
+                }}</span>
               </el-menu-item>
             </el-menu-item-group>
             <el-divider v-else :key="'sep-' + key" />
