@@ -4,12 +4,10 @@ import TocIcon from '@/assets/icons/toc.svg'
 import SettingIcon from '@/assets/icons/setting.svg'
 
 export const sideBarIcons = [
-
   // {
   //   name: 'search',
   //   icon: SearchIcon
   // },
-
 ]
 
 export const sideBarBottomIcons = [

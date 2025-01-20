@@ -47,7 +47,9 @@ export default {
       },
       activeHeadingId: null,
       headingsCache: null, // 缓存标题元素
-      lastScrollTime: 0 // 用于限制滚动处理频率
+      lastScrollTime: 0, // 用于限制滚动处理频率
+      mouseIdleTimer: null, // 添加鼠标闲置计时器
+      lastMousePosition: { x: 0, y: 0 } // 记录最后鼠标位置
     }
   },
 
@@ -60,12 +62,10 @@ export default {
 
   mounted () {
     this.$nextTick(() => {
-      // 尝试获取 Muya 编辑器容器
       this.editorElement =
         document.querySelector('.mu-container') ||
         document.querySelector('.editor-container')
       if (this.editorElement) {
-        console.log('Editor element found:', this.editorElement) // DEBUG
         this.setupEventListeners()
         this.updateHeadingsCache()
       } else {
@@ -93,6 +93,12 @@ export default {
       })
 
       this.editorElement.addEventListener('click', this.handleEditorClick)
+
+      // 监听鼠标移动来重置闲置计时器
+      this.editorElement.addEventListener('mousemove', this.resetIdleTimer)
+
+      // 初始启动闲置检测
+      this.startIdleDetection()
     },
 
     // 处理树节点点击
@@ -101,8 +107,52 @@ export default {
     },
 
     // 处理编辑器点击
-    handleEditorClick () {
-      this.syncOutlinePosition()
+    handleEditorClick (event) {
+      if (!this.editorElement) return
+
+      const editorRect = this.editorElement.getBoundingClientRect()
+      const mouseY = event.clientY - editorRect.top
+
+      // 找到该位置最近的标题
+      let targetElement = null
+      const elements = this.editorElement.querySelectorAll(
+        'h1, h2, h3, h4, h5, h6'
+      )
+
+      // 找最近的标题
+      let closestDistance = Infinity
+      elements.forEach(element => {
+        const rect = element.getBoundingClientRect()
+        const distance = Math.abs(rect.top + rect.height / 2 - mouseY)
+        if (distance < closestDistance) {
+          closestDistance = distance
+          targetElement = element
+        }
+      })
+
+      if (!targetElement) return
+
+      const headingSlug =
+        targetElement.id || targetElement.getAttribute('data-id')
+      if (!headingSlug) return
+
+      // 更新大纲高亮并滚动到对应位置
+      if (headingSlug !== this.activeHeadingId) {
+        this.activeHeadingId = headingSlug
+        this.$nextTick(() => {
+          const { tocTree } = this.$refs
+          if (tocTree) {
+            tocTree.setCurrentKey(headingSlug)
+            const nodeEl = tocTree.$el.querySelector(
+              `[data-key="${headingSlug}"]`
+            )
+            if (nodeEl) {
+              // 同步大纲滚动位置
+              this.syncTocScrollPosition(event.clientY, tocTree, nodeEl)
+            }
+          }
+        })
+      }
     },
 
     // 处理滚动事件
@@ -175,87 +225,25 @@ export default {
       }
     },
 
-    // 同步大纲位置
-    syncOutlinePosition () {
-      if (!this.editorElement || !this.headingsCache?.length) return
+    // 同步大纲滚动位置到鼠标位置
+    syncTocScrollPosition (mouseY, tocTree, nodeEl) {
+      if (!tocTree || !nodeEl) return
 
-      let targetElement = null
+      const tocContainer = tocTree.$el
+      const tocRect = tocContainer.getBoundingClientRect()
 
-      const selection = window.getSelection()
-      if (selection.rangeCount > 0) {
-        targetElement = selection.anchorNode?.parentElement
-      } else {
-        const elements = this.editorElement.querySelectorAll('*')
-        for (const element of elements) {
-          const rect = element.getBoundingClientRect()
-          if (rect.top > 0) {
-            targetElement = element
-            break
-          }
-        }
-      }
+      // 计算节点在大纲中的相对位置比例
+      const relativeMousePosition = mouseY / window.innerHeight
 
-      if (!targetElement) return
+      // 计算大纲应该滚动的位置
+      const targetScrollTop =
+        tocContainer.scrollHeight * relativeMousePosition - tocRect.height / 2
 
-      // 找到最近的标题元素
-      let closestHeading = null
-      let currentElement = targetElement
-
-      // 向上查找最近的标题
-      while (currentElement && currentElement !== this.editorElement) {
-        if (currentElement.matches('h1, h2, h3, h4, h5, h6')) {
-          closestHeading = currentElement
-          break
-        }
-        currentElement = currentElement.parentElement
-      }
-
-      // 如果向上没找到，则查找当前位置之前最近的标题
-      if (!closestHeading) {
-        // 获取文档中的所有节点
-        const treeWalker = document.createTreeWalker(
-          this.editorElement,
-          NodeFilter.SHOW_ELEMENT,
-          null,
-          false
-        )
-
-        let currentNode = null
-        let previousHeading = null
-
-        // 遍历所有节点直到找到目标元素
-        while ((currentNode = treeWalker.nextNode())) {
-          if (currentNode.matches('h1, h2, h3, h4, h5, h6')) {
-            previousHeading = currentNode
-          }
-          if (currentNode === targetElement) {
-            closestHeading = previousHeading
-            break
-          }
-        }
-      }
-
-      if (!closestHeading) return
-
-      const headingSlug =
-        closestHeading.id || closestHeading.getAttribute('data-id')
-      if (!headingSlug) return
-
-      if (headingSlug !== this.activeHeadingId) {
-        this.activeHeadingId = headingSlug
-        this.$nextTick(() => {
-          const { tocTree } = this.$refs
-          if (tocTree) {
-            tocTree.setCurrentKey(headingSlug)
-            const nodeEl = tocTree.$el.querySelector(
-              `[data-key="${headingSlug}"]`
-            )
-            if (nodeEl) {
-              nodeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-            }
-          }
-        })
-      }
+      // 平滑滚动到目标位置
+      tocContainer.scrollTo({
+        top: targetScrollTop,
+        behavior: 'smooth'
+      })
     },
 
     scrollToOutlineItem (headingId) {
@@ -331,6 +319,129 @@ export default {
       } else {
         console.warn('No matching node found in TOC data for:', headingId)
       }
+    },
+
+    // 重置闲置计时器
+    resetIdleTimer (event) {
+      // 清除现有计时器
+      if (this.mouseIdleTimer) {
+        clearTimeout(this.mouseIdleTimer)
+      }
+
+      // 记录当前鼠标位置
+      this.lastMousePosition = {
+        x: event.clientX,
+        y: event.clientY
+      }
+
+      // 设置新的计时器
+      this.mouseIdleTimer = setTimeout(() => {
+        this.handleMouseIdle()
+      }, 500) // 500ms 后触发闲置处理
+    },
+
+    // 处理鼠标闲置
+    handleMouseIdle () {
+      if (!this.editorElement) return
+
+      const editorRect = this.editorElement.getBoundingClientRect()
+      const mouseY = this.lastMousePosition.y - editorRect.top
+
+      // 找到该位置最近的标题
+      const elements = Array.from(
+        this.editorElement.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      )
+
+      // 按照在文档中的位置排序
+      elements.sort((a, b) => {
+        const aRect = a.getBoundingClientRect()
+        const bRect = b.getBoundingClientRect()
+        return aRect.top - bRect.top
+      })
+
+      // 找到鼠标位置最近的标题
+      let targetElement = null
+      let minDistance = Infinity
+
+      elements.forEach(element => {
+        const rect = element.getBoundingClientRect()
+        const elementMiddle = rect.top + rect.height / 2 - editorRect.top
+        const distance = Math.abs(elementMiddle - mouseY)
+
+        if (distance < minDistance) {
+          minDistance = distance
+          targetElement = element
+        }
+      })
+
+      if (!targetElement) return
+
+      const headingSlug =
+        targetElement.id || targetElement.getAttribute('data-id')
+      if (!headingSlug) return
+
+      // 更新大纲高亮
+      if (headingSlug !== this.activeHeadingId) {
+        this.activeHeadingId = headingSlug
+        this.$nextTick(() => {
+          const { tocTree } = this.$refs
+          if (tocTree) {
+            // 找到目标节点
+            const findNodeInToc = nodes => {
+              for (const node of nodes) {
+                if (node.slug === headingSlug) {
+                  return node
+                }
+                if (node.children?.length) {
+                  const found = findNodeInToc(node.children)
+                  if (found) return found
+                }
+              }
+              return null
+            }
+
+            const targetNode = findNodeInToc(this.toc)
+            if (targetNode) {
+              try {
+                // 确保父节点都是展开的
+                let currentNode = targetNode
+                while (currentNode.parent) {
+                  const parentNode = tocTree.store.nodesMap[currentNode.parent]
+                  if (parentNode) {
+                    parentNode.expanded = true
+                    currentNode = parentNode
+                  } else {
+                    break
+                  }
+                }
+
+                // 设置当前节点并同步滚动位置
+                tocTree.setCurrentKey(headingSlug)
+                const nodeEl = tocTree.$el.querySelector(
+                  `[data-key="${headingSlug}"]`
+                )
+                if (nodeEl) {
+                  // 同步大纲滚动位置
+                  this.syncTocScrollPosition(
+                    this.lastMousePosition.y,
+                    tocTree,
+                    nodeEl
+                  )
+                }
+              } catch (error) {
+                console.error('Error setting current node:', error)
+              }
+            }
+          }
+        })
+      }
+    },
+
+    startIdleDetection () {
+      // 初始启动闲置检测
+      this.mouseIdleTimer = setTimeout(() => {
+        this.handleMouseIdle()
+      }, 500)
     }
   },
 
@@ -340,9 +451,13 @@ export default {
       this.editorElement.removeEventListener('scroll', this.handleScroll)
       this.editorElement.removeEventListener('wheel', this.handleScroll)
       this.editorElement.removeEventListener('click', this.handleEditorClick)
+      this.editorElement.removeEventListener('mousemove', this.resetIdleTimer)
     }
     document.removeEventListener('scroll', this.handleScroll)
     window.removeEventListener('scroll', this.handleScroll)
+    if (this.mouseIdleTimer) {
+      clearTimeout(this.mouseIdleTimer)
+    }
   }
 }
 
@@ -360,13 +475,40 @@ function debounce (fn, delay) {
 
 <style>
 .side-bar-toc {
-  height: var(--theme-color);
+  height: 100%; /* 确保容器占满高度 */
   margin: 0;
   padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
   background-color: var(--theme-color);
+  overflow-y: auto; /* 添加垂直滚动条 */
+}
+
+/* 自定义滚动条样式 */
+.side-bar-toc::-webkit-scrollbar {
+  width: 6px; /* 滚动条宽度 */
+}
+
+.side-bar-toc::-webkit-scrollbar-track {
+  background: #f1f1f1; /* 滚动条轨道颜色 */
+}
+
+.side-bar-toc::-webkit-scrollbar-thumb {
+  background: #888; /* 滚动条滑块颜色 */
+  border-radius: 3px; /* 滑块圆角 */
+}
+
+.side-bar-toc::-webkit-scrollbar-thumb:hover {
+  background: #555; /* 滚动条滑块悬停颜色 */
+}
+
+/* 确保 el-tree 组件也能正确滚动 */
+.el-tree {
+  height: 100%;
+  overflow-y: auto;
+  background-color: var(--theme-color);
+  color: var(--theme-color);
 }
 
 .side-bar-toc-overflow {
@@ -393,14 +535,9 @@ function debounce (fn, delay) {
   border-right: var(--theme-color);
 }
 
-.el-tree {
-  background-color: var(--theme-color);
-  color: var(--theme-color);
-}
-
 .el-tree-node.is-current > .el-tree-node__content {
-  background-color: #ebe708; /* 点击的时候的颜色 */
-  color: #0829e4; /* 点击文字颜色 */
+  background-color: #eb8908; /* 跳转的时候的颜色 */
+  color: #0829e4; /* 跳转文字颜色 */
   font-size: 20px;
 }
 
@@ -408,16 +545,5 @@ function debounce (fn, delay) {
   background-color: #ebe708; /* 点击的时候的颜色 */
   color: #0829e4; /* 点击文字颜色 */
   font-size: 20px;
-}
-
-.el-tree-node.is-current > .el-tree-node__label {
-  font-size: 20px;
-  color: #f4f800;
-  background-color: #ff0000; /* 点击的时候的颜色 */
-}
-.el-tree-node.is-current > .el-tree-node__label:hover {
-  font-size: 20px;
-  color: #ff0000;
-  background-color: #f4f800; /* 点击的时候的颜色 */
 }
 </style>

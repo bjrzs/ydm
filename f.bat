@@ -2,10 +2,11 @@
 cls
 chcp 65001
 
+
 :: use ESLint to fix files
 echo.
-echo Use ESLint to fix files...
-yarn eslint --fix ^
+echo ---Use ESLint to fix files...
+call yarn eslint --fix ^
 src\main\index.js ^
 src\main\menu\dynamicMenu.js ^
 src\renderer\main.js ^
@@ -39,8 +40,8 @@ if errorlevel 1 (
 
 :: use Prettier to format files
 echo.
-echo Use Prettier to format files...
-%Prettier_path%/prettier --write ^
+echo ---Use Prettier to format files...
+call %Prettier_path%/prettier --write ^
 src\main\index.js ^
 src\main\menu\dynamicMenu.js ^
 src\renderer\main.js ^
@@ -75,8 +76,8 @@ if errorlevel 1 (
 
 :: remove trailing whitespace and ensure LF line endings
 echo.
-echo Remove trailing whitespace and ensure LF line endings...
-sed -i 's/\s\+$//' ^
+echo ---Remove trailing whitespace and ensure LF line endings...
+call sed -i 's/\s\+$//' ^
 src\main\index.js ^
 src\main\menu\dynamicMenu.js ^
 src\renderer\main.js ^
@@ -111,8 +112,8 @@ if errorlevel 1 (
 
 :: convert CRLF to LF
 echo.
-echo Convert CRLF to LF...
-dos2unix ^
+echo ---Convert CRLF to LF...
+call dos2unix ^
 src\main\index.js ^
 src\main\menu\dynamicMenu.js ^
 src\renderer\main.js ^
@@ -149,5 +150,5 @@ if errorlevel 1 (
 echo.
 echo Is OK, Let's continue...
 
-pause
+
 exit /b 0

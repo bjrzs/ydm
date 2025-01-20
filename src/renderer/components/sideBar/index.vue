@@ -123,7 +123,10 @@ export default {
           this.$store.commit('SET_LAYOUT', { rightColumn: name })
           this.sideBarViewWidth = +this.sideBarWidth
           if (needDispatch) {
-            this.$store.dispatch('CHANGE_SIDE_BAR_WIDTH', this.finalSideBarWidth)
+            this.$store.dispatch(
+              'CHANGE_SIDE_BAR_WIDTH',
+              this.finalSideBarWidth
+            )
           }
         }
       }
