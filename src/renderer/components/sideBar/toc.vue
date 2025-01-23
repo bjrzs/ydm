@@ -136,20 +136,30 @@ export default {
         targetElement.id || targetElement.getAttribute('data-id')
       if (!headingSlug) return
 
-      // 更新大纲高亮并滚动到对应位置
+      // 更新大纲高亮
       if (headingSlug !== this.activeHeadingId) {
         this.activeHeadingId = headingSlug
         this.$nextTick(() => {
           const { tocTree } = this.$refs
           if (tocTree) {
             tocTree.setCurrentKey(headingSlug)
-            const nodeEl = tocTree.$el.querySelector(
-              `[data-key="${headingSlug}"]`
-            )
-            if (nodeEl) {
-              // 同步大纲滚动位置
-              this.syncTocScrollPosition(event.clientY, tocTree, nodeEl)
-            }
+
+            // 根据鼠标位置同步大纲滚动
+            const tocContainer = tocTree.$el
+            const tocRect = tocContainer.getBoundingClientRect()
+
+            // 计算鼠标位置在编辑器中的相对比例
+            const relativeMousePosition = mouseY / editorRect.height
+
+            // 计算大纲应该滚动到的位置
+            const targetScrollTop =
+              tocContainer.scrollHeight * relativeMousePosition - tocRect.height / 2
+
+            // 平滑滚动到目标位置
+            tocContainer.scrollTo({
+              top: targetScrollTop,
+              behavior: 'smooth'
+            })
           }
         })
       }

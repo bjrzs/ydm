@@ -16,6 +16,9 @@ echo Electron-Vue Directory: >> dir_all.txt
 dir /s/a ".electron-vue" >> dir_all.txt
 echo ==================== >> dir_all.txt
 
+echo build Directory: >> dir_all.txt
+dir /s/a "build" >> dir_all.txt
+echo ==================== >> dir_all.txt
 
 echo Directory list saved to dir_all.txt
 pause 
