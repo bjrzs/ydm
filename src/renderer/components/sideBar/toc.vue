@@ -172,28 +172,43 @@ export default {
             const activeIndex = this.activeTocIndex
             const totalItems = this.tocItems.length
 
-            // 计算目标标题的偏移量
-            const itemHeight = tocContainer.scrollHeight / totalItems
-            const targetOffset = activeIndex * itemHeight
+            // 处理第一个和最后一个标题的特殊情况
+            if (activeIndex === 0) {
+              // 滚动到顶部
+              tocContainer.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              })
+            } else if (activeIndex === totalItems - 1) {
+              // 滚动到底部
+              tocContainer.scrollTo({
+                top: tocContainer.scrollHeight,
+                behavior: 'smooth'
+              })
+            } else {
+              // 其他情况保持原有滚动逻辑
+              const itemHeight = tocContainer.scrollHeight / totalItems
+              const targetOffset = activeIndex * itemHeight
 
-            // 计算滚动位置，使标题位于容器中间
-            let scrollTop = targetOffset - tocRect.height / 2
+              // 计算滚动位置，使标题位于容器中间
+              let scrollTop = targetOffset - tocRect.height / 2
 
-            // 添加额外边界处理
-            const minScroll = Math.min(50, tocRect.height / 4) // 顶部最小间距
-            const maxScroll = Math.max(
-              tocContainer.scrollHeight - tocRect.height - minScroll,
-              minScroll
-            )
+              // 添加额外边界处理
+              const minScroll = Math.min(50, tocRect.height / 4) // 顶部最小间距
+              const maxScroll = Math.max(
+                tocContainer.scrollHeight - tocRect.height - minScroll,
+                minScroll
+              )
 
-            // 确保滚动位置在边界范围内
-            scrollTop = Math.max(minScroll, Math.min(scrollTop, maxScroll))
+              // 确保滚动位置在边界范围内
+              scrollTop = Math.max(minScroll, Math.min(scrollTop, maxScroll))
 
-            // 平滑滚动到目标位置
-            tocContainer.scrollTo({
-              top: scrollTop,
-              behavior: 'smooth'
-            })
+              // 平滑滚动到目标位置
+              tocContainer.scrollTo({
+                top: scrollTop,
+                behavior: 'smooth'
+              })
+            }
           }
         })
       }
