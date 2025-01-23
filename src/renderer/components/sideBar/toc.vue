@@ -57,7 +57,27 @@ export default {
     ...mapState({
       toc: state => state.editor.toc,
       wordWrapInToc: state => state.preferences.wordWrapInToc
-    })
+    }),
+    tocItems () {
+      // 将嵌套的toc结构展平为数组
+      const flattenToc = nodes => {
+        let items = []
+        nodes.forEach(node => {
+          items.push(node)
+          if (node.children) {
+            items = items.concat(flattenToc(node.children))
+          }
+        })
+        return items
+      }
+      return flattenToc(this.toc)
+    },
+    activeTocIndex () {
+      if (!this.activeHeadingId) return -1
+      return this.tocItems.findIndex(
+        item => item.slug === this.activeHeadingId
+      )
+    }
   },
 
   mounted () {
@@ -148,16 +168,30 @@ export default {
             const tocContainer = tocTree.$el
             const tocRect = tocContainer.getBoundingClientRect()
 
-            // 计算鼠标位置在编辑器中的相对比例
-            const relativeMousePosition = mouseY / editorRect.height
+            // 获取当前高亮标题的索引和总标题数
+            const activeIndex = this.activeTocIndex
+            const totalItems = this.tocItems.length
 
-            // 计算大纲应该滚动到的位置
-            const targetScrollTop =
-              tocContainer.scrollHeight * relativeMousePosition - tocRect.height / 2
+            // 计算目标标题的偏移量
+            const itemHeight = tocContainer.scrollHeight / totalItems
+            const targetOffset = activeIndex * itemHeight
+
+            // 计算滚动位置，使标题位于容器中间
+            let scrollTop = targetOffset - tocRect.height / 2
+
+            // 添加额外边界处理
+            const minScroll = Math.min(50, tocRect.height / 4) // 顶部最小间距
+            const maxScroll = Math.max(
+              tocContainer.scrollHeight - tocRect.height - minScroll,
+              minScroll
+            )
+
+            // 确保滚动位置在边界范围内
+            scrollTop = Math.max(minScroll, Math.min(scrollTop, maxScroll))
 
             // 平滑滚动到目标位置
             tocContainer.scrollTo({
-              top: targetScrollTop,
+              top: scrollTop,
               behavior: 'smooth'
             })
           }

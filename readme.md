@@ -128,3 +128,59 @@ G:\cm\ydm\build\win-unpacked\resources\app\node_modules 即可
 1. 我希望在用户UserDate\themes中，可以使用 css文件 ，将主题 集中到一个文件 ，
    当在主菜单 中点击的时候，能够刷新并读取UserDate\themes中的css主题，并应用
 
+
+## 在编辑区任意区域中点击鼠标左键时，大纲能够 自动滚动对应标题到与鼠标 Y轴相同的位置
+从editor.vue代码中可以看到，编辑器组件已经监听了selectionChange事件，可以获取到光标位置的Y坐标。现在需要：
+
+在editor.vue中添加点击事件监听，获取点击位置的Y坐标
+通过bus将Y坐标传递给toc.vue组件
+在toc.vue中实现根据Y坐标滚动到对应标题的功能
+接下来需要查看toc.vue的代码，了解大纲组件的结构和滚动实现方式。
+
+从toc.vue代码中可以看到，已经实现了handleEditorClick方法来处理编辑器点击事件，并且能够根据点击位置找到最近的标题元素。但是当前的实现是直接滚动到对应标题的位置，而不是根据鼠标Y轴位置来同步大纲滚动。
+
+需要修改handleEditorClick方法，使其根据鼠标Y轴位置来同步大纲滚动。具体步骤如下：
+
+获取点击位置的Y坐标
+计算该位置在编辑器中的相对位置比例
+根据比例计算大纲应该滚动到的位置
+平滑滚动大纲到目标位置
+---------------
+文件已成功更新，新的handleEditorClick方法已经实现根据鼠标Y轴位置来同步大纲滚动。现在当用户在编辑器任意位置点击时，大纲会自动滚动到对应位置。
+
+
+
+打开编辑器和大纲视图
+在编辑器不同位置点击
+观察大纲是否平滑滚动到对应位置
+检查滚动位置是否准确
+
+已实现大纲根据编辑器点击位置自动同步滚动的功能。现在当用户在编辑器任意位置点击时，大纲会根据鼠标Y轴位置自动滚动到对应位置，实现更精确的同步效果。
+
+主要修改内容：
+
+修改了handleEditorClick方法
+使用鼠标位置比例来计算大纲滚动位置
+添加平滑滚动效果
+
+
+@M:\cm\ydm\src\renderer\components\sideBar\toc.vue
+
+
+// 根据鼠标位置同步大纲滚动
+            const tocContainer = tocTree.$el
+            const tocRect = tocContainer.getBoundingClientRect()
+
+            // 计算鼠标位置在编辑器中的相对比例
+            const relativeMousePosition = mouseY / editorRect.height
+
+            // 计算大纲应该滚动到的位置
+            const targetScrollTop =
+              tocContainer.scrollHeight * relativeMousePosition - tocRect.height / 2
+
+这里应该改成计算 高亮显示的标题 （也就是当前鼠标所在的标题）在大纲中的相对位置，比如大纲中有100个标题，现在高亮显示的是第99个，那么应该滚动到第99行。如果现在亮显显示的是第50个，那么就应该滚动 到第50行。
+
+如果当前高亮的是第99个标题，大纲将滚动到第99行
+如果当前高亮的是第50个标题，大纲将滚动到第50行
+
+并将这行 滚动在屏幕 的中间，但如果滚动到99行（总共100行）则是滚动到最下面了，这行高亮的下面剩下一行，能明白不
