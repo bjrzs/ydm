@@ -172,14 +172,17 @@ export default {
             const activeIndex = this.activeTocIndex
             const totalItems = this.tocItems.length
 
-            // 处理第一个和最后一个标题的特殊情况
-            if (activeIndex === 0) {
+            // 处理前5行和最后5行的特殊情况
+            if (activeIndex >= 0 && activeIndex <= 4) {
               // 滚动到顶部
               tocContainer.scrollTo({
                 top: 0,
                 behavior: 'smooth'
               })
-            } else if (activeIndex === totalItems - 1) {
+            } else if (
+              activeIndex >= totalItems - 5 &&
+              activeIndex <= totalItems - 1
+            ) {
               // 滚动到底部
               tocContainer.scrollTo({
                 top: tocContainer.scrollHeight,
