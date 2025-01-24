@@ -172,15 +172,15 @@ export default {
             const activeIndex = this.activeTocIndex
             const totalItems = this.tocItems.length
 
-            // 处理前5行和最后5行的特殊情况
-            if (activeIndex >= 0 && activeIndex <= 4) {
+            // 处理前10行和最后10行的特殊情况
+            if (activeIndex >= 0 && activeIndex <= 9) {
               // 滚动到顶部
               tocContainer.scrollTo({
                 top: 0,
                 behavior: 'smooth'
               })
             } else if (
-              activeIndex >= totalItems - 5 &&
+              activeIndex >= totalItems - 10 &&
               activeIndex <= totalItems - 1
             ) {
               // 滚动到底部
@@ -410,28 +410,18 @@ export default {
       const mouseY = this.lastMousePosition.y - editorRect.top
 
       // 找到该位置最近的标题
-      const elements = Array.from(
-        this.editorElement.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      let targetElement = null
+      const elements = this.editorElement.querySelectorAll(
+        'h1, h2, h3, h4, h5, h6'
       )
 
-      // 按照在文档中的位置排序
-      elements.sort((a, b) => {
-        const aRect = a.getBoundingClientRect()
-        const bRect = b.getBoundingClientRect()
-        return aRect.top - bRect.top
-      })
-
-      // 找到鼠标位置最近的标题
-      let targetElement = null
-      let minDistance = Infinity
-
+      // 找最近的标题
+      let closestDistance = Infinity
       elements.forEach(element => {
         const rect = element.getBoundingClientRect()
-        const elementMiddle = rect.top + rect.height / 2 - editorRect.top
-        const distance = Math.abs(elementMiddle - mouseY)
-
-        if (distance < minDistance) {
-          minDistance = distance
+        const distance = Math.abs(rect.top + rect.height / 2 - mouseY)
+        if (distance < closestDistance) {
+          closestDistance = distance
           targetElement = element
         }
       })
@@ -448,7 +438,7 @@ export default {
         this.$nextTick(() => {
           const { tocTree } = this.$refs
           if (tocTree) {
-            // 找到目标节点
+            // 确保父节点都是展开的
             const findNodeInToc = nodes => {
               for (const node of nodes) {
                 if (node.slug === headingSlug) {
@@ -464,35 +454,77 @@ export default {
 
             const targetNode = findNodeInToc(this.toc)
             if (targetNode) {
-              try {
-                // 确保父节点都是展开的
-                let currentNode = targetNode
-                while (currentNode.parent) {
-                  const parentNode = tocTree.store.nodesMap[currentNode.parent]
-                  if (parentNode) {
-                    parentNode.expanded = true
-                    currentNode = parentNode
-                  } else {
-                    break
-                  }
+              // 展开所有父节点
+              let currentNode = targetNode
+              while (currentNode.parent) {
+                const parentNode = tocTree.store.nodesMap[currentNode.parent]
+                if (parentNode) {
+                  parentNode.expanded = true
+                  currentNode = parentNode
+                } else {
+                  break
                 }
-
-                // 设置当前节点并同步滚动位置
-                tocTree.setCurrentKey(headingSlug)
-                const nodeEl = tocTree.$el.querySelector(
-                  `[data-key="${headingSlug}"]`
-                )
-                if (nodeEl) {
-                  // 同步大纲滚动位置
-                  this.syncTocScrollPosition(
-                    this.lastMousePosition.y,
-                    tocTree,
-                    nodeEl
-                  )
-                }
-              } catch (error) {
-                console.error('Error setting current node:', error)
               }
+            }
+
+            tocTree.setCurrentKey(headingSlug)
+
+            // 获取当前高亮标题的索引和总标题数
+            const activeIndex = this.activeTocIndex
+            const totalItems = this.tocItems.length
+
+            // 处理前10行和最后10行的特殊情况
+            const tocContainer = tocTree.$el
+            if (activeIndex >= 0 && activeIndex <= 9) {
+              // 滚动到顶部
+              tocContainer.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              })
+            } else if (
+              activeIndex >= totalItems - 10 &&
+              activeIndex <= totalItems - 1
+            ) {
+              // 滚动到底部
+              tocContainer.scrollTo({
+                top: tocContainer.scrollHeight,
+                behavior: 'smooth'
+              })
+            } else {
+              // 其他情况保持原有滚动逻辑
+              const itemHeight = tocContainer.scrollHeight / totalItems
+              const targetOffset = activeIndex * itemHeight
+
+              // 计算滚动位置，使标题位于容器中间
+              let scrollTop = targetOffset - tocContainer.getBoundingClientRect().height / 2
+
+              // 添加额外边界处理
+              const minScroll = Math.min(50, tocContainer.getBoundingClientRect().height / 4)
+              const maxScroll = Math.max(
+                tocContainer.scrollHeight - tocContainer.getBoundingClientRect().height - minScroll,
+                minScroll
+              )
+
+              // 确保滚动位置在边界范围内
+              scrollTop = Math.max(minScroll, Math.min(scrollTop, maxScroll))
+
+              // 平滑滚动到目标位置
+              tocContainer.scrollTo({
+                top: scrollTop,
+                behavior: 'smooth'
+              })
+            }
+
+            // 同步大纲滚动位置
+            const nodeEl = tocTree.$el.querySelector(
+              `[data-key="${headingSlug}"]`
+            )
+            if (nodeEl) {
+              this.syncTocScrollPosition(
+                this.lastMousePosition.y,
+                tocTree,
+                nodeEl
+              )
             }
           }
         })
