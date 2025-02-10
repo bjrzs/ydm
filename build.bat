@@ -85,6 +85,13 @@ if errorlevel 1 (
     echo Electron-builder completed with warnings, continuing...
 )
 
+echo.
+echo ---Copy node_modules to app
+call xcopy_.bat >nul
+if errorlevel 1 (
+    echo Copy node_modules to app, continuing...
+)
+
 echo ---Delete dist\electron 
 rmdir /s /q dist\electron
 
