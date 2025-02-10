@@ -108,7 +108,9 @@
       "selectFolder": "选择文件夹",
       "openBlank": "打开空白页面",
       "misc": "其他",
-      "language": "界面语言"
+      "language": "界面语言",
+      "sideBarSave": "保存侧边栏",
+      "sideBarSaveDesc": "保存侧边栏的显示状态"
     },
     "marktext": {
       "title": "MarkText",
@@ -202,7 +204,9 @@
     "tabBarVisible": "显示标签栏",
     "sourceCodeModeEnabled": "启用源代码模式",
     "typewriterModeEnabled": "启用打字机模式",
-    "focusModeEnabled": "启用专注模式"
+    "focusModeEnabled": "启用专注模式",
+    "sideBarSave": "保存侧边栏",
+    "sideBarSaveDesc": "保存侧边栏的显示状态"
   },
   "editor": {
     "title": "编辑器",

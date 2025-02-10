@@ -57,6 +57,12 @@
           :options="titleBarStyleOptions"
           :onChange="value => onSelectChange('titleBarStyle', value)"
         ></cur-select>
+        <bool
+          :title="$t('preferences.sideBarSave')"
+          :desc="$t('preferences.sideBarSaveDesc')"
+          :value="sideBarSave"
+          @change="value => onSelectChange('sideBarSave', value)"
+        />
       </template>
     </compound>
   </div>
@@ -107,7 +113,8 @@ export default {
       hideScrollbar: state => state.preferences.hideScrollbar,
       wordWrapInToc: state => state.preferences.wordWrapInToc,
       fileSortBy: state => state.preferences.fileSortBy,
-      language: state => state.preferences.language
+      language: state => state.preferences.language,
+      sideBarSave: state => state.preferences.sideBarSave
     }),
     startUpAction: {
       get: function () {

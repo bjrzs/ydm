@@ -58,5 +58,6 @@
 	"searchNoIgnore": false,
 	"searchFollowSymlinks": true,
 	"watcherUsePolling": false,
-	"defaultDirectoryToOpen": "F:\\2022\\Riji\\2024的日记"
+	"defaultDirectoryToOpen": "F:\\2022\\Riji\\2024的日记",
+	"sideBarSave": false
 }

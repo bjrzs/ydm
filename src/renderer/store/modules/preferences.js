@@ -2,7 +2,8 @@ import { ipcRenderer } from 'electron'
 
 const state = {
   theme: 'light',
-  autoSave: false
+  autoSave: false,
+  sideBarSave: false
   // 添加其他必要的初始状态...
 }
 
