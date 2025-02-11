@@ -371,9 +371,7 @@
     }
   },
   "sideBar": {
-    "files": "文件",
-    "search": "搜索",
-    "toc": "目录",
+    "files": "文件",      
     "settings": "设置",
     "tree": {
       "openedFiles": "已打开文件",

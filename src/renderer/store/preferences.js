@@ -61,15 +61,15 @@ const state = {
   spellcheckerLanguage: 'en-US',
 
   // Default values that are overwritten with the entries below.
-  sideBarVisibility: false,
-  tabBarVisibility: false,
+  sideBarVisibility: true,
+  tabBarVisibility: true,
   sourceCodeModeEnabled: false,
 
   searchExclusions: [],
   searchMaxFileSize: '',
   searchIncludeHidden: false,
   searchNoIgnore: false,
-  searchFollowSymlinks: true,
+  searchFollowSymlinks: false,
 
   watcherUsePolling: false,
 

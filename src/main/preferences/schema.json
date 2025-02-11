@@ -362,12 +362,12 @@
   "sideBarVisibility": {
     "description": "View--Whether the side bar is visible.",
     "type": "boolean",
-    "default": false
+    "default": true
   },
   "tabBarVisibility": {
     "description": "View--Whether the tabs are shown.",
     "type": "boolean",
-    "default": false
+    "default": true
   },
   "sourceCodeModeEnabled": {
     "description": "View--Whether the source-code mode is enabled by default.",
@@ -401,7 +401,7 @@
   "searchFollowSymlinks": {
     "description": "Searcher--Whether symlinks should be followed.",
     "type": "boolean",
-    "default": true
+    "default": false
   },
   "watcherUsePolling": {
     "description": "Watcher--Whether to use polling. Polling may leads to high CPU utilization but is necessary to watch files over a network.",

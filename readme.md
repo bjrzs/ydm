@@ -1,10 +1,8 @@
 ![image-20250121155350947](Picture/readme/image-20250121155350947.png)
 
-# MarkText 
+# MarkText
 
 项目地址 ：https://github.com/marktext/marktext
-
-
 
 # 前言
 
@@ -25,10 +23,6 @@
 然后，对于我这样的小白，编译Marktext 竟然如此的麻烦
 还有它使用的Javascript编程语言,之前甚至见都没怎么见过
 
-
-
-
-
 # 编译方法：
 
 安装软件：
@@ -41,8 +35,6 @@
 - Node.js: v16.20.2 (>=v16 且 <v17)
 - nvm
 
-
-
 ### Node.js
 
 - 安装路径：G:\cm\tools\nodejs
@@ -50,26 +42,31 @@
 - npm版本：8.19.4
 
 ### Python
+
 - 安装路径：D:\Tools\Python39
 - 版本：Python 3.92rc1
 - 编译需要
 
 ### Git
+
 - 安装路径：D:\Tools\git
 - 版本：2.47.0.windows.2
 
 ### Visual Studio 2019
+
 - 安装路径：D:\Tools\Microsoft\Visual_Studio_2019
 - MSVC工具链版本：14.29.30133
 - Windows SDK版本：10.0.20348.0
 - build需要它的一些功能
 
 ### Yarn
+
 - 安装路径：G:\cm\tools\yarn
 - 版本：1.22.22
 - 作用：编译的主要命令
 
 ### CMake
+
 - 安装路径：G:\cm\tools\CMake\bin
 - 版本：3.31.3
 
@@ -104,6 +101,53 @@ G:\cm\ydm\build\win-unpacked\resources\app\node_modules 即可
 4. 实现了侧边栏更改语言，可以统一 使用侧边栏和顶部主菜单 中文化
 5. 实现了保存语言功能
 
+```mermaid
+graph TB
+subgraph 语言文件
+zh[src/locales/zh-cn.json]
+en[src/locales/en.json]
+end
+subgraph 渲染进程
+i18n[src/renderer/i18n/index.js]
+main[src/renderer/main.js]
+general[src/renderer/prefComponents/general/index.vue]
+sidebar[src/renderer/components/sideBar/index.vue]
+menu[src/renderer/menu/index.js]
+end
+subgraph 主进程
+mainProcess[src/main/index.ts]
+oldI18n[src/main/old_i18n.js]
+menuTemplates[src/main/menu/templates/.js]
+end
+subgraph 存储和通信
+localStorage[(localStorage)]
+ipc{IPC通信}
+end
+%% 语言文件关系
+zh --> i18n
+en --> i18n
+%% 渲染进程内部关系
+i18n --> main
+general --> i18n
+sidebar --> i18n
+menu --> i18n
+%% 存储关系
+i18n --> localStorage
+localStorage --> i18n
+%% IPC通信关系
+i18n --> ipc
+ipc --> oldI18n
+oldI18n --> menuTemplates
+menuTemplates --> mainProcess
+%% 语言切换流程
+general -- "触发语言切换" --> i18n
+i18n -- "更新UI" --> sidebar
+i18n -- "通知主进程" --> ipc
+ipc -- "更新菜单" --> menuTemplates
+style i18n fill:#f9f,stroke:#333,stroke-width:2px
+style ipc fill:#fcf,stroke:#333,stroke-width:2px
+```
+
 二、大纲工作：
 
 1. 在编辑区任意区域中点击鼠标左键时，大纲高亮显示对应标题
@@ -111,8 +155,8 @@ G:\cm\ydm\build\win-unpacked\resources\app\node_modules 即可
 3. 在编辑区任意区域中点击鼠标左键时，大纲能够 自动滚动对应标题到与鼠标 Y轴相同的位置
 4. 在编辑区中，停留鼠标超过0.7秒时，大纲能够 自动滚动对应标题到与鼠标 Y轴相同的位置
 
-
 ## 在编辑区任意区域中点击鼠标左键时，大纲能够 自动滚动对应标题到与鼠标 Y轴相同的位置
+
 从editor.vue代码中可以看到，编辑器组件已经监听了selectionChange事件，可以获取到光标位置的Y坐标。现在需要：
 
 在editor.vue中添加点击事件监听，获取点击位置的Y坐标
@@ -128,32 +172,27 @@ G:\cm\ydm\build\win-unpacked\resources\app\node_modules 即可
 计算该位置在编辑器中的相对位置比例
 根据比例计算大纲应该滚动到的位置
 平滑滚动大纲到目标位置
+
 ---------------
+
 文件已成功更新，新的handleEditorClick方法已经实现根据鼠标Y轴位置来同步大纲滚动。现在当用户在编辑器任意位置点击时，大纲会自动滚动到对应位置。
 @g:\cm\ydm\src\renderer\components\sideBar\toc.vue
 
 
 
-
-## 未完成的工作：
+## 以下是未完成的工作：
 
 一、汉化工作：
 
 1. 我希望是将zh-cn.json 放在用户UserDate\locales,在Marktext 启动后读取
 2. 添加更多的语言 放在UserDate\locales
 
-
-
-
-
 三、主题：
 
 1. 我希望在用户UserDate\themes中，可以使用 css文件 ，将主题 集中到一个文件 ，
    当在主菜单 中点击的时候，能够刷新并读取UserDate\themes中的css主题，并应用
 
-
 现在的问题，点击 偏好设置 会出现明显的卡顿
 
-
-
-
+在localStorage  也就是User\preferences.json 中，
+选项"sideBarVisibility" 是决定 MarkText 启动的时候 ，侧边栏是 显示 or隐藏
